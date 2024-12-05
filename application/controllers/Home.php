@@ -9,8 +9,9 @@ class Home extends CI_Controller {
     }
 	public function index()
 	{
-
-        $tahun = $this->input->get('tahun', true);
+        // var_dump($this->session->userdata());die;
+        $tahun = $this->input->get('tahun', true) ?: date('Y')-1;
+        $data['tahun'] = $tahun;
         $data['dataPC'] = $this->db->query("
         SELECT SUM(PC_AR)*100 PC_AR, SUM(PC_KM)*100 PC_KM, SUM(PC_MTBF) PC_MTBF, AVG(TARGET_AR)*100 TARGET_AR, AVG(TARGET_KM)*100 TARGET_KM, AVG(TARGET_MTBF) TARGET_MTBF FROM (
         SELECT
@@ -65,11 +66,11 @@ class Home extends CI_Controller {
         }
 
         if($target > $data){
-            $text = "<h1 class='text text-danger fw-bold'>".round($data,2)."$persen</h1>";
+            $text = "<h2 class='text text-danger fw-bold'>".round($data,2)."$persen</h2>";
         }else if($target == $data){
-            $text = "<h1 class='text text-warning fw-bold'>".round($data,2)."$persen</h1>";
+            $text = "<h2 class='text text-warning fw-bold'>".round($data,2)."$persen</h2>";
         }else if($target < $data){
-            $text = "<h1 class='text text-success fw-bold'>".round($data,2)."$persen</h1>";
+            $text = "<h2 class='text text-success fw-bold'>".round($data,2)."$persen</h2>";
         }
 
         return $text;

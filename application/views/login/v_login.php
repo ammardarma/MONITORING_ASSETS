@@ -20,7 +20,7 @@
 <body style="font-family: Lato;">
     <main>
         <div class="vh-100 align-content-center bg-gambar">
-            <div class="container h-100" style="padding-top:10rem; padding-bottom:10rem;">
+            <div class="container h-100" style="padding-top:8rem; padding-bottom:8rem;">
                 <!-- ALERT MESSAGE -->
                 <?php if ($this->session->flashdata('success')) { ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert" data-mdb-alert-init
@@ -47,7 +47,7 @@
                                         <img src="assets/ilustration_login.svg" height="90" class="rounded-8" alt="?" loading="lazy"/>
                                     </div>
                                     <div class="d-none d-md-block">
-                                    <img src="assets/monitoring.png" height="120" class="rounded-8" alt="?" loading="lazy"/>
+                                    <img src="assets/logo-wb.png" height="70" class="rounded-8" alt="?" loading="lazy"/>
                                     </div>
                                     <div class="row text-center mb-2 mt-3">
                                         <h6 class="m-0"><strong>Login Account</strong></h6>

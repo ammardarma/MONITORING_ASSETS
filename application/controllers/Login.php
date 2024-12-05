@@ -14,7 +14,7 @@ class Login extends CI_Controller {
 
     public function actValidated(){
         $input = $this->input->post();
-
+        session_start();
         $email = $input['email'];
         $password = $input['password'];
         $data = $this->db->select("*")
@@ -29,15 +29,15 @@ class Login extends CI_Controller {
             $this->session->set_flashdata('name', $data[0]->NAME);
             $this->session->set_flashdata('email', $data[0]->EMAIL);
             $this->session->set_flashdata('status', $data[0]->STATUS);
-            redirect('/Home');
+            redirect('Home');
         }else {
             $this->session->set_flashdata('failed', "Login gagal, user tidak ada!");
-            redirect('/Login');
+            redirect('Login');
         }
     }
 
     public function actLogout() {
         $this->session->sess_destroy();
-        redirect('/Login');
+        redirect('Login');
     }
 }
