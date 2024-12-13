@@ -54,6 +54,7 @@ class PC extends CI_Controller {
 
     public function viewList() {
         $tahun = $this->input->get('tahun', true) ?: date('Y')-1;
+        $data['tipe'] = $this->input->get('tipe', true);
         $data['tahun'] = $tahun;
         $this->template->display('pc/v_list.php', 'header.php', $data);
     }
@@ -63,13 +64,14 @@ class PC extends CI_Controller {
         $post = $this->input->post();
         $rows = $this->getDataPC($post);
         $data = [];
+        $recordsFiltered = 0;
 
         foreach ($rows as $key => $field) {
             $recordsFiltered++;
             $row = [];
 
-            $edit = '<a href="#" onclick="editDataNamaPelatihan(\''.$field['KD_LATIH'].'\')" class="btn btn-primary btn-floating" title="Button Edit"><i class="fa fa-pencil"></i></a>';
-            $delete = '<a href="#" onclick=deleteData(\'actDeleteNamaPelatihan?id='.$field['KD_LATIH'].'\') class="btn btn-danger btn-floating" title="Button Delete"><i class="fa fa-trash"></i></button>';
+            $edit = '<a href="#" onclick="editDataNamaPelatihan(\''.$field['ID'].'\')" class="btn btn-primary btn-floating" title="Button Edit"><i class="fa fa-pencil"></i></a>';
+            $delete = '<a href="#" onclick=deleteData(\'actDeleteNamaPelatihan?id='.$field['ID'].'\') class="btn btn-danger btn-floating" title="Button Delete"><i class="fa fa-trash"></i></button>';
 
             $row[] = $field['NAMA_USER'];
             $row[] = $field['NAMA_PERANGKAT'];
@@ -96,9 +98,13 @@ class PC extends CI_Controller {
     {
         $column_order = ['NAMA_USER', 'NAMA_PERANGKAT', 'TAHUN', 'PERIODE', 'TIPE', 'PENCAPAIAN'];
         $order = 'ASC';
-        $this->db->query("ALTER SESSION SET NLS_DATE_FORMAT = 'DD MON YYYY'");
         $this->db->select('A.*');
         $this->db->from('PC_TABLE A');
+        $this->db->where('TIPE', $post['tipe']);
+        $this->db->where('TAHUN', $post['tahun']);
+        if(!empty($post['periode'])){
+            $this->db->where('PERIODE', $post['periode']);
+        }
 
         if (!empty($post['search']['value'])) {
             $this->db->group_start();
@@ -114,7 +120,7 @@ class PC extends CI_Controller {
             }
             $this->db->order_by($column_order[$post['order']['0']['column']], $order);
         } else {
-            $this->db->order_by("A.NAMA_USER DESC");
+            $this->db->order_by("A.PENCAPAIAN DESC");
         }
 
         if ($type == 'count') {

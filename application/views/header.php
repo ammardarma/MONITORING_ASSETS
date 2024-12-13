@@ -12,6 +12,12 @@
         <link rel="stylesheet" href="https://esokbumi.my.id/assets/mdbootstrap5/css/mdb.min.css"/>
         <link rel="stylesheet" href="https://esokbumi.my.id/assets/mdbootstrap5/plugins/css/all.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <!-- DataTables -->
+        <link href="https://lib.wika-beton.co.id/datatables/jquery.dataTables.min.css" rel="stylesheet">
+        <script src="https://lib.wika-beton.co.id/datatables/jquery.dataTables.min.js"></script>
+        <script src="https://lib.wika-beton.co.id/datatables/dataTables.bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://lib.wika-beton.co.id/datatables/dataTables.fixedColumns.min.js"></script>
+        <!-- FONT -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
@@ -27,13 +33,6 @@
                 <a href="<?=base_url()?>Home" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Home">
                     <div class="btn-primary bg-button-menu <?=$this->uri->segment(1) == 'Home' ? 'bg-button-menu-active' : '' ?>">
                         <h5 class="fa fa-home m-0 p-0"></h5>
-                    </div>
-                </a>
-            </li>
-            <li class="sidenav-item mb-3">
-                <a class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Target">
-                    <div class="btn-primary bg-button-menu">
-                        <h5 class="fa fa-bullseye-arrow m-0"></h5>
                     </div>
                 </a>
             </li>
@@ -167,5 +166,23 @@ $(document).ready(function(){
 
     .text-pink {
         color :#f05f76 !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        color: black !important;
+        border: 1px solid #f1f1f1 !important;
+        border-radius: 25px;
+        background: #fff !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.active {
+        color: black !important;
+        border: 1px solid #d4d4d0 !important;
+        border-radius: 25px;
+        background: #fff !important;
+    }
+
+    .btn {
+        text-transform: unset !important;
     }
 </style>

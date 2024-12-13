@@ -1,34 +1,33 @@
 <div><h5 class="fw-bold"><i class="fa fa-desktop"></i> Personal Computer</h5></div>
-<div class="text-secondary fw-bold text-end" style="font-size:0.8rem;">
-    <i class="fa fa-angle-double-right"></i> PC <i class="fa fa-angle-right"></i> Dashboard
-</div>
 
 <div class="row mt-4 mb-4 justify-content-end">
-    <div class="col-md-3">
-        <select data-mdb-select-init class="tahun">
-            <?php for($i = 0; $i < 10; $i++): ?>
-                <option value="202<?=$i?>" <?=(("202".$i) == $tahun) ? 'selected': ''?>>202<?=$i?></option>
-            <?php endfor; ?>
-        </select>
-        <label class="form-label select-label">Filter Year</label>
     </div>
-</div>
-
-<div class="row mb-4">
-   <div class="col-md-3 align-self-stretch mb-2">
-        <div class="card shadow-5-strong rounded-8 wave wave-success">
-            <div class="card-body">
-                <div class="row">
-                    <small class="text-secondary"><small><b>Total Users</b></small></small>
-                </div>
-                <div class="d-flex justify-content-between align-items-start mt-3">
-                    <h3 class="text-dark fw-bold"><?=$dataUser[0]->USER_PC ?: '0'?></h3>
-                    <div class="btn btn-floating btn-secondary"><b><i class="fa fa-user"></i></b></div>
+    
+    <div class="row justify-content-between align-items-center">
+        <div class="col-md-3 align-self-stretch mb-2">
+            <div class="card shadow-5-strong rounded-8 wave wave-success">
+                <div class="card-body">
+                    <div class="row">
+                        <small class="text-secondary"><small><b>Total Users</b></small></small>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-start mt-3">
+                        <h3 class="text-dark fw-bold"><?=$dataUser[0]->USER_PC ?: '0'?></h3>
+                        <div class="btn btn-floating btn-secondary"><b><i class="fa fa-user"></i></b></div>
+                    </div>
                 </div>
             </div>
         </div>
-   </div>
-   <div class="col-md-3 align-self-stretch mb-2">
+        <div class="col-md-3">
+            <select data-mdb-select-init class="tahun">
+                <?php for($i = 0; $i < 10; $i++): ?>
+                    <option value="202<?=$i?>" <?=(("202".$i) == $tahun) ? 'selected': ''?>>202<?=$i?></option>
+                <?php endfor; ?>
+            </select>
+            <label class="form-label select-label">Filter Year</label>
+        </div>
+</div>
+<div class="row mb-4">
+   <div class="col-md-4 align-self-stretch mb-2">
         <div class="card shadow-5-strong h-100 border-bottom border-primary border-5">
             <div class="card-body pt-3 pb-2">
                 <div class="d-flex justify-content-between align-items-center">
@@ -57,7 +56,7 @@
             </div>
         </div>
    </div>
-   <div class="col-md-3 align-self-stretch mb-2">
+   <div class="col-md-4 align-self-stretch mb-2">
         <div class="card shadow-5-strong h-100 border-bottom border-success border-5">
             <div class="card-body pt-3 pb-2">
                 <div class="d-flex justify-content-between align-items-center">
@@ -86,7 +85,7 @@
             </div>
         </div>
    </div>
-   <div class="col-md-3 align-self-stretch mb-2">
+   <div class="col-md-4 align-self-stretch mb-2">
         <div class="card shadow-5-strong h-100 border-bottom border-warning border-5">
             <div class="card-body pt-3 pb-2">
                 <div class="d-flex justify-content-between align-items-center">
@@ -127,8 +126,8 @@
                 </div>
                 <canvas class="chart-ar" height="300"></canvas>
                 <div class="text-center mt-5">
-                    <a href="#">
-                        <h6 class="text-primary mb-0">See More</h6>
+                    <a href="<?=base_url()?>PC/viewList?tipe=AR">
+                        <h6 class="text-primary mb-0">See Detail</h6>
                         <i class="fas fa-angle-down"></i>
                     </a>
                 </div>
@@ -144,8 +143,8 @@
                 </div>
                 <canvas class="chart-km" height="300"></canvas>
                 <div class="text-center mt-5">
-                    <a href="#">
-                        <h6 class="text-success mb-0">See More</h6>
+                    <a href="<?=base_url()?>PC/viewList?tipe=KM">
+                        <h6 class="text-success mb-0">See Detail</h6>
                         <i class="fas fa-angle-down text-success"></i>
                     </a>
                 </div>
@@ -161,8 +160,8 @@
                 </div>
                 <canvas class="chart-mtbf" height="300"></canvas>
                 <div class="text-center mt-5">
-                    <a href="#">
-                        <h6 class="text-warning mb-0">See More</h6>
+                    <a href="<?=base_url()?>PC/viewList?tipe=MTBF">
+                        <h6 class="text-warning mb-0">See Detail</h6>
                         <i class="fas fa-angle-down text-warning"></i>
                     </a>
                 </div>
