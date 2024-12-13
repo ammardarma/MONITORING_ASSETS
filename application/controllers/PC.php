@@ -70,8 +70,8 @@ class PC extends CI_Controller {
             $recordsFiltered++;
             $row = [];
 
-            $edit = '<a href="#" onclick="editDataNamaPelatihan(\''.$field['ID'].'\')" class="btn btn-primary btn-floating" title="Button Edit"><i class="fa fa-pencil"></i></a>';
-            $delete = '<a href="#" onclick=deleteData(\'actDeleteNamaPelatihan?id='.$field['ID'].'\') class="btn btn-danger btn-floating" title="Button Delete"><i class="fa fa-trash"></i></button>';
+            $edit = '<a href="'.base_url().'PC/viewForm?tipe='.$field['TIPE'].'&id='.$field['ID'].'" class="btn btn-primary btn-floating" title="Button Edit"><i class="fa fa-pencil"></i></a>';
+            $delete = '<a href="#" onclick=deleteData(\'actDeleteData?id='.$field['ID'].'&tipe='.$field['TIPE'].'\') class="btn btn-danger btn-floating" title="Button Delete"><i class="fa fa-trash"></i></button>';
 
             $row[] = $field['NAMA_USER'];
             $row[] = $field['NAMA_PERANGKAT'];
@@ -100,6 +100,7 @@ class PC extends CI_Controller {
         $order = 'ASC';
         $this->db->select('A.*');
         $this->db->from('PC_TABLE A');
+        $this->db->where('TIPE_PERANGKAT', 'PC');
         $this->db->where('TIPE', $post['tipe']);
         $this->db->where('TAHUN', $post['tahun']);
         if(!empty($post['periode'])){
@@ -136,6 +137,93 @@ class PC extends CI_Controller {
 
         return $result;
 
+    }
+
+    public function viewForm() {
+        $id = $this->input->get('id', true);
+        $data['tipe'] = $this->input->get('tipe', true);
+        $data['data'] = $this->db->query("SELECT * FROM PC_TABLE WHERE ID='$id'")->row();
+        if(!empty($id)){
+            $data['title'] = 'Edit Data ' . $data['tipe']; 
+        }else {
+            $data['title'] = 'Add Data ' . $data['tipe']; 
+        }
+        $this->template->display('pc/v_form.php', 'header.php', $data);
+    }
+
+    public function actAddData(){
+        // var_dump($this->input->post());
+        $input = $this->input->post();
+        $namaUser = $input['nama_user'];
+        $tipe = $input['tipe'];
+        $namaPerangkat = $input['nama_perangkat'];
+        $tahun = $input['tahun'];
+        $periode = $input['periode'];
+        $data = $this->db->query("SELECT TARGET FROM M_TARGETS WHERE TIPE='$tipe' AND TAHUN = '$tahun' AND PERIODE = '$periode'")->result();
+        if($tipe == 'AR'){
+            $pencapaian = $data[0]->TARGET * 100;
+            foreach($input['kendala'] as $v){
+                $pencapaian -= $v;
+            }
+        }else {
+            $pencapaian = $input['pencapaian'];
+        }
+
+        if($tipe != 'MTBF'){
+            $pencapaian /= 100;
+        }
+
+        $this->db->query("INSERT INTO PC_TABLE(TAHUN, PERIODE, NAMA_USER, TIPE_PERANGKAT, NAMA_PERANGKAT, PENCAPAIAN, TIPE) VALUES ('$tahun','$periode','$namaUser','PC','$namaPerangkat','$pencapaian','$tipe')");
+
+        if ($this->db->affected_rows() > 0) {
+            $this->session->set_flashdata('success', "Data berhasil ditambahkan!");
+            redirect('/PC/viewList?tipe='.$tipe);
+       } else {
+            $this->session->set_flashdata('failed', "Data gagal ditambahkan, silahkan hubungi administrator!");
+            redirect('/PC/viewList?tipe='.$tipe);
+       }
+
+    }
+
+    public function actEditData(){
+        // var_dump($this->input->post());
+        $input = $this->input->post();
+        $id = $input['id'];
+        $namaUser = $input['nama_user'];
+        $tipe = $input['tipe'];
+        $namaPerangkat = $input['nama_perangkat'];
+        $tahun = $input['tahun'];
+        $periode = $input['periode'];
+        $pencapaian = $input['pencapaian'];
+        
+        if($tipe != 'MTBF'){
+            $pencapaian /= 100;
+        }
+
+        $this->db->query("UPDATE PC_TABLE SET TAHUN='$tahun', PERIODE='$periode', NAMA_USER='$namaUser', NAMA_PERANGKAT='$namaPerangkat', PENCAPAIAN='$pencapaian' WHERE ID = '$id'");
+
+        if ($this->db->affected_rows() > 0) {
+            $this->session->set_flashdata('success', "Data berhasil diubah!");
+            redirect('/PC/viewList?tipe='.$tipe);
+       } else {
+            $this->session->set_flashdata('failed', "Data gagal diubah, silahkan hubungi administrator!");
+            redirect('/PC/viewList?tipe='.$tipe);
+       }
+
+    }
+
+    public function actDeleteData() {
+        $id = $this->input->get('id', true);
+        $tipe = $this->input->get('tipe', true);
+        $this->db->query("DELETE FROM PC_TABLE WHERE ID = '$id'");
+
+        if ($this->db->affected_rows() > 0) {
+            $this->session->set_flashdata('success', "Data berhasil dihapus!");
+            redirect('/PC/viewList?tipe='.$tipe);
+       } else {
+            $this->session->set_flashdata('failed', "Data gagal diphaus, silahkan hubungi administrator!");
+            redirect('/PC/viewList?tipe='.$tipe);
+       }
     }
     
 }

@@ -1,5 +1,23 @@
 <div><h5 class="fw-bold"><i class="fa fa-desktop"></i> Personal Computer</h5></div>
 
+<!-- ALERT MESSAGE -->
+<?php if ($this->session->flashdata('success')) { ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert" data-mdb-alert-init
+        data-mdb-color="success">
+        <i class="fa fa-check-circle me-3"></i>
+        <?php echo $this->session->flashdata('success'); ?>
+        <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php } ?>
+<?php if ($this->session->flashdata('failed')) { ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" data-mdb-alert-init
+        data-mdb-color="danger">
+        <i class="fa fa-check-circle me-3"></i>
+        <?php echo $this->session->flashdata('failed'); ?>
+        <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php } ?>
+
 <div class="row mt-4 justify-content-start">
     <div class="col-md-3 mb-2">
         <input type="hidden" class="tipe" value="<?=$tipe?>"/>
@@ -31,7 +49,7 @@
                     </div> 
                 </div>
                 <div class="col-md-2 text-end">
-                    <button type="button" class="btn btn-success" href="<?=base_url()?>PC" ><i class="fa fa-plus"></i> &nbsp;&nbsp;Add Data</button>
+                    <a href="<?=base_url()?>PC/viewForm?tipe=<?=$tipe?>" class="btn btn-success" href="<?=base_url()?>PC" ><i class="fa fa-plus"></i> &nbsp;&nbsp;Add Data</a>
                 </div>
             </div>
             <table id="dt_table" class="table table-borderless table-striped">
@@ -50,6 +68,28 @@
         </div>
     </div>
 </div>
+
+
+<!-- MODAL UNTUK DELETE DATA PELATIHAN DAN LEMBAGA (URL DARI CONTROLLER) -->
+<form id='formDeleteData' method="post" action="">
+    <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDelete" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-weight:900; font-size:20px;"><span class="fa fa-warning text-danger"></span> Hapus Data</h5>
+                    <button type="button" class="btn-close" data-mdb-ripple-init data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Apakah anda yakin ingin menghapus data ini?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-mdb-ripple-init data-mdb-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Lanjutkan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -103,5 +143,13 @@ $(document).ready(function() {
     $('#search-dt-table').on('input', function() {
         oTable.DataTable().search($(this).val()).draw() ;
     });
+
   });
+
+  function deleteData(url){
+    $('#formDeleteData').attr('action', '<?=base_url()?>PC/'+url);
+    new mdb.Modal($('#modalDelete')).show();
+  }
+
+  
 </script>
