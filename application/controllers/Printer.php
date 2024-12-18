@@ -13,8 +13,6 @@ class Printer extends CI_Controller {
         $tahun = $this->input->get('tahun', true) ?: date('Y')-1;
         $data['tahun'] = $tahun;
 
-        // $data['class'] = $this;
-
         $data['dataSummary'] = $this->db->query("
         SELECT SUM(PR_FPG) PR_FPG, SUM(PR_FPB) PR_FPB, SUM(PR_TK) PR_TK, AVG(TARGET_FPG) TARGET_FPG, AVG(TARGET_FPB) TARGET_FPB, AVG(TARGET_TP)TARGET_TP FROM ( 
         SELECT

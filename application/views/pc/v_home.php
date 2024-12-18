@@ -39,7 +39,7 @@
                             <?php if(substr($dataSelisih[0]->SELISIH_AR_1, 0, 1) == '-'): ?>
                                 <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_1,2) ?: '0'?>%</h6>
                             <?php else : ?>
-                                <h6 class="text-danger fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_1,2) ?: '0'?>%</h6>
+                                <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_1,2) ?: '0'?>%</h6>
                             <?php endif; ?>
                             <div class="text-secondary" style="font-size:12px;">Period 1</div>
                             <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
@@ -48,7 +48,7 @@
                             <?php if(substr($dataSelisih[0]->SELISIH_AR_2, 0, 1) == '-'): ?>
                                 <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_2,2) ?: '0'?>%</h6>
                             <?php else : ?>
-                                <h6 class="text-danger fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_2,2) ?: '0'?>%</h6>
+                                <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_2,2) ?: '0'?>%</h6>
                             <?php endif; ?>
                             <div class="text-secondary" style="font-size:12px;">Period 2</div>
                         </div>
@@ -68,7 +68,7 @@
                             <?php if(substr($dataSelisih[0]->SELISIH_KM_1, 0, 1) == '-'): ?>
                                 <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_1,2) ?: '0'?>%</h6>
                             <?php else : ?>
-                                <h6 class="text-danger fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_1,2) ?: '0'?>%</h6>
+                                <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_1,2) ?: '0'?>%</h6>
                             <?php endif; ?>
                             <div class="text-secondary" style="font-size:12px;">Period 1</div>
                             <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
@@ -77,7 +77,7 @@
                             <?php if(substr($dataSelisih[0]->SELISIH_KM_2, 0, 1) == '-'): ?>
                                 <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_2,2) ?: '0'?>%</h6>
                             <?php else : ?>
-                                <h6 class="text-danger fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_2,2) ?: '0'?>%</h6>
+                                <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_2,2) ?: '0'?>%</h6>
                             <?php endif; ?>
                             <div class="text-secondary" style="font-size:12px;">Period 2</div>
                         </div>
@@ -97,7 +97,7 @@
                             <?php if(substr($dataSelisih[0]->SELISIH_MTBF_1, 0, 1) == '-'): ?>
                                 <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_1,2) ?: '0'?></h6>
                             <?php else : ?>
-                                <h6 class="text-danger fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_1,2) ?: '0'?></h6>
+                                <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_1,2) ?: '0'?></h6>
                             <?php endif; ?>
                             <div class="text-secondary" style="font-size:12px;">Period 1</div>
                             <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
@@ -106,7 +106,7 @@
                             <?php if(substr($dataSelisih[0]->SELISIH_MTBF_2, 0, 1) == '-'): ?>
                                 <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_2,2) ?: '0'?></h6>
                             <?php else : ?>
-                                <h6 class="text-danger fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_2,2) ?: '0'?></h6>
+                                <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_2,2) ?: '0'?></h6>
                             <?php endif; ?>
                             <div class="text-secondary" style="font-size:12px;">Period 2</div>
                         </div>

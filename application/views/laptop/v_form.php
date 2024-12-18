@@ -6,10 +6,11 @@
     <form id='formAddData' method="post" action="<?= base_url() ?>Laptop/actAddData" class="was-validated">
 <?php endif; ?>
 <div class="card mt-4">
-    <div class="card-header">
-        <h6 class="card-title fw-bold"><i class="fa fa-pen"></i> &nbsp;<?=$title?></h6>
-    </div>
     <div class="card-body">
+        <div class="row text-start">
+            <h6 class="card-title fw-bold"><i class="fa fa-pen"></i> &nbsp;<?=$title?></h6>  
+        </div>
+        <hr class="hr hr-blurry mb-4"/>
         <input type="hidden" name="id" value="<?=!empty($data) ? $data->ID : ''?>"/>
         <input type="hidden" name="tipe" value="<?=$tipe?>"/>
         <div class="col-md-12 mb-4">

@@ -58,6 +58,13 @@
                 </a>
             </li>
             <li class="sidenav-item mb-3">
+                <a href="<?=base_url()?>Target" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Target">
+                    <div class="btn-primary bg-button-menu <?=$this->uri->segment(1) == 'Target' ? 'bg-button-menu-active' : '' ?>">
+                        <h5 class="fa fa-bullseye-arrow m-0"></h5>
+                    </div>
+                </a>
+            </li>
+            <li class="sidenav-item mb-3">
                 <a href="<?=base_url()?>Users" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Users">
                     <div class="btn-primary bg-button-menu <?=$this->uri->segment(1) == 'Users' ? 'bg-button-menu-active' : '' ?>">
                         <h5 class="fa fa-users m-0"></h5>
@@ -81,13 +88,13 @@
                 </div>
                 <div class="dropdown">
                     <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
-                        <img src="https://esokbumi.my.id/assets/img/ammar.png" class="rounded-8" height="60" alt="?" loading="lazy"/>
+                        <img src="<?=base_url()?>assets/user.png" class="rounded-8" height="60" alt="?" loading="lazy"/>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" style="width:250px;" aria-labelledby="navbarDropdownMenuAvatar">
                         <li>
-                            <div class="p-2">
-                                <span class="text-primary"><span class="fa fa-user"></span> &nbsp;&nbsp;<?=$this->session->userdata('name')?></span><br>
-                                <small>(<?=$this->session->userdata('status')?>)</small>
+                            <div class="py-2 px-2">
+                                <span class="text-primary" style="font-size:1rem;"><span class="fa fa-user"></span> &nbsp;&nbsp;<?=$this->session->userdata('name')?></span><br>
+                                <small><i class="fas fa-info-circle"></i> &nbsp;&nbsp;<?=ucfirst($this->session->userdata('status'))?></small>
                             </div>
                         </li>
                         <li>
