@@ -1,7 +1,7 @@
-<a href="<?=base_url()?>PC" class="btn btn-danger mb-4"><i class="fa fa-arrow-left"></i> Back</a>
 <div class="d-flex justify-content-between">
-    <h5 class="fw-bold"><i class="fa fa-desktop"></i> Personal Computer</h5>
+    <h5 class="fw-bold"><i class="fa fa-users"></i> Users</h5>
 </div>
+
 <!-- ALERT MESSAGE -->
 <?php if ($this->session->flashdata('success')) { ?>
     <div class="alert alert-success alert-dismissible fade show" role="alert" data-mdb-alert-init
@@ -21,23 +21,6 @@
 <?php } ?>
 
 <div class="row mt-4 justify-content-start">
-    <div class="col-md-3 mb-2">
-        <input type="hidden" class="tipe" value="<?=$tipe?>"/>
-        <select data-mdb-select-init class="tahun">
-            <?php for($i = 0; $i < 10; $i++): ?>
-                <option value="202<?=$i?>" <?=(("202".$i) == $tahun) ? 'selected': ''?>>202<?=$i?></option>
-            <?php endfor; ?>
-        </select>
-        <label class="form-label select-label">Filter Year</label>
-    </div>
-    <div class="col-md-3 mb-2">
-        <select data-mdb-select-init class="periode">
-            <option value="" selected>All</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-        </select>
-        <label class="form-label select-label">Filter Period</label>
-    </div>
 </div>
 <div class="row">
     <div class="card">
@@ -51,18 +34,15 @@
                     </div> 
                 </div>
                 <div class="col-md-2 text-end">
-                    <a href="<?=base_url()?>PC/viewForm?tipe=<?=$tipe?>" class="btn btn-success" href="<?=base_url()?>PC" ><i class="fa fa-plus"></i> &nbsp;&nbsp;Add Data</a>
+                    <a href="<?=base_url()?>Users/viewForm?" class="btn btn-success" ><i class="fa fa-plus"></i> &nbsp;&nbsp;Add Data</a>
                 </div>
             </div>
             <table id="dt_table" class="table table-borderless table-striped">
                 <thead>
                     <tr>
-                        <th>Nama User</th>
-                        <th>Nama Perangkat</th>
-                        <th>Tahun</th>
-                        <th>Periode</th>
-                        <th>Tipe</th>
-                        <th>Pencapaian</th>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -72,7 +52,7 @@
 </div>
 
 
-<!-- MODAL UNTUK DELETE DATA PELATIHAN DAN LEMBAGA (URL DARI CONTROLLER) -->
+<!-- MODAL UNTUK DELETE DATA (URL DARI CONTROLLER) -->
 <form id='formDeleteData' method="post" action="">
     <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDelete" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -95,14 +75,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('.tahun').on('change', function () {
-        oTable.DataTable().draw();
-    });
-
-    $('.periode').on('change', function () {
-        oTable.DataTable().draw();
-    });
-
     oTable = $('#dt_table').dataTable({
         dom: 'Brtip',
         order: [],
@@ -119,12 +91,9 @@ $(document).ready(function() {
             }
         },
         ajax: {
-            url: "<?= base_url() ?>PC/ajaxDataPC",
+            url: "<?= base_url() ?>Users/ajaxDataUsers",
             "type": "POST",
             "data": function (data) {
-                data['tipe'] = $('.tipe').val();
-                data['tahun'] = $('.tahun').val();
-                data['periode'] = $('.periode').val();
             },
 
         },
@@ -135,7 +104,7 @@ $(document).ready(function() {
                 "orderable": true,
             }, 
             {
-                "targets": 6,
+                "targets": 3,
                 "orderable": false,
                 "className" : 'dt-center',
             },                     
@@ -149,7 +118,7 @@ $(document).ready(function() {
   });
 
   function deleteData(url){
-    $('#formDeleteData').attr('action', '<?=base_url()?>PC/'+url);
+    $('#formDeleteData').attr('action', '<?=base_url()?>Users/'+url);
     new mdb.Modal($('#modalDelete')).show();
   }
 

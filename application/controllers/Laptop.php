@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class PC extends CI_Controller {
+class Laptop extends CI_Controller {
 
 	public function __construct() {
         parent::__construct();
@@ -30,10 +30,10 @@ class PC extends CI_Controller {
         SUM(CASE WHEN TIPE = 'KM' AND PERIODE = 2 THEN PENCAPAIAN - TARGET END)*100 AS SELISIH_KM_2,
         SUM(CASE WHEN TIPE = 'MTBF' AND PERIODE = 1 THEN PENCAPAIAN - TARGET END) AS SELISIH_MTBF_1,
         SUM(CASE WHEN TIPE = 'MTBF' AND PERIODE = 2 THEN PENCAPAIAN - TARGET END) AS SELISIH_MTBF_2
-        FROM (SELECT A.PERIODE, A.TIPE, CASE WHEN A.TIPE ='MTBF' AND A.PERIODE=1 THEN AVG(PENCAPAIAN) WHEN A.TIPE = 'MTBF' AND A.PERIODE=2 THEN AVG(PENCAPAIAN) ELSE AVG(PENCAPAIAN) END AS PENCAPAIAN, B.TARGET FROM PC_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE AND A.TIPE = B.TIPE  WHERE A.TAHUN = '$tahun' AND TIPE_PERANGKAT='PC' GROUP BY A.TIPE, A.PERIODE ORDER BY TIPE) A")->result();
+        FROM (SELECT A.PERIODE, A.TIPE, CASE WHEN A.TIPE ='MTBF' AND A.PERIODE=1 THEN AVG(PENCAPAIAN) WHEN A.TIPE = 'MTBF' AND A.PERIODE=2 THEN AVG(PENCAPAIAN) ELSE AVG(PENCAPAIAN) END AS PENCAPAIAN, B.TARGET FROM PC_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE AND A.TIPE = B.TIPE  WHERE A.TAHUN = '$tahun' AND TIPE_PERANGKAT='NB' GROUP BY A.TIPE, A.PERIODE ORDER BY TIPE) A")->result();
 
         $dataGrafik = $this->db->query("SELECT *
-        FROM (SELECT A.PERIODE, A.TIPE, CASE WHEN A.TIPE ='MTBF' AND A.PERIODE=1 THEN AVG(PENCAPAIAN) WHEN A.TIPE = 'MTBF' AND A.PERIODE=2 THEN AVG(PENCAPAIAN) ELSE AVG(PENCAPAIAN) END AS PENCAPAIAN, B.TARGET FROM PC_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE AND A.TIPE = B.TIPE  WHERE A.TAHUN = '$tahun' AND TIPE_PERANGKAT='PC' GROUP BY A.TIPE, A.PERIODE ORDER BY TIPE) A")->result();
+        FROM (SELECT A.PERIODE, A.TIPE, CASE WHEN A.TIPE ='MTBF' AND A.PERIODE=1 THEN AVG(PENCAPAIAN) WHEN A.TIPE = 'MTBF' AND A.PERIODE=2 THEN AVG(PENCAPAIAN) ELSE AVG(PENCAPAIAN) END AS PENCAPAIAN, B.TARGET FROM PC_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE AND A.TIPE = B.TIPE  WHERE A.TAHUN = '$tahun' AND TIPE_PERANGKAT='NB' GROUP BY A.TIPE, A.PERIODE ORDER BY TIPE) A")->result();
         $data['achievementAR'] = $data['targetAR'] = $data['achievementKM'] = $data['targetKM'] = $data['achievementMTBF'] = $data['targetMTBF'] = array();
 
         foreach($dataGrafik as $v){
@@ -49,20 +49,20 @@ class PC extends CI_Controller {
             }
         }
     
-		$this->template->display('pc/v_home.php', 'header.php', $data);
+		$this->template->display('laptop/v_home.php', 'header.php', $data);
 	}
 
     public function viewList() {
         $tahun = $this->input->get('tahun', true) ?: date('Y')-1;
         $data['tipe'] = $this->input->get('tipe', true);
         $data['tahun'] = $tahun;
-        $this->template->display('pc/v_list.php', 'header.php', $data);
+        $this->template->display('laptop/v_list.php', 'header.php', $data);
     }
 
-    public function ajaxDataPC()
+    public function ajaxDataLaptop()
     {
         $post = $this->input->post();
-        $rows = $this->getDataPC($post);
+        $rows = $this->getDataLaptop($post);
         $data = [];
         $recordsFiltered = 0;
 
@@ -70,7 +70,7 @@ class PC extends CI_Controller {
             $recordsFiltered++;
             $row = [];
 
-            $edit = '<a href="'.base_url().'PC/viewForm?tipe='.$field['TIPE'].'&id='.$field['ID'].'" class="btn btn-primary btn-floating" title="Button Edit"><i class="fa fa-pencil"></i></a>';
+            $edit = '<a href="'.base_url().'Laptop/viewForm?tipe='.$field['TIPE'].'&id='.$field['ID'].'" class="btn btn-primary btn-floating" title="Button Edit"><i class="fa fa-pencil"></i></a>';
             $delete = '<a href="#" onclick=deleteData(\'actDeleteData?id='.$field['ID'].'&tipe='.$field['TIPE'].'\') class="btn btn-danger btn-floating" title="Button Delete"><i class="fa fa-trash"></i></button>';
 
             $row[] = $field['NAMA_USER'];
@@ -86,7 +86,7 @@ class PC extends CI_Controller {
             $row[] = '<center>'. $edit . $delete .'</center>';
             $data[] = $row;
         }
-        $recordsTotal = $this->getDataPC($post, 'count');
+        $recordsTotal = $this->getDataLaptop($post, 'count');
 
         $output = [
             "draw" => $post['draw'],
@@ -98,13 +98,13 @@ class PC extends CI_Controller {
         exit;
     }
 
-    public function getDataPC($post, $type = "get")
+    public function getDataLaptop($post, $type = "get")
     {
         $column_order = ['NAMA_USER', 'NAMA_PERANGKAT', 'TAHUN', 'PERIODE', 'TIPE', 'PENCAPAIAN'];
         $order = 'ASC';
         $this->db->select('A.*');
         $this->db->from('PC_TABLE A');
-        $this->db->where('TIPE_PERANGKAT', 'PC');
+        $this->db->where('TIPE_PERANGKAT', 'NB');
         $this->db->where('TIPE', $post['tipe']);
         $this->db->where('TAHUN', $post['tahun']);
         if(!empty($post['periode'])){
@@ -152,7 +152,7 @@ class PC extends CI_Controller {
         }else {
             $data['title'] = 'Add Data ' . $data['tipe']; 
         }
-        $this->template->display('pc/v_form.php', 'header.php', $data);
+        $this->template->display('laptop/v_form.php', 'header.php', $data);
     }
 
     public function actAddData(){
@@ -177,14 +177,14 @@ class PC extends CI_Controller {
             $pencapaian /= 100;
         }
 
-        $this->db->query("INSERT INTO PC_TABLE(TAHUN, PERIODE, NAMA_USER, TIPE_PERANGKAT, NAMA_PERANGKAT, PENCAPAIAN, TIPE) VALUES ('$tahun','$periode','$namaUser','PC','$namaPerangkat','$pencapaian','$tipe')");
+        $this->db->query("INSERT INTO PC_TABLE(TAHUN, PERIODE, NAMA_USER, TIPE_PERANGKAT, NAMA_PERANGKAT, PENCAPAIAN, TIPE) VALUES ('$tahun','$periode','$namaUser','NB','$namaPerangkat','$pencapaian','$tipe')");
 
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('success', "Data berhasil ditambahkan!");
-            redirect('/PC/viewList?tipe='.$tipe);
+            redirect('/Laptop/viewList?tipe='.$tipe);
        } else {
             $this->session->set_flashdata('failed', "Data gagal ditambahkan, silahkan hubungi administrator!");
-            redirect('/PC/viewList?tipe='.$tipe);
+            redirect('/Laptop/viewList?tipe='.$tipe);
        }
 
     }
@@ -208,10 +208,10 @@ class PC extends CI_Controller {
 
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('success', "Data berhasil diubah!");
-            redirect('/PC/viewList?tipe='.$tipe);
+            redirect('/Laptop/viewList?tipe='.$tipe);
        } else {
             $this->session->set_flashdata('failed', "Data gagal diubah, silahkan hubungi administrator!");
-            redirect('/PC/viewList?tipe='.$tipe);
+            redirect('/Laptop/viewList?tipe='.$tipe);
        }
 
     }
@@ -223,10 +223,10 @@ class PC extends CI_Controller {
 
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('success', "Data berhasil dihapus!");
-            redirect('/PC/viewList?tipe='.$tipe);
+            redirect('/Laptop/viewList?tipe='.$tipe);
        } else {
             $this->session->set_flashdata('failed', "Data gagal diphaus, silahkan hubungi administrator!");
-            redirect('/PC/viewList?tipe='.$tipe);
+            redirect('/Laptop/viewList?tipe='.$tipe);
        }
     }
     

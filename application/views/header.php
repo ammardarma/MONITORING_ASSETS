@@ -51,15 +51,15 @@
                 </a>
             </li>
             <li class="sidenav-item mb-3">
-                <a class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Printer">
-                    <div class="btn-primary bg-button-menu">
+                <a href="<?=base_url()?>Printer" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Printer">
+                    <div class="btn-primary bg-button-menu <?=$this->uri->segment(1) == 'Printer' ? 'bg-button-menu-active' : '' ?>">
                         <h5 class="fa fa-print m-0"></h5>
                     </div>
                 </a>
             </li>
             <li class="sidenav-item mb-3">
-                <a class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Users">
-                    <div class="btn-primary bg-button-menu">
+                <a href="<?=base_url()?>Users" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Users">
+                    <div class="btn-primary bg-button-menu <?=$this->uri->segment(1) == 'Users' ? 'bg-button-menu-active' : '' ?>">
                         <h5 class="fa fa-users m-0"></h5>
                     </div>
                 </a>
@@ -83,15 +83,15 @@
                     <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
                         <img src="https://esokbumi.my.id/assets/img/ammar.png" class="rounded-8" height="60" alt="?" loading="lazy"/>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                    <ul class="dropdown-menu dropdown-menu-end" style="width:250px;" aria-labelledby="navbarDropdownMenuAvatar">
                         <li>
                             <div class="p-2">
-                                <span class="text-primary overflow-hidden"><span class="fa fa-user"></span> &nbsp;&nbsp;<?=$this->session->userdata('name')?></span><br>
-                                <small><span class="fa fa-angle-right"></span> <?=$this->session->userdata('status')?></small>
+                                <span class="text-primary"><span class="fa fa-user"></span> &nbsp;&nbsp;<?=$this->session->userdata('name')?></span><br>
+                                <small>(<?=$this->session->userdata('status')?>)</small>
                             </div>
                         </li>
                         <li>
-                            <a class="dropdown-item text-danger" href="<?=base_url()?>Login/actLogout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+                            <a class="dropdown-item text-danger" href="<?=base_url()?>Login/actLogout"><i class="fa fa-sign-out"></i> Logout</a>
                         </li>
                     </ul>
                 </div>

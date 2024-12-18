@@ -1,4 +1,4 @@
-<div><h5 class="fw-bold"><i class="fa fa-desktop"></i> Personal Computer</h5></div>
+<div><h5 class="fw-bold"><i class="fa fa-laptop"></i> Laptop</h5></div>
 
 <div class="row mt-4 mb-4 justify-content-end">
     </div>
@@ -11,7 +11,7 @@
                         <small class="text-secondary"><small><b>Total Users</b></small></small>
                     </div>
                     <div class="d-flex justify-content-between align-items-start mt-3">
-                        <h3 class="text-dark fw-bold"><?=$dataUser[0]->USER_PC ?: '0'?></h3>
+                        <h3 class="text-dark fw-bold"><?=$dataUser[0]->USER_NB ?: '0'?></h3>
                         <div class="btn btn-floating btn-secondary"><b><i class="fa fa-user"></i></b></div>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
                 </div>
                 <canvas class="chart-ar" height="300"></canvas>
                 <div class="text-center mt-5">
-                    <a href="<?=base_url()?>PC/viewList?tipe=AR">
+                    <a href="<?=base_url()?>Laptop/viewList?tipe=AR">
                         <h6 class="text-primary mb-0">See Detail</h6>
                         <i class="fas fa-angle-down"></i>
                     </a>
@@ -143,7 +143,7 @@
                 </div>
                 <canvas class="chart-km" height="300"></canvas>
                 <div class="text-center mt-5">
-                    <a href="<?=base_url()?>PC/viewList?tipe=KM">
+                    <a href="<?=base_url()?>Laptop/viewList?tipe=KM">
                         <h6 class="text-success mb-0">See Detail</h6>
                         <i class="fas fa-angle-down text-success"></i>
                     </a>
@@ -160,7 +160,7 @@
                 </div>
                 <canvas class="chart-mtbf" height="300"></canvas>
                 <div class="text-center mt-5">
-                    <a href="<?=base_url()?>PC/viewList?tipe=MTBF">
+                    <a href="<?=base_url()?>Laptop/viewList?tipe=MTBF">
                         <h6 class="text-warning mb-0">See Detail</h6>
                         <i class="fas fa-angle-down text-warning"></i>
                     </a>
@@ -173,9 +173,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $('.tahun').on('change', function() {
-      location.href="<?=base_url()?>PC?tahun="+$(this).val();
+      location.href="<?=base_url()?>Laptop?tahun="+$(this).val();
     });
-
     Chart.register(ChartDataLabels);
 
     const formatter = (value, ctx) => {

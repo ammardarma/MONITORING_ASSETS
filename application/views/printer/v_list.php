@@ -1,6 +1,6 @@
 <a href="<?=base_url()?>PC" class="btn btn-danger mb-4"><i class="fa fa-arrow-left"></i> Back</a>
 <div class="d-flex justify-content-between">
-    <h5 class="fw-bold"><i class="fa fa-desktop"></i> Personal Computer</h5>
+    <h5 class="fw-bold"><i class="fa fa-print"></i> Printer</h5>
 </div>
 <!-- ALERT MESSAGE -->
 <?php if ($this->session->flashdata('success')) { ?>
@@ -35,8 +35,18 @@
             <option value="" selected>All</option>
             <option value="1">1</option>
             <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
         </select>
-        <label class="form-label select-label">Filter Period</label>
+        <label class="form-label select-label">Filter Month</label>
     </div>
 </div>
 <div class="row">
@@ -51,16 +61,15 @@
                     </div> 
                 </div>
                 <div class="col-md-2 text-end">
-                    <a href="<?=base_url()?>PC/viewForm?tipe=<?=$tipe?>" class="btn btn-success" href="<?=base_url()?>PC" ><i class="fa fa-plus"></i> &nbsp;&nbsp;Add Data</a>
+                    <a href="<?=base_url()?>Printer/viewForm?tipe=<?=$tipe?>" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;&nbsp;Add Data</a>
                 </div>
             </div>
             <table id="dt_table" class="table table-borderless table-striped">
                 <thead>
                     <tr>
-                        <th>Nama User</th>
                         <th>Nama Perangkat</th>
                         <th>Tahun</th>
-                        <th>Periode</th>
+                        <th>Bulan</th>
                         <th>Tipe</th>
                         <th>Pencapaian</th>
                         <th>Action</th>
@@ -119,7 +128,7 @@ $(document).ready(function() {
             }
         },
         ajax: {
-            url: "<?= base_url() ?>PC/ajaxDataPC",
+            url: "<?= base_url() ?>Printer/ajaxDataPrinter",
             "type": "POST",
             "data": function (data) {
                 data['tipe'] = $('.tipe').val();
@@ -135,7 +144,7 @@ $(document).ready(function() {
                 "orderable": true,
             }, 
             {
-                "targets": 6,
+                "targets": 5,
                 "orderable": false,
                 "className" : 'dt-center',
             },                     
@@ -149,7 +158,8 @@ $(document).ready(function() {
   });
 
   function deleteData(url){
-    $('#formDeleteData').attr('action', '<?=base_url()?>PC/'+url);
+    // console.log(url.replace('_', ' '));return false;
+    $('#formDeleteData').attr('action', '<?=base_url()?>Printer/'+url.replace('_', ' '));
     new mdb.Modal($('#modalDelete')).show();
   }
 

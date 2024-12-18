@@ -1,9 +1,9 @@
-<div><h5 class="fw-bold"><i class="fa fa-desktop"></i> Personal Computer</h5></div>
+<div><h5 class="fw-bold"><i class="fa fa-laptop"></i> Laptop</h5></div>
 
 <?php if(!empty($data)): ?>
-    <form id='formEditData' method="post" action="<?= base_url() ?>PC/actEditData" class="was-validated">
+    <form id='formEditData' method="post" action="<?= base_url() ?>Laptop/actEditData" class="was-validated">
 <?php else: ?>
-    <form id='formAddData' method="post" action="<?= base_url() ?>PC/actAddData" class="was-validated">
+    <form id='formAddData' method="post" action="<?= base_url() ?>Laptop/actAddData" class="was-validated">
 <?php endif; ?>
 <div class="card mt-4">
     <div class="card-header">
@@ -62,7 +62,7 @@
         <?php endif; ?>
     </div>
     <div class="card-footer">
-        <a href="<?=base_url()?>PC/viewList?tipe=<?=$tipe?>" class="btn btn-secondary" data-mdb-ripple-init data-mdb-dismiss="modal">Close</a>
+        <a href="<?=base_url()?>Laptop/viewList?tipe=<?=$tipe?>" class="btn btn-secondary" data-mdb-ripple-init data-mdb-dismiss="modal">Close</a>
         <button type="submit" class="btn btn-success">Submit</button>
     </div>
 </div>

@@ -1,7 +1,8 @@
-<a href="<?=base_url()?>PC" class="btn btn-danger mb-4"><i class="fa fa-arrow-left"></i> Back</a>
+<a href="<?=base_url()?>Laptop" class="btn btn-danger mb-4"><i class="fa fa-arrow-left"></i> Back</a>
 <div class="d-flex justify-content-between">
-    <h5 class="fw-bold"><i class="fa fa-desktop"></i> Personal Computer</h5>
+    <h5 class="fw-bold"><i class="fa fa-laptop"></i> Laptop</h5>
 </div>
+
 <!-- ALERT MESSAGE -->
 <?php if ($this->session->flashdata('success')) { ?>
     <div class="alert alert-success alert-dismissible fade show" role="alert" data-mdb-alert-init
@@ -51,7 +52,7 @@
                     </div> 
                 </div>
                 <div class="col-md-2 text-end">
-                    <a href="<?=base_url()?>PC/viewForm?tipe=<?=$tipe?>" class="btn btn-success" href="<?=base_url()?>PC" ><i class="fa fa-plus"></i> &nbsp;&nbsp;Add Data</a>
+                    <a href="<?=base_url()?>Laptop/viewForm?tipe=<?=$tipe?>" class="btn btn-success" href="<?=base_url()?>PC" ><i class="fa fa-plus"></i> &nbsp;&nbsp;Add Data</a>
                 </div>
             </div>
             <table id="dt_table" class="table table-borderless table-striped">
@@ -119,7 +120,7 @@ $(document).ready(function() {
             }
         },
         ajax: {
-            url: "<?= base_url() ?>PC/ajaxDataPC",
+            url: "<?= base_url() ?>Laptop/ajaxDataLaptop",
             "type": "POST",
             "data": function (data) {
                 data['tipe'] = $('.tipe').val();
@@ -149,7 +150,7 @@ $(document).ready(function() {
   });
 
   function deleteData(url){
-    $('#formDeleteData').attr('action', '<?=base_url()?>PC/'+url);
+    $('#formDeleteData').attr('action', '<?=base_url()?>Laptop/'+url);
     new mdb.Modal($('#modalDelete')).show();
   }
 
