@@ -31,7 +31,7 @@
                 <span class="position-absolute top-100 start-100 translate-middle">
                     <i class="fa fa-camera"></i>
                 </span>
-                <img class="rounded-circle shadow-4 image" src="<?= base_url() . $this->session->userdata('profile_picture') ?: base_url(). 'assets/user.png'?>" alt="Avatar" style="width: 100px; height: 100px;">
+                <img class="rounded-circle shadow-4 image" src="<?= !empty($this->session->userdata('profile_picture')) ? base_url() . $this->session->userdata('profile_picture') : base_url(). 'assets/user.png'?>" alt="Avatar" style="width: 100px; height: 100px;">
                 <a href="#!">
                     <div class="mask" style="background-color: hsla(0, 0%, 98%, 0.2)"></div>
                 </a>

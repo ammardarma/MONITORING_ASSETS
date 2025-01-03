@@ -92,7 +92,7 @@
                 </div>
                 <div class="dropdown">
                     <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
-                        <img src="<?= base_url() . $this->session->userdata('profile_picture') ?: base_url(). 'assets/user.png'?>" class="rounded-8" height="60" alt="?" loading="lazy"/>
+                        <img src="<?=!empty($this->session->userdata('profile_picture')) ? base_url() . $this->session->userdata('profile_picture') : base_url(). 'assets/user.png'?>" class="rounded-8" height="60" alt="?" loading="lazy"/>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" style="width:250px;" aria-labelledby="navbarDropdownMenuAvatar">
                         <li>
