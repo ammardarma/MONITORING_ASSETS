@@ -43,13 +43,15 @@
                     </div>
                 </a>
             </li>
-            <li class="sidenav-item mb-3">
-                <a href="<?=base_url()?>Laptop" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Laptop">
-                    <div class="btn-primary bg-button-menu <?=$this->uri->segment(1) == 'Laptop' ? 'bg-button-menu-active' : '' ?>">
-                        <h5 class="fa fa-laptop m-0"></h5>
-                    </div>
-                </a>
-            </li>
+            <?php if($this->session->userdata('status') == 'admin'): ?>
+                <li class="sidenav-item mb-3">
+                    <a href="<?=base_url()?>Laptop" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Laptop">
+                        <div class="btn-primary bg-button-menu <?=$this->uri->segment(1) == 'Laptop' ? 'bg-button-menu-active' : '' ?>">
+                            <h5 class="fa fa-laptop m-0"></h5>
+                        </div>
+                    </a>
+                </li>
+            <?php endif; ?>
             <li class="sidenav-item mb-3">
                 <a href="<?=base_url()?>Printer" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Printer">
                     <div class="btn-primary bg-button-menu <?=$this->uri->segment(1) == 'Printer' ? 'bg-button-menu-active' : '' ?>">
@@ -64,6 +66,7 @@
                     </div>
                 </a>
             </li>
+            <?php if($this->session->userdata('status') == 'admin'): ?>
             <li class="sidenav-item mb-3">
                 <a href="<?=base_url()?>Users" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Users">
                     <div class="btn-primary bg-button-menu <?=$this->uri->segment(1) == 'Users' ? 'bg-button-menu-active' : '' ?>">
@@ -71,6 +74,7 @@
                     </div>
                 </a>
             </li>
+            <?php endif; ?>
         </ul>
     </nav>
 </nav>
@@ -88,14 +92,17 @@
                 </div>
                 <div class="dropdown">
                     <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
-                        <img src="<?=base_url()?>assets/user.png" class="rounded-8" height="60" alt="?" loading="lazy"/>
+                        <img src="<?= base_url() . $this->session->userdata('profile_picture') ?: base_url(). 'assets/user.png'?>" class="rounded-8" height="60" alt="?" loading="lazy"/>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" style="width:250px;" aria-labelledby="navbarDropdownMenuAvatar">
                         <li>
-                            <div class="py-2 px-2">
+                            <div class="py-2 px-3 border rounded-2">
                                 <span class="text-primary" style="font-size:1rem;"><span class="fa fa-user"></span> &nbsp;&nbsp;<?=$this->session->userdata('name')?></span><br>
                                 <small><i class="fas fa-info-circle"></i> &nbsp;&nbsp;<?=ucfirst($this->session->userdata('status'))?></small>
                             </div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-primary" href="<?=base_url()?>Users/myProfile"><i class="fa fa-user"></i> &nbsp;Profile</a>
                         </li>
                         <li>
                             <a class="dropdown-item text-danger" href="<?=base_url()?>Login/actLogout"><i class="fa fa-sign-out"></i> Logout</a>

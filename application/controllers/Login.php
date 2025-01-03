@@ -5,7 +5,6 @@ class Login extends CI_Controller {
 
 	public function __construct() {
         parent::__construct();
-        $this->load->library('Template');
     }
 	public function index()
 	{
@@ -29,6 +28,7 @@ class Login extends CI_Controller {
             $this->session->set_flashdata('name', $data[0]->NAME);
             $this->session->set_flashdata('email', $data[0]->EMAIL);
             $this->session->set_flashdata('status', $data[0]->STATUS);
+            $this->session->set_flashdata('profile_picture', $data[0]->PROFILE_PICTURE);
             redirect('Home');
         }else {
             $this->session->set_flashdata('failed', "Login gagal, user tidak ada!");

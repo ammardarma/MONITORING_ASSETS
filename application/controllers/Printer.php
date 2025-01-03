@@ -24,7 +24,7 @@ class Printer extends CI_Controller {
         CASE WHEN B.TIPE = 'TINGKAT KEPUASAN' THEN B.TARGET END AS TARGET_TP
         FROM PRINTER_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN  AND A.TIPE = B.TIPE WHERE A.TAHUN like '%$tahun%' GROUP BY A.TIPE) PRINTER")->result();
 
-        $dataGrafik = $this->db->query("SELECT BULAN, pt.TIPE, mt.TARGET,  AVG(PENCAPAIAN) PENCAPAIAN FROM PRINTER_TABLE pt JOIN M_TARGETS mt ON pt.TIPE = mt.TIPE  WHERE pt.TAHUN LIKE '%%' GROUP BY BULAN, TIPE ORDER BY BULAN")->result();
+        $dataGrafik = $this->db->query("SELECT BULAN, pt.TIPE, mt.TARGET,  AVG(PENCAPAIAN) PENCAPAIAN FROM PRINTER_TABLE pt JOIN M_TARGETS mt ON pt.TIPE = mt.TIPE  WHERE pt.TAHUN LIKE '%$tahun%' GROUP BY BULAN, TIPE ORDER BY BULAN")->result();
         $data['achievementFPG'] = $data['targetFPG'] = $data['achievementFPB'] = $data['targetFPB'] = $data['achievementTK'] = $data['targetTK'] = $data['bulan'] = array();
 
         foreach($dataGrafik as $v){
@@ -75,7 +75,7 @@ class Printer extends CI_Controller {
             }else {
                 $row[] = round($field['PENCAPAIAN'],2);
             }
-            $row[] = '<center>'. $edit . $delete .'</center>';
+            $row[] = ($this->session->userdata('status') != 'admin') ? '<center>'. $edit . $delete .'</center>' : '';
             $data[] = $row;
         }
         $recordsTotal = $this->getDataPrinter($post, 'count');

@@ -51,7 +51,9 @@
                     </div> 
                 </div>
                 <div class="col-md-2 text-end">
-                    <a href="<?=base_url()?>PC/viewForm?tipe=<?=$tipe?>" class="btn btn-success" href="<?=base_url()?>PC" ><i class="fa fa-plus"></i> &nbsp;&nbsp;Add Data</a>
+                    <?php if($this->session->userdata('status') != 'admin'): ?>
+                        <a href="<?=base_url()?>PC/viewForm?tipe=<?=$tipe?>" class="btn btn-success" href="<?=base_url()?>PC" ><i class="fa fa-plus"></i> &nbsp;&nbsp;Add Data</a>
+                    <?php endif; ?>
                 </div>
             </div>
             <table id="dt_table" class="table table-borderless table-striped">

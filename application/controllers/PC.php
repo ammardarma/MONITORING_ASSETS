@@ -83,7 +83,7 @@ class PC extends CI_Controller {
             }else {
                 $row[] = round($field['PENCAPAIAN'],2);
             }
-            $row[] = '<center>'. $edit . $delete .'</center>';
+            $row[] = ($this->session->userdata('status') != 'admin') ? '<center>'. $edit . $delete .'</center>' : '';
             $data[] = $row;
         }
         $recordsTotal = $this->getDataPC($post, 'count');

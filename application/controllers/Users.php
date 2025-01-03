@@ -153,5 +153,43 @@ class Users extends CI_Controller {
             redirect('/Users');
        }
     }
+
+    public function myProfile() {
+        $id = $this->session->userdata('user_id');
+        $data['data'] = $this->db->query("SELECT * FROM USERS WHERE USERS_ID='$id'")->row();
+        $data['title'] = 'Edit Data '; 
+        $this->template->display('users/v_profile.php', 'header.php', $data);
+    }
+
+    public function actEditProfile() {
+        $input = $this->input->post();
+        $id = $this->session->userdata('user_id');
+        $fullpath = '';
+        if(!empty($_FILES['profile_picture']['name'])){
+            $file = $_FILES['profile_picture'];
+            $source = $file['tmp_name'];
+            $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+            $fullpath = 'files_upload/profile_pic_'.$id.'.'.$ext;
+            move_uploaded_file($source, $fullpath);
+        }
+
+        $nama = $input['nama'];
+        $data  =  $this->db->query("SELECT PASSWORD FROM USERS WHERE PASSWORD='".$input['password']."'")->result();
+        if(!empty($data)){
+            $password = $input['password'];
+        }else {
+            $password = md5($input['password']);
+        }
+        
+        $this->db->query("UPDATE USERS SET NAME='$nama',PASSWORD='$password', PROFILE_PICTURE='$fullpath' WHERE USERS_ID='$id'");
+
+        if ($this->db->affected_rows() > 0) {
+            $this->session->set_flashdata('success', "Data berhasil ditambahkan!");
+            redirect('/Users/myProfile');
+       } else {
+            $this->session->set_flashdata('failed', "Data gagal ditambahkan, silahkan hubungi administrator!");
+            redirect('/Users/myProfile');
+       }
+    }
     
 }

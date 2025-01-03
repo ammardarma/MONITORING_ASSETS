@@ -8,6 +8,10 @@ class Template
     public function __construct()
     {
         $this->_ci = &get_instance();
+        $id = $this->_ci->session->userdata('user_id');
+        if(empty($id)){
+            redirect('/Login');
+        }
      }
 
     public function display($content, $header, $params = null)

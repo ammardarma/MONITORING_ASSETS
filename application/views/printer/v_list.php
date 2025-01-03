@@ -61,7 +61,9 @@
                     </div> 
                 </div>
                 <div class="col-md-2 text-end">
-                    <a href="<?=base_url()?>Printer/viewForm?tipe=<?=$tipe?>" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;&nbsp;Add Data</a>
+                    <?php if($this->session->userdata('status') != 'admin'): ?>
+                        <a href="<?=base_url()?>Printer/viewForm?tipe=<?=$tipe?>" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;&nbsp;Add Data</a>
+                    <?php endif; ?>
                 </div>
             </div>
             <table id="dt_table" class="table table-borderless table-striped">
