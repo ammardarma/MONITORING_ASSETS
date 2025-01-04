@@ -43,15 +43,13 @@
                     </div>
                 </a>
             </li>
-            <?php if($this->session->userdata('status') == 'admin'): ?>
-                <li class="sidenav-item mb-3">
-                    <a href="<?=base_url()?>Laptop" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Laptop">
-                        <div class="btn-primary bg-button-menu <?=$this->uri->segment(1) == 'Laptop' ? 'bg-button-menu-active' : '' ?>">
-                            <h5 class="fa fa-laptop m-0"></h5>
-                        </div>
-                    </a>
-                </li>
-            <?php endif; ?>
+            <li class="sidenav-item mb-3">
+                <a href="<?=base_url()?>Laptop" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Laptop">
+                    <div class="btn-primary bg-button-menu <?=$this->uri->segment(1) == 'Laptop' ? 'bg-button-menu-active' : '' ?>">
+                        <h5 class="fa fa-laptop m-0"></h5>
+                    </div>
+                </a>
+            </li>
             <li class="sidenav-item mb-3">
                 <a href="<?=base_url()?>Printer" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Printer">
                     <div class="btn-primary bg-button-menu <?=$this->uri->segment(1) == 'Printer' ? 'bg-button-menu-active' : '' ?>">
@@ -59,13 +57,15 @@
                     </div>
                 </a>
             </li>
-            <li class="sidenav-item mb-3">
-                <a href="<?=base_url()?>Target" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Target">
-                    <div class="btn-primary bg-button-menu <?=$this->uri->segment(1) == 'Target' ? 'bg-button-menu-active' : '' ?>">
-                        <h5 class="fa fa-bullseye-arrow m-0"></h5>
-                    </div>
-                </a>
-            </li>
+            <?php if($this->session->userdata('status') == 'admin'): ?>
+                <li class="sidenav-item mb-3">
+                    <a href="<?=base_url()?>Target" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Target">
+                        <div class="btn-primary bg-button-menu <?=$this->uri->segment(1) == 'Target' ? 'bg-button-menu-active' : '' ?>">
+                            <h5 class="fa fa-bullseye-arrow m-0"></h5>
+                        </div>
+                    </a>
+                </li>
+            <?php endif; ?>
             <?php if($this->session->userdata('status') == 'admin'): ?>
             <li class="sidenav-item mb-3">
                 <a href="<?=base_url()?>Users" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Users">
