@@ -10,7 +10,10 @@ class Printer extends CI_Controller {
 	public function index()
 	{
         // var_dump($this->session->userdata());die;
-        $tahun = $this->input->get('tahun', true) ?: date('Y')-1;
+        if(!empty($this->input->get('tahun', true))){
+            $this->session->set_userdata('tahun', $this->input->get('tahun', true));
+        }
+        $tahun = $this->session->userdata('tahun');
         $data['tahun'] = $tahun;
 
         $data['dataSummary'] = $this->db->query("
@@ -46,7 +49,10 @@ class Printer extends CI_Controller {
 	}
 
     public function viewList() {
-        $tahun = $this->input->get('tahun', true) ?: date('Y')-1;
+        if(!empty($this->input->get('tahun', true))){
+            $this->session->set_userdata('tahun', $this->input->get('tahun', true));
+        }
+        $tahun = $this->session->userdata('tahun');
         $data['tipe'] = $this->input->get('tipe', true);
         $data['tahun'] = $tahun;
         $this->template->display('printer/v_list.php', 'header.php', $data);

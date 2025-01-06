@@ -9,7 +9,10 @@ class Target extends CI_Controller {
     }
 	public function index()
 	{
-        $tahun = $this->input->get('tahun', true) ?: date('Y')-1;
+        if(!empty($this->input->get('tahun', true))){
+            $this->session->set_userdata('tahun', $this->input->get('tahun', true));
+        }
+        $tahun = $this->session->userdata('tahun');
         $data['tahun'] = $tahun;
 		$this->template->display('target/v_list.php', 'header.php', $data);
 	}
@@ -56,6 +59,7 @@ class Target extends CI_Controller {
         $order = 'ASC';
         $this->db->select('A.*');
         $this->db->from('M_TARGETS A');
+        $this->db->where('TAHUN', $post['tahun']);
 
         if (!empty($post['search']['value'])) {
             $this->db->group_start();

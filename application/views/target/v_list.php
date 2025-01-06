@@ -19,6 +19,8 @@
         <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
     </div>
 <?php } ?>
+<?php $this->session->unset_userdata('success'); ?>
+<?php $this->session->unset_userdata('failed'); ?>
 
 <div class="row mt-2 justify-content-end">
     <div class="col-md-3 mb-2">
@@ -103,6 +105,7 @@ $(document).ready(function() {
             url: "<?= base_url() ?>Target/ajaxDataTarget",
             "type": "POST",
             "data": function (data) {
+                data['tahun'] = $('.tahun').val()
             },
 
         },
@@ -122,6 +125,10 @@ $(document).ready(function() {
 
     $('#search-dt-table').on('input', function() {
         oTable.DataTable().search($(this).val()).draw() ;
+    });
+
+    $('.tahun').on('change', function () {
+        oTable.DataTable().draw();
     });
 
   });

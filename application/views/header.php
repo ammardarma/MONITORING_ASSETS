@@ -88,17 +88,16 @@
             <div class="d-flex align-items-center">
                 <div class="me-4 mt-2 d-none d-md-block text-center">
                     <h5 class="m-0 text-purple"><strong>&nbsp;&nbsp;IT INVENTORY</strong></h5>
-                    <small class="m-0 text-dark">&nbsp;&nbsp;Maintain Our Assets</small>
+                    <small class="m-0 text-dark">&nbsp;&nbsp;Maintain Our Assets</small><br>
                 </div>
                 <div class="dropdown">
-                    <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
+                    <a data-mdb-dropdown-init class="dropdown-toggle align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
                         <img src="<?=!empty($this->session->userdata('profile_picture')) ? base_url() . $this->session->userdata('profile_picture') : base_url(). 'assets/user.png'?>" class="rounded-8" height="60" alt="?" loading="lazy"/>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" style="width:250px;" aria-labelledby="navbarDropdownMenuAvatar">
                         <li>
                             <div class="py-2 px-3 border rounded-2">
-                                <span class="text-primary" style="font-size:1rem;"><span class="fa fa-user"></span> &nbsp;&nbsp;<?=$this->session->userdata('name')?></span><br>
-                                <small><i class="fas fa-info-circle"></i> &nbsp;&nbsp;<?=ucfirst($this->session->userdata('status'))?></small>
+                                <span class="text-primary" style="font-size:1rem;"><span class="fa fa-angle-double-right"></span> &nbsp;&nbsp;<?=$this->session->userdata('name')?></span><br>
                             </div>
                         </li>
                         <li>
@@ -111,7 +110,10 @@
                 </div>
             </div>
         </div>
-        <hr class="hr hr-blurry mb-4" />
+        <hr class="hr hr-blurry" />
+        <div class="text-end mb-4">
+            <h6 class="fw-bold text-primary" style="font-size:14px;"><i class="fa fa-info-circle">&nbsp;&nbsp;</i><?=ucfirst($this->session->userdata('status'))?></h6>
+        </div>
         <?=$content?>
     </div>
 </div>

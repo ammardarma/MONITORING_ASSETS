@@ -38,6 +38,8 @@
                         <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
                     </div>
                 <?php } ?>
+                <?php $this->session->unset_userdata('success'); ?>
+                <?php $this->session->unset_userdata('failed'); ?>
                 <div class="card rounded-8 shadow-5-strong h-100 ">
                     <div class="card-body p-0">
                         <div class="row h-100">

@@ -19,6 +19,8 @@
         <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
     </div>
 <?php } ?>
+<?php $this->session->unset_userdata('success'); ?>
+<?php $this->session->unset_userdata('failed'); ?>
 
 <div class="row mt-4 justify-content-start">
 </div>

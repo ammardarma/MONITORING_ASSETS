@@ -10,7 +10,10 @@ class Laptop extends CI_Controller {
 	public function index()
 	{
         // var_dump($this->session->userdata());die;
-        $tahun = $this->input->get('tahun', true) ?: date('Y')-1;
+        if(!empty($this->input->get('tahun', true))){
+            $this->session->set_userdata('tahun', $this->input->get('tahun', true));
+        }
+        $tahun = $this->session->userdata('tahun');
         $data['tahun'] = $tahun;
 
         $data['class'] = $this;
@@ -18,8 +21,8 @@ class Laptop extends CI_Controller {
         $data['dataUser'] = $this->db->query("
         SELECT SUM(USER_PC) USER_PC, SUM(USER_NB)USER_NB FROM (
         SELECT 
-        CASE WHEN TIPE_PERANGKAT = 'PC' THEN COUNT(NAMA_USER) END USER_PC,
-        CASE WHEN TIPE_PERANGKAT = 'NB' THEN COUNT(NAMA_USER) END USER_NB
+        CASE WHEN TIPE_PERANGKAT = 'PC' THEN COUNT(DISTINCT NAMA_USER) END USER_PC,
+        CASE WHEN TIPE_PERANGKAT = 'NB' THEN COUNT(DISTINCT NAMA_USER) END USER_NB
         FROM PC_TABLE B WHERE TAHUN like '%$tahun%' GROUP BY TIPE_PERANGKAT) PC ")->result();
 
         $data['dataSelisih'] = $this->db->query("
@@ -53,7 +56,10 @@ class Laptop extends CI_Controller {
 	}
 
     public function viewList() {
-        $tahun = $this->input->get('tahun', true) ?: date('Y')-1;
+        if(!empty($this->input->get('tahun', true))){
+            $this->session->set_userdata('tahun', $this->input->get('tahun', true));
+        }
+        $tahun = $this->session->userdata('tahun');
         $data['tipe'] = $this->input->get('tipe', true);
         $data['tahun'] = $tahun;
         $this->template->display('laptop/v_list.php', 'header.php', $data);

@@ -171,6 +171,7 @@ class Users extends CI_Controller {
             $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
             $fullpath = 'files_upload/profile_pic_'.$id.'.'.$ext;
             move_uploaded_file($source, $fullpath);
+            $this->db->query("UPDATE USERS SET PROFILE_PICTURE='' WHERE USERS_ID='$id'");
         }
 
         $nama = $input['nama'];
@@ -180,8 +181,8 @@ class Users extends CI_Controller {
         }else {
             $password = md5($input['password']);
         }
-        
         $this->db->query("UPDATE USERS SET NAME='$nama',PASSWORD='$password', PROFILE_PICTURE='$fullpath' WHERE USERS_ID='$id'");
+        $this->session->set_flashdata('profile_picture', $fullpath);
 
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('success', "Data berhasil ditambahkan!");

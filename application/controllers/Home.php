@@ -10,7 +10,12 @@ class Home extends CI_Controller {
 	public function index()
 	{
         // var_dump($this->session->userdata());die;
-        $tahun = $this->input->get('tahun', true) ?: date('Y')-1;
+        if(empty($this->session->userdata('tahun'))){
+            $this->session->set_userdata('tahun', date('Y')-1);
+        }else if(!empty($this->input->get('tahun', true))){
+            $this->session->set_userdata('tahun', $this->input->get('tahun', true));
+        }
+        $tahun = $this->session->userdata('tahun');
         $data['tahun'] = $tahun;
         $data['dataPC'] = $this->db->query("
         SELECT SUM(PC_AR)*100 PC_AR, SUM(PC_KM)*100 PC_KM, SUM(PC_MTBF) PC_MTBF, AVG(TARGET_AR)*100 TARGET_AR, AVG(TARGET_KM)*100 TARGET_KM, AVG(TARGET_MTBF) TARGET_MTBF FROM (
@@ -49,8 +54,8 @@ class Home extends CI_Controller {
 
         $data['dataUser'] = $this->db->query("SELECT SUM(USER_PC) USER_PC, SUM(USER_NB)USER_NB FROM (
         SELECT 
-        CASE WHEN TIPE_PERANGKAT = 'PC' THEN COUNT(NAMA_USER) END USER_PC,
-        CASE WHEN TIPE_PERANGKAT = 'NB' THEN COUNT(NAMA_USER) END USER_NB
+        CASE WHEN TIPE_PERANGKAT = 'PC' THEN COUNT(DISTINCT NAMA_USER) END USER_PC,
+        CASE WHEN TIPE_PERANGKAT = 'NB' THEN COUNT(DISTINCT NAMA_USER) END USER_NB
         FROM PC_TABLE B WHERE TAHUN like '%$tahun%' GROUP BY TIPE_PERANGKAT) PC ")->result();
 
         $data['myClass'] = $this;
