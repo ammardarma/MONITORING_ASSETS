@@ -33,39 +33,29 @@
             </div>
         </div>
         <div class="col-md-12 mb-4">
-            <select name="tahun" data-mdb-select-init class="tahun" required>
-                <option value="<?=date('Y')?>"><?=date('Y')?></option>
-            </select>
-            <label class="form-label select-label">Tahun</label>
-        </div>
-        <div class="col-md-12 mb-4">
-            <select name="periode" data-mdb-select-init class="periode" required>
-                <option value="1" <?=!empty($data) ? ($data->PERIODE == 1 ? 'selected' : '') : ''?>>1</option>
-                <option value="2" <?=!empty($data) ? ($data->PERIODE == 2 ? 'selected' : '') : ''?>>2</option>
-            </select>
-            <label class="form-label select-label">Periode</label>
-        </div>
-        <?php if($tipe == 'AR' && empty($data)): ?>
-            <div class="col-md-12 mb-4">
-                <select name="kendala[]" data-mdb-select-init class="kendala" multiple required>
-                    <option value="1">Update</option>
-                    <option value="2">Internet</option>
-                    <option value="3">Antivirus</option>
-                    <option value="3">Office</option>
-                    <option value="4">Server</option>
-                    <option value="5">Hardware</option>
-                    <option value="5">Driver</option>
-                </select>
-                <label class="form-label select-label">Kendala</label>
+            <div class="form-outline" data-mdb-input-init>
+                <input type="date" class="form-control" name="tanggal" style="width:100%" value="<?=!empty($data) ? date('Y-m-d', strtotime($data->TANGGAL)) : '' ?>" required/>
+                <label for="nama_lembaga" class="form-label">Tanggal</label>
             </div>
-        <?php else: ?>
-            <div class="col-md-12 mb-4">
+        </div>
+        <div class="col-md-12 mb-4 colPencapaian">
             <div class="form-outline" data-mdb-input-init>
                 <input type="number" class="form-control" name="pencapaian" value="<?=!empty($data) ? ($tipe != 'MTBF' ? $data->PENCAPAIAN * 100 : $data->PENCAPAIAN) : ''?>" style="width:100%" required/>
                 <label for="" class="form-label">Pencapaian</label>
             </div>
         </div>
-        <?php endif; ?>
+        <!-- <div class="col-md-12 mb-4 colKendala" hidden>
+            <select name="kendala[]" data-mdb-select-init class="kendala" multiple required>
+                <option value="1">Update</option>
+                <option value="2">Internet</option>
+                <option value="3">Antivirus</option>
+                <option value="3">Office</option>
+                <option value="4">Server</option>
+                <option value="5">Hardware</option>
+                <option value="5">Driver</option>
+            </select>
+            <label class="form-label select-label">Kendala</label>
+        </div> -->
     </div>
     <div class="card-footer">
         <a href="<?=base_url()?>PC/viewList?tipe=<?=$tipe?>" class="btn btn-secondary" data-mdb-ripple-init data-mdb-dismiss="modal">Close</a>
@@ -76,7 +66,17 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-   
+//    $('.tipe').on('change', function () {
+//     <?php if(empty($data)): ?>
+//         if($(this).val() == 'AR'){
+//             $('.colKendala').attr('hidden', false);
+//             $('.colPencapaian').attr('hidden', true);
+//         }else {
+//             $('.colPencapaian').attr('hidden', false);
+//             $('.colKendala').attr('hidden', true);
+//         }
+//     <?php endif; ?>
+//    });
 
 });
 </script>

@@ -33,7 +33,7 @@ class PC extends CI_Controller {
         SUM(CASE WHEN TIPE = 'KM' AND PERIODE = 2 THEN PENCAPAIAN - TARGET END)*100 AS SELISIH_KM_2,
         SUM(CASE WHEN TIPE = 'MTBF' AND PERIODE = 1 THEN PENCAPAIAN - TARGET END) AS SELISIH_MTBF_1,
         SUM(CASE WHEN TIPE = 'MTBF' AND PERIODE = 2 THEN PENCAPAIAN - TARGET END) AS SELISIH_MTBF_2
-        FROM (SELECT A.PERIODE, A.TIPE, CASE WHEN A.TIPE ='MTBF' AND A.PERIODE=1 THEN AVG(PENCAPAIAN) WHEN A.TIPE = 'MTBF' AND A.PERIODE=2 THEN AVG(PENCAPAIAN) ELSE AVG(PENCAPAIAN) END AS PENCAPAIAN, B.TARGET FROM PC_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE AND A.TIPE = B.TIPE  WHERE A.TAHUN = '$tahun' AND TIPE_PERANGKAT='PC' GROUP BY A.TIPE, A.PERIODE ORDER BY TIPE) A")->result();
+        FROM (SELECT A.PERIODE, A.TIPE, CASE WHEN A.TIPE ='MTBF' AND A.PERIODE=1 THEN AVG(PENCAPAIAN) WHEN A.TIPE = 'MTBF' AND A.PERIODE=2 THEN AVG(PENCAPAIAN) ELSE AVG(PENCAPAIAN) END AS PENCAPAIAN, B.TARGET FROM PC_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE AND A.TIPE = B.TIPE  WHERE A.TAHUN like '%$tahun%' AND TIPE_PERANGKAT='PC' GROUP BY A.TIPE, A.PERIODE ORDER BY TIPE) A")->result();
 
         $dataGrafik = $this->db->query("SELECT *
         FROM (SELECT A.PERIODE, A.TIPE, CASE WHEN A.TIPE ='MTBF' AND A.PERIODE=1 THEN AVG(PENCAPAIAN) WHEN A.TIPE = 'MTBF' AND A.PERIODE=2 THEN AVG(PENCAPAIAN) ELSE AVG(PENCAPAIAN) END AS PENCAPAIAN, B.TARGET FROM PC_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE AND A.TIPE = B.TIPE  WHERE A.TAHUN = '$tahun' AND TIPE_PERANGKAT='PC' GROUP BY A.TIPE, A.PERIODE ORDER BY TIPE) A")->result();
@@ -79,11 +79,12 @@ class PC extends CI_Controller {
             $edit = '<a href="'.base_url().'PC/viewForm?tipe='.$field['TIPE'].'&id='.$field['ID'].'" class="btn btn-primary btn-floating" title="Button Edit"><i class="fa fa-pencil"></i></a>';
             $delete = '<a href="#" onclick=deleteData(\'actDeleteData?id='.$field['ID'].'&tipe='.$field['TIPE'].'\') class="btn btn-danger btn-floating" title="Button Delete"><i class="fa fa-trash"></i></button>';
 
-            $row[] = $field['NAMA_USER'];
+            $row[] = $field['TIPE'];
             $row[] = $field['NAMA_PERANGKAT'];
+            $row[] = $field['NAMA_USER'];
+            $row[] = $field['TANGGAL'];
             $row[] = $field['TAHUN'];
             $row[] = $field['PERIODE'];
-            $row[] = $field['TIPE'];
             if($post['tipe'] != 'MTBF'){
                 $row[] = round($field['PENCAPAIAN']*100,2) . '%';
             }else {
@@ -106,7 +107,7 @@ class PC extends CI_Controller {
 
     public function getDataPC($post, $type = "get")
     {
-        $column_order = ['NAMA_USER', 'NAMA_PERANGKAT', 'TAHUN', 'PERIODE', 'TIPE', 'PENCAPAIAN'];
+        $column_order = ['NAMA_USER', 'NAMA_PERANGKAT', 'TAHUN', 'PERIODE', 'TIPE', 'PENCAPAIAN', 'TANGGAL'];
         $order = 'ASC';
         $this->db->select('A.*');
         $this->db->from('PC_TABLE A');
@@ -162,28 +163,36 @@ class PC extends CI_Controller {
     }
 
     public function actAddData(){
-        // var_dump($this->input->post());
+        // var_dump($this->input->post());die;
         $input = $this->input->post();
         $namaUser = $input['nama_user'];
         $tipe = $input['tipe'];
         $namaPerangkat = $input['nama_perangkat'];
-        $tahun = $input['tahun'];
-        $periode = $input['periode'];
-        $data = $this->db->query("SELECT TARGET FROM M_TARGETS WHERE TIPE='$tipe' AND TAHUN = '$tahun' AND PERIODE = '$periode'")->result();
-        if($tipe == 'AR'){
-            $pencapaian = $data[0]->TARGET * 100;
-            foreach($input['kendala'] as $v){
-                $pencapaian -= $v;
-            }
+        $tanggal = $input['tanggal'];
+        $tahun = date('Y', strtotime($tanggal));
+        $bulan = date('m', strtotime($tanggal));
+        if($bulan < 6){
+            $periode = '1';
+        }else {
+            $periode = '2';
+        }
+        // $data = $this->db->query("SELECT TARGET FROM M_TARGETS WHERE TIPE='$tipe' AND TAHUN = '$tahun' AND PERIODE = '$periode'")->result();
+        // if($tipe == 'AR'){
+        //     $pencapaian = $data[0]->TARGET * 100;
+        //     foreach($input['kendala'] as $v){
+        //         $pencapaian -= $v;
+        //     }
+        // }else {
+        //     $pencapaian = $input['pencapaian'];
+        // }
+
+        if($tipe != 'MTBF'){
+            $pencapaian = $input['pencapaian'] / 100;
         }else {
             $pencapaian = $input['pencapaian'];
         }
 
-        if($tipe != 'MTBF'){
-            $pencapaian /= 100;
-        }
-
-        $this->db->query("INSERT INTO PC_TABLE(TAHUN, PERIODE, NAMA_USER, TIPE_PERANGKAT, NAMA_PERANGKAT, PENCAPAIAN, TIPE) VALUES ('$tahun','$periode','$namaUser','PC','$namaPerangkat','$pencapaian','$tipe')");
+        $this->db->query("INSERT INTO PC_TABLE(TAHUN, PERIODE, NAMA_USER, TIPE_PERANGKAT, NAMA_PERANGKAT, PENCAPAIAN, TIPE, TANGGAL) VALUES ('$tahun','$periode','$namaUser','PC','$namaPerangkat','$pencapaian','$tipe', '$tanggal')");
 
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('success', "Data berhasil ditambahkan!");
@@ -202,15 +211,21 @@ class PC extends CI_Controller {
         $namaUser = $input['nama_user'];
         $tipe = $input['tipe'];
         $namaPerangkat = $input['nama_perangkat'];
-        $tahun = $input['tahun'];
-        $periode = $input['periode'];
+        $tanggal = $input['tanggal'];
+        $tahun = date('Y', strtotime($tanggal));
+        $bulan = date('m', strtotime($tanggal));
+        if($bulan < 6){
+            $periode = '1';
+        }else {
+            $periode = '2';
+        }
         $pencapaian = $input['pencapaian'];
         
         if($tipe != 'MTBF'){
             $pencapaian /= 100;
         }
 
-        $this->db->query("UPDATE PC_TABLE SET TAHUN='$tahun', PERIODE='$periode', NAMA_USER='$namaUser', NAMA_PERANGKAT='$namaPerangkat', PENCAPAIAN='$pencapaian' WHERE ID = '$id'");
+        $this->db->query("UPDATE PC_TABLE SET TAHUN='$tahun', PERIODE='$periode', NAMA_USER='$namaUser', NAMA_PERANGKAT='$namaPerangkat', PENCAPAIAN='$pencapaian', TANGGAL='$tanggal', TIPE='$tipe' WHERE ID = '$id'");
 
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('success', "Data berhasil diubah!");

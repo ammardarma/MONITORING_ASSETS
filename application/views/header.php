@@ -92,7 +92,7 @@
                 </div>
                 <div class="dropdown">
                     <a data-mdb-dropdown-init class="dropdown-toggle align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
-                        <img src="<?=!empty($this->session->userdata('profile_picture')) ? base_url() . $this->session->userdata('profile_picture') : base_url(). 'assets/user.png'?>" class="rounded-8" height="60" alt="?" loading="lazy"/>
+                        <img src="<?=!empty($this->session->userdata('profile_picture')) ? base_url() . $this->session->userdata('profile_picture') : base_url(). 'assets/user.png'?>" class="rounded-circle" height="60" width="60" alt="?"/>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" style="width:250px;" aria-labelledby="navbarDropdownMenuAvatar">
                         <li>
@@ -112,7 +112,7 @@
         </div>
         <hr class="hr hr-blurry" />
         <div class="text-end mb-4">
-            <h6 class="fw-bold text-primary" style="font-size:14px;"><i class="fa fa-info-circle">&nbsp;&nbsp;</i><?=ucfirst($this->session->userdata('status'))?></h6>
+            <h6 class="fw-bold text-primary" style="font-size:14px;"><i class="fa fa-info-circle">&nbsp;&nbsp;</i><?=$this->session->userdata('name') . ' | ' .ucfirst($this->session->userdata('status'))?></h6>
         </div>
         <?=$content?>
     </div>

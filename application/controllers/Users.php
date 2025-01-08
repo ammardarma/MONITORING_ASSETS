@@ -164,32 +164,39 @@ class Users extends CI_Controller {
     public function actEditProfile() {
         $input = $this->input->post();
         $id = $this->session->userdata('user_id');
-        $fullpath = '';
+        $data = $this->db->query("SELECT * FROM USERS WHERE USERS_ID='$id'")->result();
+        $fullpath = $data[0]->PROFILE_PICTURE;
         if(!empty($_FILES['profile_picture']['name'])){
-            $file = $_FILES['profile_picture'];
-            $source = $file['tmp_name'];
-            $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
-            $fullpath = 'files_upload/profile_pic_'.$id.'.'.$ext;
-            move_uploaded_file($source, $fullpath);
             $this->db->query("UPDATE USERS SET PROFILE_PICTURE='' WHERE USERS_ID='$id'");
+            if(!empty($data[0]->PROFILE_PICTURE)){
+                unlink($data[0]->PROFILE_PICTURE);
+            }
+            $file = $_FILES['profile_picture'];
+            $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+            $source = file_get_contents($file['tmp_name']);
+            $path = 'files_upload';
+            $fullpath = $path . '/' . 'profile_pic_'.$id.'.'.$ext;
+            system('mkdir -p ' . $path);
+            $fsave = fopen($fullpath, 'w');
+            fwrite($fsave, $source);
+            fclose($fsave);
         }
-
         $nama = $input['nama'];
-        $data  =  $this->db->query("SELECT PASSWORD FROM USERS WHERE PASSWORD='".$input['password']."'")->result();
-        if(!empty($data)){
+        if($data[0]->PASSWORD == $input['password']){
             $password = $input['password'];
         }else {
             $password = md5($input['password']);
         }
+
         $this->db->query("UPDATE USERS SET NAME='$nama',PASSWORD='$password', PROFILE_PICTURE='$fullpath' WHERE USERS_ID='$id'");
-        $this->session->set_flashdata('profile_picture', $fullpath);
+        $this->session->set_userdata('profile_picture', $fullpath);
 
         if ($this->db->affected_rows() > 0) {
-            $this->session->set_flashdata('success', "Data berhasil ditambahkan!");
-            redirect('/Users/myProfile');
+            $this->session->set_flashdata('success', "Data berhasil diubah!");
+            redirect('/Users/myProfile', 'refresh');
        } else {
-            $this->session->set_flashdata('failed', "Data gagal ditambahkan, silahkan hubungi administrator!");
-            redirect('/Users/myProfile');
+            $this->session->set_flashdata('failed', "Data gagal diubah, silahkan hubungi administrator!");
+            redirect('/Users/myProfile', 'refresh');
        }
     }
     

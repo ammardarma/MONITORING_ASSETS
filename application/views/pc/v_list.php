@@ -75,11 +75,12 @@
             <table id="dt_table" class="table table-borderless table-striped">
                 <thead>
                     <tr>
-                        <th>Nama User</th>
+                        <th>Tipe</th>
                         <th>Nama Perangkat</th>
+                        <th>Nama User</th>
+                        <th>Tanggal</th>
                         <th>Tahun</th>
                         <th>Periode</th>
-                        <th>Tipe</th>
                         <th>Pencapaian</th>
                         <th>Action</th>
                     </tr>
@@ -157,7 +158,7 @@ $(document).ready(function() {
                 "orderable": true,
             }, 
             {
-                "targets": 6,
+                "targets": [7],
                 "orderable": false,
                 "className" : 'dt-center',
             },                     

@@ -13,7 +13,6 @@ class Login extends CI_Controller {
 
     public function actValidated(){
         $input = $this->input->post();
-        session_start();
         $email = $input['email'];
         $password = $input['password'];
         $data = $this->db->select("*")
@@ -23,12 +22,11 @@ class Login extends CI_Controller {
         ->get()->result();
 
         if(!empty($data)){
-            echo 'ada data';
-            $this->session->set_flashdata('user_id', $data[0]->USERS_ID);
-            $this->session->set_flashdata('name', $data[0]->NAME);
-            $this->session->set_flashdata('email', $data[0]->EMAIL);
-            $this->session->set_flashdata('status', $data[0]->STATUS);
-            $this->session->set_flashdata('profile_picture', $data[0]->PROFILE_PICTURE);
+            $this->session->set_userdata('user_id', $data[0]->USERS_ID);
+            $this->session->set_userdata('name', $data[0]->NAME);
+            $this->session->set_userdata('email', $data[0]->EMAIL);
+            $this->session->set_userdata('status', $data[0]->STATUS);
+            $this->session->set_userdata('profile_picture', $data[0]->PROFILE_PICTURE);
             redirect('Home');
         }else {
             $this->session->set_flashdata('failed', "Login gagal, user tidak ada!");

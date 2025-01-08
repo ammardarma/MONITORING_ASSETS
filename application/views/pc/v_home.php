@@ -33,8 +33,37 @@
                     <div class="text-primary fw-bold" style="font-size:0.8em;">Availability Rate</div>
                     <div class="text-primary fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
                 </div>
-                <canvas class="chart-ar" height="300"></canvas>
-                <div class="text-center mt-5">
+                <canvas class="chart-ar mb-5" height="300"></canvas>
+                <div class="col-md-12 align-self-stretch mb-2">
+                      <div class="card shadow-5-strong h-100 border-top border-primary border-5">
+                          <div class="card-body pt-3 pb-2">
+                              <div class="d-flex justify-content-between align-items-center">
+                                  <div class="text-secondary fw-bold" style="font-size:0.8em;">Deviation Availability Rate</div>
+                                  <div class="text-primary fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
+                              </div>
+                                  <div class="row align-items-center justify-content-between mt-4">
+                                      <div class="col-md-6 position-relative text-center mb-2">
+                                        <div class="text-secondary mb-2" style="font-size:12px;">Period 1</div>
+                                          <?php if(substr($dataSelisih[0]->SELISIH_AR_1, 0, 1) == '-'): ?>
+                                              <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_1,2) ?: '0'?>%</h6>
+                                          <?php else : ?>
+                                              <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_1,2) ?: '0'?>%</h6>
+                                          <?php endif; ?>
+                                          <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
+                                      </div>
+                                      <div class="col-md-6 position-relative text-center mb-2">
+                                        <div class="text-secondary mb-2" style="font-size:12px;">Period 2</div>
+                                          <?php if(substr($dataSelisih[0]->SELISIH_AR_2, 0, 1) == '-'): ?>
+                                              <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_2,2) ?: '0'?>%</h6>
+                                          <?php else : ?>
+                                              <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_2,2) ?: '0'?>%</h6>
+                                          <?php endif; ?>
+                                      </div>
+                                  </div>
+                          </div>
+                      </div>
+                </div>
+                <div class="text-center mt-4">
                     <a href="<?=base_url()?>PC/viewList?tipe=AR">
                         <h6 class="text-primary mb-0">See Detail</h6>
                         <i class="fas fa-angle-down"></i>
@@ -81,7 +110,7 @@
 
 <div class="row mb-4">
    <div class="col-md-4 align-self-stretch mb-2">
-        <div class="card shadow-5-strong h-100 border-bottom border-primary border-5">
+        <!-- <div class="card shadow-5-strong h-100 border-bottom border-primary border-5">
             <div class="card-body pt-3 pb-2">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="text-secondary fw-bold" style="font-size:0.8em;">Deviation Availability Rate</div>
@@ -107,7 +136,7 @@
                         </div>
                     </div>
             </div>
-        </div>
+        </div> -->
    </div>
    <div class="col-md-4 align-self-stretch mb-2">
         <div class="card shadow-5-strong h-100 border-bottom border-success border-5">
