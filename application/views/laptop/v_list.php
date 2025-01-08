@@ -23,11 +23,14 @@
 
 <div class="row mt-4 justify-content-start">
     <div class="col-md-3 mb-2">
-        <input type="hidden" class="tipe" value="<?=$tipe?>"/>
         <select data-mdb-select-init class="tahun">
-            <?php for($i = 0; $i < 10; $i++): ?>
-                <option value="202<?=$i?>" <?=(("202".$i) == $tahun) ? 'selected': ''?>>202<?=$i?></option>
-            <?php endfor; ?>
+            <?php if($this->session->userdata('status') == 'admin'): ?>
+                <?php for($i = 2; $i < 10; $i++): ?>
+                    <option value="202<?=$i?>" <?=(("202".$i) == $tahun) ? 'selected': ''?>>202<?=$i?></option>
+                <?php endfor; ?>
+            <?php else: ?>
+                <option value="<?=date('Y')?>"><?=date('Y')?></option>
+            <?php endif; ?>
         </select>
         <label class="form-label select-label">Filter Year</label>
     </div>
@@ -38,6 +41,14 @@
             <option value="2">2</option>
         </select>
         <label class="form-label select-label">Filter Period</label>
+    </div>
+    <div class="col-md-4 mb-2">
+        <select data-mdb-select-init class="tipe">
+           <option value="AR" <?=$tipe == 'AR' ? 'selected' : ''?>>Availability Rate</option>
+           <option value="KM" <?=$tipe == 'KM' ? 'selected' : ''?>>Maintenance Success</option>
+           <option value="MTBF" <?=$tipe == 'MTBF' ? 'selected' : ''?>>Mean Time Between Failures</option>
+        </select>
+        <label class="form-label select-label">Filter Type</label>
     </div>
 </div>
 <div class="row">
@@ -104,6 +115,10 @@ $(document).ready(function() {
 
     $('.periode').on('change', function () {
         oTable.DataTable().draw();
+    });
+
+    $('.tipe').on('change', function() {
+        location.href="<?=base_url()?>PC/viewList?tipe="+$(this).val();
     });
 
     oTable = $('#dt_table').dataTable({

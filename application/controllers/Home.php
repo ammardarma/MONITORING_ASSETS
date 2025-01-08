@@ -11,7 +11,7 @@ class Home extends CI_Controller {
 	{
         // var_dump($this->session->userdata());die;
         if(empty($this->session->userdata('tahun'))){
-            $this->session->set_userdata('tahun', date('Y')-1);
+            $this->session->set_userdata('tahun', date('Y'));
         }else if(!empty($this->input->get('tahun', true))){
             $this->session->set_userdata('tahun', $this->input->get('tahun', true));
         }

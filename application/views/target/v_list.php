@@ -25,7 +25,7 @@
 <div class="row mt-2 justify-content-end">
     <div class="col-md-3 mb-2">
         <select data-mdb-select-init class="tahun">
-            <?php for($i = 0; $i < 10; $i++): ?>
+            <?php for($i = 2; $i < 10; $i++): ?>
                 <option value="202<?=$i?>" <?=(("202".$i) == $tahun) ? 'selected': ''?>>202<?=$i?></option>
             <?php endfor; ?>
         </select>
@@ -54,7 +54,6 @@
                         <th>Periode</th>
                         <th>Tipe</th>
                         <th>Target</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
             </table>

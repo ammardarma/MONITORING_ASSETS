@@ -1,4 +1,6 @@
-<a href="<?=base_url()?>PC" class="btn btn-danger mb-4"><i class="fa fa-arrow-left"></i> Back</a>
+<?php if($this->session->userdata('status') == 'admin'): ?>
+    <a href="<?=base_url()?>Printer" class="btn btn-danger mb-4"><i class="fa fa-arrow-left"></i> Back</a>
+<?php endif; ?>
 <div class="d-flex justify-content-between">
     <h5 class="fw-bold"><i class="fa fa-print"></i> Printer</h5>
 </div>
@@ -26,9 +28,13 @@
     <div class="col-md-3 mb-2">
         <input type="hidden" class="tipe" value="<?=$tipe?>"/>
         <select data-mdb-select-init class="tahun">
-            <?php for($i = 0; $i < 10; $i++): ?>
-                <option value="202<?=$i?>" <?=(("202".$i) == $tahun) ? 'selected': ''?>>202<?=$i?></option>
-            <?php endfor; ?>
+            <?php if($this->session->userdata('status') == 'admin'): ?>
+                <?php for($i = 2; $i < 10; $i++): ?>
+                    <option value="202<?=$i?>" <?=(("202".$i) == $tahun) ? 'selected': ''?>>202<?=$i?></option>
+                <?php endfor; ?>
+            <?php else: ?>
+                <option value="<?=date('Y')?>"><?=date('Y')?></option>
+            <?php endif; ?>
         </select>
         <label class="form-label select-label">Filter Year</label>
     </div>
@@ -49,6 +55,14 @@
             <option value="12">12</option>
         </select>
         <label class="form-label select-label">Filter Month</label>
+    </div>
+    <div class="col-md-4 mb-2">
+        <select data-mdb-select-init class="tipe">
+           <option value="FREKUENSI PENGGUNA" <?=$tipe == 'FREKUENSI PENGGUNA' ? 'selected' : ''?>>Frekuensi Pengguna</option>
+           <option value="FREKUENSI PERBAIKAN" <?=$tipe == 'FREKUENSI PERBAIKAN' ? 'selected' : ''?>>Frekuensi Perbaikan</option>
+           <option value="TINGKAT KEPUASAN" <?=$tipe == 'TINGKAT KEPUASAN' ? 'selected' : ''?>>Tingkat Kepuasan</option>
+        </select>
+        <label class="form-label select-label">Filter Type</label>
     </div>
 </div>
 <div class="row">
@@ -114,6 +128,10 @@ $(document).ready(function() {
 
     $('.periode').on('change', function () {
         oTable.DataTable().draw();
+    });
+
+    $('.tipe').on('change', function() {
+        location.href="<?=base_url()?>Printer/viewList?tipe="+$(this).val();
     });
 
     oTable = $('#dt_table').dataTable({

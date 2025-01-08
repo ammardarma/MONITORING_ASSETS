@@ -20,10 +20,16 @@
             </div>
         </div>
         <div class="col-md-12 mb-4">
+            <select data-mdb-select-init class="tipe" name="tipe">
+                <option value="FREKUENSI PENGGUNA" <?=!empty($data) && $data->TIPE == 'FREKUENSI PENGGUNA' ? 'selected' : ''?>>Frekuensi Pengguna</option>
+                <option value="FREKUENSI PERBAIKAN" <?=!empty($data) && $data->TIPE == 'FREKUENSI PERBAIKAN' ? 'selected' : ''?>>Frekuensi Perbaikan</option>
+                <option value="TINGKAT KEPUASAN" <?=!empty($data) && $data->TIPE == 'TINGKAT KEPUASAN' ? 'selected' : ''?>>Tingkat Kepuasan</option>
+            </select>
+            <label class="form-label select-label">Tipe</label>
+        </div>
+        <div class="col-md-12 mb-4">
             <select name="tahun" data-mdb-select-init class="tahun" required>
-                <?php for($i = 0; $i < 10; $i++): ?>
-                    <option value="202<?=$i?>" <?=!empty($data) ? ($data->TAHUN == "202".$i ? 'selected' : '') : ''?>>202<?=$i?></option>
-                <?php endfor; ?>
+                <option value="<?=date('Y')?>"><?=date('Y')?></option>
             </select>
             <label class="form-label select-label">Tahun</label>
         </div>

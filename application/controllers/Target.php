@@ -38,7 +38,6 @@ class Target extends CI_Controller {
             }else {
                 $row[] = $field['TARGET'];
             }
-            $row[] = '<center>'. $edit .'</center>';
             $data[] = $row;
         }
         $recordsTotal = $this->getDataTarget($post, 'count');

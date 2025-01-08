@@ -37,21 +37,21 @@
                 </a>
             </li>
             <li class="sidenav-item mb-3">
-                <a href="<?=base_url()?>PC"  class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="PC">
+                <a href="<?=$this->session->userdata('status') == 'admin' ? base_url() . 'PC' : base_url() . 'PC/viewList?tipe=AR'?>"  class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="PC">
                     <div class="btn-primary bg-button-menu <?=$this->uri->segment(1) == 'PC' ? 'bg-button-menu-active' : '' ?>">
                         <h5 class="fa fa-desktop m-0"></h5>
                     </div>
                 </a>
             </li>
             <li class="sidenav-item mb-3">
-                <a href="<?=base_url()?>Laptop" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Laptop">
+                <a href="<?=$this->session->userdata('status') == 'admin' ? base_url() . 'Laptop' : base_url() . 'Laptop/viewList?tipe=AR'?>" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Laptop">
                     <div class="btn-primary bg-button-menu <?=$this->uri->segment(1) == 'Laptop' ? 'bg-button-menu-active' : '' ?>">
                         <h5 class="fa fa-laptop m-0"></h5>
                     </div>
                 </a>
             </li>
             <li class="sidenav-item mb-3">
-                <a href="<?=base_url()?>Printer" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Printer">
+                <a href="<?=$this->session->userdata('status') == 'admin' ? base_url() . 'Printer' : base_url() . 'Printer/viewList?tipe=FREKUENSI PENGGUNA'?>" class="sidenav-link p-0 justify-content-center" data-mdb-tooltip-init title="Printer">
                     <div class="btn-primary bg-button-menu <?=$this->uri->segment(1) == 'Printer' ? 'bg-button-menu-active' : '' ?>">
                         <h5 class="fa fa-print m-0"></h5>
                     </div>

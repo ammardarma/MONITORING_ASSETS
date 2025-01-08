@@ -34,7 +34,7 @@ class Printer extends CI_Controller {
             if($v->TIPE == 'FREKUENSI PENGGUNA'){
                 $data['achievementFPG'][] = round($v->PENCAPAIAN*100,2);
                 $data['targetFPG'][] = round($v->TARGET*100,2);
-                $data['bulan'][] = $v->BULAN;
+                $data['bulan'][] = date('M', mktime(0, 0, 0, $v->BULAN, 10));
             }else if($v->TIPE == 'FREKUENSI PERBAIKAN'){
                 $data['achievementFPB'][] = round($v->PENCAPAIAN,2);
                 $data['targetFPB'][] = round($v->TARGET,2);
@@ -193,7 +193,7 @@ class Printer extends CI_Controller {
         }
 
 
-        $this->db->query("UPDATE PRINTER_TABLE SET TAHUN='$tahun', BULAN='$periode', NAMA_PERANGKAT='$namaPerangkat', PENCAPAIAN='$pencapaian' WHERE ID = '$id'");
+        $this->db->query("UPDATE PRINTER_TABLE SET TAHUN='$tahun', BULAN='$periode',TIPE='$tipe', NAMA_PERANGKAT='$namaPerangkat', PENCAPAIAN='$pencapaian' WHERE ID = '$id'");
 
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('success', "Data berhasil diubah!");

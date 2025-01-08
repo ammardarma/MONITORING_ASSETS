@@ -12,12 +12,13 @@
         </div>
         <hr class="hr hr-blurry mb-4"/>
         <input type="hidden" name="id" value="<?=!empty($data) ? $data->ID : ''?>"/>
-        <input type="hidden" name="tipe" value="<?=$tipe?>"/>
         <div class="col-md-12 mb-4">
-            <div class="form-outline" data-mdb-input-init>
-                <input type="text" class="form-control" name="nama_user" style="width:100%" value="<?=!empty($data) ? $data->NAMA_USER : ''?>" required/>
-                <label for="nama_lembaga" class="form-label">Nama User</label>
-            </div>
+            <select data-mdb-select-init class="tipe" name="tipe">
+                <option value="AR" <?=!empty($data) && $data->TIPE == 'AR' ? 'selected' : ''?>>Availability Rate</option>
+                <option value="KM" <?=!empty($data) && $data->TIPE == 'KM' ? 'selected' : ''?>>Maintenance Success</option>
+                <option value="MTBF" <?=!empty($data) && $data->TIPE == 'MTBF' ? 'selected' : ''?>>Mean Time Between Failures</option>
+            </select>
+            <label class="form-label select-label">Tipe</label>
         </div>
         <div class="col-md-12 mb-4">
             <div class="form-outline" data-mdb-input-init>
@@ -26,10 +27,14 @@
             </div>
         </div>
         <div class="col-md-12 mb-4">
+            <div class="form-outline" data-mdb-input-init>
+                <input type="text" class="form-control" name="nama_user" style="width:100%" value="<?=!empty($data) ? $data->NAMA_USER : ''?>" required/>
+                <label for="nama_lembaga" class="form-label">Nama User</label>
+            </div>
+        </div>
+        <div class="col-md-12 mb-4">
             <select name="tahun" data-mdb-select-init class="tahun" required>
-                <?php for($i = 0; $i < 10; $i++): ?>
-                    <option value="202<?=$i?>" <?=!empty($data) ? ($data->TAHUN == "202".$i ? 'selected' : '') : ''?>>202<?=$i?></option>
-                <?php endfor; ?>
+                <option value="<?=date('Y')?>"><?=date('Y')?></option>
             </select>
             <label class="form-label select-label">Tahun</label>
         </div>

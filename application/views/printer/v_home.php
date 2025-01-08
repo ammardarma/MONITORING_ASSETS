@@ -5,7 +5,7 @@
       </div>
       <div class="col-md-3 mb-4">
           <select data-mdb-select-init class="tahun">
-              <?php for($i = 0; $i < 10; $i++): ?>
+              <?php for($i = 2; $i < 10; $i++): ?>
                   <option value="202<?=$i?>" <?=(("202".$i) == $tahun) ? 'selected': ''?>>202<?=$i?></option>
               <?php endfor; ?>
           </select>
@@ -17,7 +17,7 @@
         <div class="card shadow-5-strong h-100 border-bottom border-primary border-5">
             <div class="card-body pt-3 pb-2">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="text-primary fw-bold" style="font-size:0.6em;">Frekuensi Pengguna</div>
+                    <div class="text-primary fw-bold" style="font-size:0.9em;">Frekuensi Pengguna</div>
                     <div class="text-primary fw-bold" style="font-size:0.7em;"><i class="fa fa-percentage"></i></div>
                 </div>
                     <div class="row align-items-center justify-content-between mt-4">
@@ -39,7 +39,7 @@
         <div class="card shadow-5-strong h-100 border-bottom border-success border-5">
             <div class="card-body pt-3 pb-2">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="text-success fw-bold" style="font-size:0.6em;">Frekuensi Perbaikan</div>
+                    <div class="text-success fw-bold" style="font-size:0.9em;">Frekuensi Perbaikan</div>
                     <div class="text-success fw-bold" style="font-size:0.7em;">x&#772;</div>
                 </div>
                     <div class="row align-items-center justify-content-between mt-4">
@@ -61,7 +61,7 @@
         <div class="card shadow-5-strong h-100 border-bottom border-warning border-5">
             <div class="card-body pt-3 pb-2">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="text-warning fw-bold" style="font-size:0.6em;">Tingkat Kepuasan</div>
+                    <div class="text-warning fw-bold" style="font-size:0.9em;">Tingkat Kepuasan</div>
                     <div class="text-warning fw-bold" style="font-size:0.7em;"><i class="fa fa-percentage"></i></div>
                 </div>
                     <div class="row align-items-center justify-content-between mt-4">
@@ -86,7 +86,7 @@
         <div class="card bg-transparent shadow-0 border border-primary border-2">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="text-primary fw-bold" style="font-size:0.8em;">Frekuensi Pengguna</div>
+                    <div class="text-primary fw-bold" style="font-size:0.9em;">Frekuensi Pengguna</div>
                     <div class="text-primary fw-bold" style="font-size:1em;"><i class="fa fa-percentage"></i></div>
                 </div>
                 <canvas class="chart-fpg" height="100"></canvas>
@@ -103,7 +103,7 @@
         <div class="card bg-transparent shadow-0 border border-success border-2">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="text-success fw-bold" style="font-size:0.8em;">Frekuensi Perbaikan</div>
+                    <div class="text-success fw-bold" style="font-size:0.9em;">Frekuensi Perbaikan</div>
                     <div class="text-success fw-bold" style="font-size:1em;">x&#772;</div>
                 </div>
                 <canvas class="chart-fpb" height="100"></canvas>
@@ -120,7 +120,7 @@
         <div class="card bg-transparent shadow-0 border border-warning border-2">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="text-warning fw-bold" style="font-size:0.8em;">Tingkat Kepuasan</div>
+                    <div class="text-warning fw-bold" style="font-size:0.9em;">Tingkat Kepuasan</div>
                     <div class="text-warning fw-bold" style="font-size:1em;"><i class="fa fa-percentage"></i></div>
                 </div>
                 <canvas class="chart-tk" height="100"></canvas>
@@ -154,13 +154,13 @@ $(document).ready(function() {
 
     // FREKUENSI PENGGUNA
     const dataChartFPG = {
-    type: "line",
+    type: "bar",
     maintainAspectRatio: false,
     responsive: true,  
     options: {
       plugins : {
         datalabels: { 
-          anchor: 'center',
+          anchor: 'end',
           align: 'top',
           clamp: true
         },
@@ -186,6 +186,9 @@ $(document).ready(function() {
       labels: <?=json_encode($bulan)?>,
       datasets: [{
           label: "Target",
+          backgroundColor: [
+            'rgba(255,99,132,0.2)',
+          ],
           borderColor: [
             'rgba(255,99,132,1)',
           ],
@@ -222,13 +225,13 @@ $(document).ready(function() {
 
   // FREKUENSI PERBAIKAN
   const dataChartFPB = {
-    type: "line",
+    type: "bar",
     maintainAspectRatio: false,
     responsive: true,  
     options: {
       plugins : {
         datalabels: { 
-          anchor: 'center',
+          anchor: 'end',
           align: 'top',
           clamp: true
         },
@@ -254,6 +257,9 @@ $(document).ready(function() {
       labels: <?=json_encode($bulan)?>,
       datasets: [{
           label: "Target",
+          backgroundColor: [
+            'rgba(255,99,132,0.2)',
+          ],
           borderColor: [
             'rgba(255,99,132,1)',
           ],
@@ -269,10 +275,10 @@ $(document).ready(function() {
         {
           label: "Achievement",
           backgroundColor: [
-            'rgba(20, 164, 77, 0.2)',
+            'rgba(102, 16, 242, 0.2)',
           ],
           borderColor: [
-            'rgba(20, 164, 77, 1)',
+            'rgba(102, 16, 242, 1)',
           ],
           borderWidth: 2,
           borderRadius : 6,
@@ -290,13 +296,13 @@ $(document).ready(function() {
 
   // TINGKAT KEPUASAN
   const dataChartTK = {
-    type: "line",
+    type: "bar",
     maintainAspectRatio: false,
     responsive: true,  
     options: {
       plugins : {
         datalabels: { 
-          anchor: 'center',
+          anchor: 'end',
           align: 'top',
           clamp: true
         },
@@ -322,6 +328,9 @@ $(document).ready(function() {
       labels: <?=json_encode($bulan)?>,
       datasets: [{
           label: "Target",
+          backgroundColor: [
+            'rgba(255,99,132,0.2)',
+          ],
           borderColor: [
             'rgba(255,99,132,1)',
           ],
@@ -337,10 +346,10 @@ $(document).ready(function() {
         {
           label: "Achievement",
           backgroundColor: [
-            'rgba(228, 161, 27, 0.2)',
+            'rgba(102, 16, 242, 0.2)',
           ],
           borderColor: [
-            'rgba(228, 161, 27, 1)',
+            'rgba(102, 16, 242, 1)',
           ],
           borderWidth: 2,
           borderRadius : 6,
