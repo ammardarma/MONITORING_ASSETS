@@ -86,6 +86,7 @@
                 <thead>
                     <tr>
                         <th>Nama Perangkat</th>
+                        <th>Tanggal</th>
                         <th>Tahun</th>
                         <th>Bulan</th>
                         <th>Tipe</th>

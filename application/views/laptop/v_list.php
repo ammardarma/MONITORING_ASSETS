@@ -1,4 +1,6 @@
-<a href="<?=base_url()?>Laptop" class="btn btn-danger mb-4"><i class="fa fa-arrow-left"></i> Back</a>
+<?php if($this->session->userdata('status') == 'admin'): ?>
+    <a href="<?=base_url()?>Laptop" class="btn btn-danger mb-4"><i class="fa fa-arrow-left"></i> Back</a>
+<?php endif; ?>
 <div class="d-flex justify-content-between">
     <h5 class="fw-bold"><i class="fa fa-laptop"></i> Laptop</h5>
 </div>
@@ -118,7 +120,7 @@ $(document).ready(function() {
     });
 
     $('.tipe').on('change', function() {
-        location.href="<?=base_url()?>PC/viewList?tipe="+$(this).val();
+        location.href="<?=base_url()?>Laptop/viewList?tipe="+$(this).val();
     });
 
     oTable = $('#dt_table').dataTable({

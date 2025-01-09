@@ -33,9 +33,9 @@
                     <div class="text-primary fw-bold" style="font-size:0.8em;">Availability Rate</div>
                     <div class="text-primary fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
                 </div>
-                <canvas class="chart-ar mb-5" height="300"></canvas>
+                <canvas class="chart-ar mb-3" height="300"></canvas>
                 <div class="col-md-12 align-self-stretch mb-2">
-                      <div class="card shadow-5-strong h-100 border-top border-primary border-5">
+                      <div class="card shadow-2 h-100">
                           <div class="card-body pt-3 pb-2">
                               <div class="d-flex justify-content-between align-items-center">
                                   <div class="text-secondary fw-bold" style="font-size:0.8em;">Deviation Availability Rate</div>
@@ -63,13 +63,13 @@
                           </div>
                       </div>
                 </div>
-                <div class="text-center mt-4">
-                    <a href="<?=base_url()?>PC/viewList?tipe=AR">
-                        <h6 class="text-primary mb-0">See Detail</h6>
-                        <i class="fas fa-angle-down"></i>
-                    </a>
-                </div>
             </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="<?=base_url()?>PC/viewList?tipe=AR">
+                <h6 class="text-primary mb-0">See Detail</h6>
+                <i class="fas fa-angle-down"></i>
+            </a>
         </div>
     </div>
     <div class="col-md-4">
@@ -79,14 +79,43 @@
                     <div class="text-success fw-bold" style="font-size:0.8em;">Maintenance Success</div>
                     <div class="text-success fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
                 </div>
-                <canvas class="chart-km" height="300"></canvas>
-                <div class="text-center mt-5">
-                    <a href="<?=base_url()?>PC/viewList?tipe=KM">
-                        <h6 class="text-success mb-0">See Detail</h6>
-                        <i class="fas fa-angle-down text-success"></i>
-                    </a>
+                <canvas class="chart-km mb-3" height="300"></canvas>
+                <div class="col-md-12 align-self-stretch mb-2">
+                    <div class="card shadow-2">
+                        <div class="card-body pt-3 pb-2">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="text-secondary fw-bold" style="font-size:0.8em;">Deviation Maintenance Success</div>
+                                <div class="text-success fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
+                            </div>
+                            <div class="row align-items-center justify-content-between mt-4">
+                                <div class="col-md-6 position-relative text-center mb-2">
+                                  <div class="text-secondary mb-2" style="font-size:12px;">Period 1</div>
+                                    <?php if(substr($dataSelisih[0]->SELISIH_KM_1, 0, 1) == '-'): ?>
+                                        <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_1,2) ?: '0'?>%</h6>
+                                    <?php else : ?>
+                                        <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_1,2) ?: '0'?>%</h6>
+                                    <?php endif; ?>
+                                    <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
+                                </div>
+                                <div class="col-md-6 position-relative text-center mb-2">
+                                  <div class="text-secondary mb-2" style="font-size:12px;">Period 2</div>
+                                    <?php if(substr($dataSelisih[0]->SELISIH_KM_2, 0, 1) == '-'): ?>
+                                        <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_2,2) ?: '0'?>%</h6>
+                                    <?php else : ?>
+                                        <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_2,2) ?: '0'?>%</h6>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="<?=base_url()?>PC/viewList?tipe=KM">
+                <h6 class="text-success mb-0">See Detail</h6>
+                <i class="fas fa-angle-down text-success"></i>
+            </a>
         </div>
     </div>
     <div class="col-md-4">
@@ -96,21 +125,50 @@
                     <div class="text-warning fw-bold" style="font-size:0.8em;">Mean Time Between Failures</div>
                     <div class="text-warning fw-bold" style="font-size:0.8em;">(Month)</div>
                 </div>
-                <canvas class="chart-mtbf" height="300"></canvas>
-                <div class="text-center mt-5">
-                    <a href="<?=base_url()?>PC/viewList?tipe=MTBF">
-                        <h6 class="text-warning mb-0">See Detail</h6>
-                        <i class="fas fa-angle-down text-warning"></i>
-                    </a>
+                <canvas class="chart-mtbf mb-3" height="300"></canvas>
+                <div class="col-md-12 align-self-stretch mb-2">
+                      <div class="card shadow-2 h-100">
+                          <div class="card-body pt-3 pb-2">
+                              <div class="d-flex justify-content-between align-items-center">
+                                  <div class="text-secondary fw-bold" style="font-size:0.8em;">Deviation Mean Time Between Failures</div>
+                                  <div class="text-warning fw-bold" style="font-size:0.8em;">(Mon)</div>
+                              </div>
+                                  <div class="row align-items-center justify-content-between mt-4">
+                                      <div class="col-md-6 position-relative text-center mb-2">
+                                        <div class="text-secondary mb-2" style="font-size:12px;">Period 1</div>
+                                          <?php if(substr($dataSelisih[0]->SELISIH_MTBF_1, 0, 1) == '-'): ?>
+                                              <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_1,2) ?: '0'?></h6>
+                                          <?php else : ?>
+                                              <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_1,2) ?: '0'?></h6>
+                                          <?php endif; ?>
+                                          <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
+                                      </div>
+                                      <div class="col-md-6 position-relative text-center mb-2">
+                                        <div class="text-secondary mb-2" style="font-size:12px;">Period 2</div>
+                                          <?php if(substr($dataSelisih[0]->SELISIH_MTBF_2, 0, 1) == '-'): ?>
+                                              <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_2,2) ?: '0'?></h6>
+                                          <?php else : ?>
+                                              <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_2,2) ?: '0'?></h6>
+                                          <?php endif; ?>
+                                      </div>
+                                  </div>
+                          </div>
+                      </div>
                 </div>
             </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="<?=base_url()?>PC/viewList?tipe=MTBF">
+                <h6 class="text-warning mb-0">See Detail</h6>
+                <i class="fas fa-angle-down text-warning"></i>
+            </a>
         </div>
     </div>
 </div>
 
-<div class="row mb-4">
+<!-- <div class="row mb-4">
    <div class="col-md-4 align-self-stretch mb-2">
-        <!-- <div class="card shadow-5-strong h-100 border-bottom border-primary border-5">
+        <div class="card shadow-5-strong h-100 border-bottom border-primary border-5">
             <div class="card-body pt-3 pb-2">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="text-secondary fw-bold" style="font-size:0.8em;">Deviation Availability Rate</div>
@@ -136,7 +194,7 @@
                         </div>
                     </div>
             </div>
-        </div> -->
+        </div>
    </div>
    <div class="col-md-4 align-self-stretch mb-2">
         <div class="card shadow-5-strong h-100 border-bottom border-success border-5">
@@ -196,6 +254,44 @@
             </div>
         </div>
    </div>
+</div> -->
+
+<hr class="hr hr-blurry mb-5"/>
+<div class="mb-4"><h6 class="fw-bold"><i class="fas fa-chart-bar"></i> &nbsp;&nbsp;Comparison Data Between Years</h6></div>
+<div class="row mt-3 mb-4">
+    <div class="col-md-4">
+        <div class="card bg-transparent shadow-0 border border-primary border-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="text-primary fw-bold" style="font-size:0.8em;">Comparation Availability Rate</div>
+                    <div class="text-primary fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
+                </div>
+                <canvas class="chart-ar-compare" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-transparent shadow-0 border border-success border-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="text-success fw-bold" style="font-size:0.8em;">Comparation Maintenance Success</div>
+                    <div class="text-success fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
+                </div>
+                <canvas class="chart-km-compare" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-transparent shadow-0 border border-warning border-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="text-warning fw-bold" style="font-size:0.8em;">Comparation Mean Time Between Failures</div>
+                    <div class="text-warning fw-bold" style="font-size:0.8em;">(Month)</div>
+                </div>
+                <canvas class="chart-mtbf-compare" height="300"></canvas>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -216,74 +312,74 @@ $(document).ready(function() {
 
     // AR
     const dataChartAR = {
-    type: "bar",
-    maintainAspectRatio: false,
-    responsive: true,  
-    options: {
-      plugins : {
-        datalabels: { 
-          anchor: 'center',
-          align: 'top',
-          clamp: true
-        },
-        legend : {
-            position:'bottom',
-        }
-      }, 
-      scales: {
-            x: {
-                grid: {
-                display: false
-                }
-            },
-            y: {
-                grid: {
-                display: false
-                }
+      type: "bar",
+      maintainAspectRatio: false,
+      responsive: true,  
+      options: {
+        plugins : {
+          datalabels: { 
+            anchor: 'center',
+            align: 'top',
+            clamp: true
+          },
+          legend : {
+              position:'bottom',
+          }
+        }, 
+        scales: {
+              x: {
+                  grid: {
+                  display: false
+                  }
+              },
+              y: {
+                  grid: {
+                  display: false
+                  }
+              }
+          }
+      },
+      data: {
+        labels: ["Period 1", "Period 2",],
+        datasets: [{
+            label: "Target",
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+            ],
+            fill: true,
+            borderColor: [
+              'rgba(255,99,132,1)',
+            ],
+            borderWidth: 2,
+            borderRadius : 6,
+            tension: 0.4,
+            data: <?=json_encode($targetAR)?>,
+            datalabels: {
+              color: "black",
+              formatter: formatter,
             }
-        }
-    },
-    data: {
-      labels: ["Period 1", "Period 2",],
-      datasets: [{
-          label: "Target",
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-          ],
-          fill: true,
-          borderColor: [
-            'rgba(255,99,132,1)',
-          ],
-          borderWidth: 2,
-          borderRadius : 6,
-          tension: 0.4,
-          data: <?=json_encode($targetAR)?>,
-          datalabels: {
-            color: "black",
-            formatter: formatter,
-          }
-        },
-        {
-          label: "Achievement",
-          backgroundColor: [
-            'rgba(102, 16, 242, 0.2)',
-          ],
-          fill: true,
-          borderColor: [
-            'rgba(102, 16, 242, 1)',
-          ],
-          borderWidth: 2,
-          borderRadius : 6,
-          tension: 0.4,
-          data: <?=json_encode($achievementAR)?>,
-          datalabels: {
-            color: "black",
-            formatter: formatter,
-          }
-        },
-      ],
-    },
-  };
+          },
+          {
+            label: "Achievement",
+            backgroundColor: [
+              'rgba(102, 16, 242, 0.2)',
+            ],
+            fill: true,
+            borderColor: [
+              'rgba(102, 16, 242, 1)',
+            ],
+            borderWidth: 2,
+            borderRadius : 6,
+            tension: 0.4,
+            data: <?=json_encode($achievementAR)?>,
+            datalabels: {
+              color: "black",
+              formatter: formatter,
+            }
+          },
+        ],
+      },
+    };
   new Chart($('.chart-ar'), dataChartAR);
 
     //   KM
@@ -429,5 +525,218 @@ $(document).ready(function() {
     },
   };
   new Chart($('.chart-mtbf'), dataChartMTBF);
+
+  const dataChartARCompare = {
+      type: "bar",
+      maintainAspectRatio: false,
+      responsive: true,  
+      options: {
+        plugins : {
+          datalabels: { 
+            anchor: 'center',
+            align: 'top',
+            clamp: true
+          },
+          legend : {
+              position:'bottom',
+          }
+        }, 
+        scales: {
+              x: {
+                  grid: {
+                  display: false
+                  }
+              },
+              y: {
+                  grid: {
+                  display: false
+                  }
+              }
+          }
+      },
+      data: {
+        labels: ["Period 1", "Period 2",],
+        datasets: [{
+            label: "Achievement <?=$this->session->userdata('tahun')-1?>",
+            backgroundColor: [
+              'rgba(212, 212, 212, 0.2)',
+            ],
+            fill: true,
+            borderColor: [
+              'rgba(212,212,212,1)',
+            ],
+            borderWidth: 2,
+            borderRadius : 6,
+            tension: 0.4,
+            data: <?=json_encode($achievementARLastYear)?>,
+            datalabels: {
+              color: "black",
+              formatter: formatter,
+            }
+          },
+          {
+            label: "Achievement <?=$this->session->userdata('tahun')?>",
+            backgroundColor: [
+              'rgba(102, 16, 242, 0.2)',
+            ],
+            fill: true,
+            borderColor: [
+              'rgba(102, 16, 242, 1)',
+            ],
+            borderWidth: 2,
+            borderRadius : 6,
+            tension: 0.4,
+            data: <?=json_encode($achievementAR)?>,
+            datalabels: {
+              color: "black",
+              formatter: formatter,
+            }
+          },
+        ],
+      },
+    };
+  new Chart($('.chart-ar-compare'), dataChartARCompare);
+
+  const dataChartKMCompare = {
+      type: "bar",
+      maintainAspectRatio: false,
+      responsive: true,  
+      options: {
+        plugins : {
+          datalabels: { 
+            anchor: 'center',
+            align: 'top',
+            clamp: true
+          },
+          legend : {
+              position:'bottom',
+          }
+        }, 
+        scales: {
+              x: {
+                  grid: {
+                  display: false
+                  }
+              },
+              y: {
+                  grid: {
+                  display: false
+                  }
+              }
+          }
+      },
+      data: {
+        labels: ["Period 1", "Period 2",],
+        datasets: [{
+            label: "Achievement <?=$this->session->userdata('tahun')-1?>",
+            backgroundColor: [
+              'rgba(212, 212, 212, 0.2)',
+            ],
+            fill: true,
+            borderColor: [
+              'rgba(212,212,212,1)',
+            ],
+            borderWidth: 2,
+            borderRadius : 6,
+            tension: 0.4,
+            data: <?=json_encode($achievementKMLastYear)?>,
+            datalabels: {
+              color: "black",
+              formatter: formatter,
+            }
+          },
+          {
+            label: "Achievement <?=$this->session->userdata('tahun')?>",
+            backgroundColor: [
+              'rgba(102, 16, 242, 0.2)',
+            ],
+            fill: true,
+            borderColor: [
+              'rgba(102, 16, 242, 1)',
+            ],
+            borderWidth: 2,
+            borderRadius : 6,
+            tension: 0.4,
+            data: <?=json_encode($achievementKM)?>,
+            datalabels: {
+              color: "black",
+              formatter: formatter,
+            }
+          },
+        ],
+      },
+    };
+  new Chart($('.chart-km-compare'), dataChartKMCompare);
+
+  const dataChartMTBFCompare = {
+      type: "bar",
+      maintainAspectRatio: false,
+      responsive: true,  
+      options: {
+        plugins : {
+          datalabels: { 
+            anchor: 'center',
+            align: 'top',
+            clamp: true
+          },
+          legend : {
+              position:'bottom',
+          }
+        }, 
+        scales: {
+              x: {
+                  grid: {
+                  display: false
+                  }
+              },
+              y: {
+                  grid: {
+                  display: false
+                  }
+              }
+          }
+      },
+      data: {
+        labels: ["Period 1", "Period 2",],
+        datasets: [{
+            label: "Achievement <?=$this->session->userdata('tahun')-1?>",
+            backgroundColor: [
+              'rgba(212, 212, 212, 0.2)',
+            ],
+            fill: true,
+            borderColor: [
+              'rgba(212,212,212,1)',
+            ],
+            borderWidth: 2,
+            borderRadius : 6,
+            tension: 0.4,
+            data: <?=json_encode($achievementMTBFLastYear)?>,
+            datalabels: {
+              color: "black",
+              formatter: formatterNonPercentage,
+            }
+          },
+          {
+            label: "Achievement <?=$this->session->userdata('tahun')?>",
+            backgroundColor: [
+              'rgba(102, 16, 242, 0.2)',
+            ],
+            fill: true,
+            borderColor: [
+              'rgba(102, 16, 242, 1)',
+            ],
+            borderWidth: 2,
+            borderRadius : 6,
+            tension: 0.4,
+            data: <?=json_encode($achievementMTBF)?>,
+            datalabels: {
+              color: "black",
+              formatter: formatterNonPercentage,
+            }
+          },
+        ],
+      },
+    };
+  new Chart($('.chart-mtbf-compare'), dataChartMTBFCompare);
 });
 </script>

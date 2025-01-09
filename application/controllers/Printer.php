@@ -27,19 +27,26 @@ class Printer extends CI_Controller {
         CASE WHEN B.TIPE = 'TINGKAT KEPUASAN' THEN B.TARGET END AS TARGET_TP
         FROM PRINTER_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN  AND A.TIPE = B.TIPE WHERE A.TAHUN like '%$tahun%' GROUP BY A.TIPE) PRINTER")->result();
 
-        $dataGrafik = $this->db->query("SELECT BULAN, pt.TIPE, mt.TARGET,  AVG(PENCAPAIAN) PENCAPAIAN FROM PRINTER_TABLE pt JOIN M_TARGETS mt ON pt.TIPE = mt.TIPE  WHERE pt.TAHUN LIKE '%$tahun%' GROUP BY BULAN, TIPE ORDER BY BULAN")->result();
-        $data['achievementFPG'] = $data['targetFPG'] = $data['achievementFPB'] = $data['targetFPB'] = $data['achievementTK'] = $data['targetTK'] = $data['bulan'] = array();
+        $dataGrafik = $this->db->query("SELECT A.*, B.PENCAPAIAN AS PENCAPAIAN_SEBELUM FROM 
+        (SELECT BULAN, pt.TIPE, mt.TARGET,  AVG(PENCAPAIAN) PENCAPAIAN FROM PRINTER_TABLE pt JOIN M_TARGETS mt ON pt.TIPE = mt.TIPE  WHERE pt.TAHUN LIKE '%$tahun%' GROUP BY BULAN, TIPE ORDER BY BULAN) A 
+        LEFT JOIN 
+        (SELECT BULAN, pt.TIPE, mt.TARGET,  AVG(PENCAPAIAN) PENCAPAIAN FROM PRINTER_TABLE pt JOIN M_TARGETS mt ON pt.TIPE = mt.TIPE  WHERE pt.TAHUN LIKE '%".($tahun-1)."%' GROUP BY BULAN, TIPE ORDER BY BULAN) B 
+        ON A.BULAN=B.BULAN AND A.TIPE=B.TIPE")->result();
+        $data['achievementFPG'] = $data['targetFPG'] = $data['achievementFPB'] = $data['targetFPB'] = $data['achievementTK'] = $data['targetTK'] = $data['bulan'] = $data['achievementFPGLastYear']  = $data['achievementFPB'] = $data['achievementTK'] = array();
 
         foreach($dataGrafik as $v){
             if($v->TIPE == 'FREKUENSI PENGGUNA'){
-                $data['achievementFPG'][] = round($v->PENCAPAIAN*100,2);
+                $data['achievementFPG'][] = round($v->PENCAPAIAN * 100, 2);
+                $data['achievementFPGLastYear'][] = round($v->PENCAPAIAN_SEBELUM * 100, 2);
                 $data['targetFPG'][] = round($v->TARGET*100,2);
                 $data['bulan'][] = date('M', mktime(0, 0, 0, $v->BULAN, 10));
             }else if($v->TIPE == 'FREKUENSI PERBAIKAN'){
-                $data['achievementFPB'][] = round($v->PENCAPAIAN,2);
+                $data['achievementFPB'][] = round($v->PENCAPAIAN, 2);
+                $data['achievementFPBLastYear'][] = round($v->PENCAPAIAN_SEBELUM, 2);
                 $data['targetFPB'][] = round($v->TARGET,2);
             }else if($v->TIPE == 'TINGKAT KEPUASAN') {
                 $data['achievementTK'][] = round($v->PENCAPAIAN*100,2);
+                $data['achievementTKLastYear'][] = round($v->PENCAPAIAN_SEBELUM * 100, 2);
                 $data['targetTK'][] = round($v->TARGET*100,2);
             }
         }
@@ -73,6 +80,7 @@ class Printer extends CI_Controller {
             $delete = '<a href="#" onclick=deleteData(\''.str_replace(" ", "_", 'actDeleteData?id='.$field['ID'].'&tipe='.$field['TIPE']).'\') class="btn btn-danger btn-floating" title="Button Delete"><i class="fa fa-trash"></i></button>';
 
             $row[] = $field['NAMA_PERANGKAT'];
+            $row[] = $field['TANGGAL'];
             $row[] = $field['TAHUN'];
             $row[] = $field['BULAN'];
             $row[] = $field['TIPE'];
@@ -98,7 +106,7 @@ class Printer extends CI_Controller {
 
     public function getDataPrinter($post, $type = "get")
     {
-        $column_order = ['NAMA_USER', 'NAMA_PERANGKAT', 'TAHUN', 'PERIODE', 'TIPE', 'PENCAPAIAN'];
+        $column_order = ['NAMA_USER', 'NAMA_PERANGKAT', 'TAHUN', 'PERIODE', 'TIPE', 'PENCAPAIAN', 'TANGGAL'];
         $order = 'ASC';
         $this->db->select('A.*');
         $this->db->from('PRINTER_TABLE A');
@@ -157,15 +165,16 @@ class Printer extends CI_Controller {
         $input = $this->input->post();
         $tipe = $input['tipe'];
         $namaPerangkat = $input['nama_perangkat'];
-        $tahun = $input['tahun'];
-        $periode = $input['periode'];
+        $tanggal = $input['tanggal'];
+        $tahun = date('Y', strtotime($tanggal));
+        $periode = date('m', strtotime($tanggal));
         if($tipe == 'FREKUENSI PERBAIKAN'){
             $pencapaian = $input['pencapaian'];
         }else {
             $pencapaian = $input['pencapaian'] / 100;
         }
 
-        $this->db->query("INSERT INTO PRINTER_TABLE(TAHUN, BULAN, NAMA_PERANGKAT, PENCAPAIAN, TIPE) VALUES ('$tahun','$periode','$namaPerangkat','$pencapaian','$tipe')");
+        $this->db->query("INSERT INTO PRINTER_TABLE(TAHUN, BULAN, NAMA_PERANGKAT, PENCAPAIAN, TIPE, TANGGAL) VALUES ('$tahun','$periode','$namaPerangkat','$pencapaian','$tipe', '$tanggal')");
 
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('success', "Data berhasil ditambahkan!");
@@ -183,8 +192,9 @@ class Printer extends CI_Controller {
         $id = $input['id'];
         $tipe = $input['tipe'];
         $namaPerangkat = $input['nama_perangkat'];
-        $tahun = $input['tahun'];
-        $periode = $input['periode'];
+        $tanggal = $input['tanggal'];
+        $tahun = date('Y', strtotime($tanggal));
+        $periode = date('m', strtotime($tanggal));
 
         if($tipe == 'FREKUENSI PERBAIKAN'){
             $pencapaian = $input['pencapaian'];
@@ -192,8 +202,7 @@ class Printer extends CI_Controller {
             $pencapaian = $input['pencapaian'] / 100;
         }
 
-
-        $this->db->query("UPDATE PRINTER_TABLE SET TAHUN='$tahun', BULAN='$periode',TIPE='$tipe', NAMA_PERANGKAT='$namaPerangkat', PENCAPAIAN='$pencapaian' WHERE ID = '$id'");
+        $this->db->query("UPDATE PRINTER_TABLE SET TAHUN='$tahun', BULAN='$periode',TIPE='$tipe', NAMA_PERANGKAT='$namaPerangkat', PENCAPAIAN='$pencapaian', TANGGAL='$tanggal' WHERE ID = '$id'");
 
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('success', "Data berhasil diubah!");

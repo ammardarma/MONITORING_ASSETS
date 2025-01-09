@@ -35,19 +35,26 @@ class PC extends CI_Controller {
         SUM(CASE WHEN TIPE = 'MTBF' AND PERIODE = 2 THEN PENCAPAIAN - TARGET END) AS SELISIH_MTBF_2
         FROM (SELECT A.PERIODE, A.TIPE, CASE WHEN A.TIPE ='MTBF' AND A.PERIODE=1 THEN AVG(PENCAPAIAN) WHEN A.TIPE = 'MTBF' AND A.PERIODE=2 THEN AVG(PENCAPAIAN) ELSE AVG(PENCAPAIAN) END AS PENCAPAIAN, B.TARGET FROM PC_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE AND A.TIPE = B.TIPE  WHERE A.TAHUN like '%$tahun%' AND TIPE_PERANGKAT='PC' GROUP BY A.TIPE, A.PERIODE ORDER BY TIPE) A")->result();
 
-        $dataGrafik = $this->db->query("SELECT *
-        FROM (SELECT A.PERIODE, A.TIPE, CASE WHEN A.TIPE ='MTBF' AND A.PERIODE=1 THEN AVG(PENCAPAIAN) WHEN A.TIPE = 'MTBF' AND A.PERIODE=2 THEN AVG(PENCAPAIAN) ELSE AVG(PENCAPAIAN) END AS PENCAPAIAN, B.TARGET FROM PC_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE AND A.TIPE = B.TIPE  WHERE A.TAHUN = '$tahun' AND TIPE_PERANGKAT='PC' GROUP BY A.TIPE, A.PERIODE ORDER BY TIPE) A")->result();
-        $data['achievementAR'] = $data['targetAR'] = $data['achievementKM'] = $data['targetKM'] = $data['achievementMTBF'] = $data['targetMTBF'] = array();
+        $dataGrafik = $this->db->query("SELECT A.*, B.PENCAPAIAN AS PENCAPAIAN_SEBELUM FROM 
+        (SELECT A.PERIODE, A.TIPE, CASE WHEN A.TIPE ='MTBF' AND A.PERIODE=1 THEN AVG(PENCAPAIAN) WHEN A.TIPE = 'MTBF' AND A.PERIODE=2 THEN AVG(PENCAPAIAN) ELSE AVG(PENCAPAIAN) END AS PENCAPAIAN, B.TARGET FROM PC_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE AND A.TIPE = B.TIPE  WHERE A.TAHUN = '$tahun' AND TIPE_PERANGKAT='PC' GROUP BY A.TIPE, A.PERIODE ORDER BY TIPE) A 
+        LEFT JOIN 
+        (SELECT A.PERIODE, A.TIPE, CASE WHEN A.TIPE ='MTBF' AND A.PERIODE=1 THEN AVG(PENCAPAIAN) WHEN A.TIPE = 'MTBF' AND A.PERIODE=2 THEN AVG(PENCAPAIAN) ELSE AVG(PENCAPAIAN) END AS PENCAPAIAN, B.TARGET FROM PC_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE AND A.TIPE = B.TIPE  WHERE A.TAHUN = '".($tahun-1)."' AND TIPE_PERANGKAT='PC' GROUP BY A.TIPE, A.PERIODE ORDER BY TIPE) B 
+        ON A.PERIODE=B.PERIODE AND A.TIPE=B.TIPE")->result();
+   
+        $data['achievementAR'] = $data['targetAR'] = $data['achievementKM'] = $data['targetKM'] = $data['achievementMTBF'] = $data['targetMTBF'] = $data['achievementARLastYear'] = $data['achievementMTBFLastYear'] = $data['achievementKMLastYear'] = array();
 
         foreach($dataGrafik as $v){
             if($v->TIPE == 'AR'){
                 $data['achievementAR'][] = round($v->PENCAPAIAN*100,2);
+                $data['achievementARLastYear'][] = round($v->PENCAPAIAN_SEBELUM*100,2);
                 $data['targetAR'][] = round($v->TARGET*100,2);
             }else if($v->TIPE == 'KM'){
                 $data['achievementKM'][] = round($v->PENCAPAIAN*100,2);
+                $data['achievementKMLastYear'][] = round($v->PENCAPAIAN_SEBELUM*100,2);
                 $data['targetKM'][] = round($v->TARGET*100,2);
             }else if($v->TIPE == 'MTBF') {
                 $data['achievementMTBF'][] = round($v->PENCAPAIAN,2);
+                $data['achievementMTBFLastYear'][] = round($v->PENCAPAIAN_SEBELUM,2);
                 $data['targetMTBF'][] = round($v->TARGET,2);
             }
         }

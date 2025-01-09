@@ -28,27 +28,10 @@
             <label class="form-label select-label">Tipe</label>
         </div>
         <div class="col-md-12 mb-4">
-            <select name="tahun" data-mdb-select-init class="tahun" required>
-                <option value="<?=date('Y')?>"><?=date('Y')?></option>
-            </select>
-            <label class="form-label select-label">Tahun</label>
-        </div>
-        <div class="col-md-12 mb-4">
-            <select name="periode" data-mdb-select-init class="periode" required>
-                <option value="1" <?=!empty($data) ? ($data->BULAN == 1 ? 'selected' : '') : ''?>>1</option>
-                <option value="2" <?=!empty($data) ? ($data->BULAN == 2 ? 'selected' : '') : ''?>>2</option>
-                <option value="3" <?=!empty($data) ? ($data->BULAN == 3 ? 'selected' : '') : ''?>>3</option>
-                <option value="4" <?=!empty($data) ? ($data->BULAN == 4 ? 'selected' : '') : ''?>>4</option>
-                <option value="5" <?=!empty($data) ? ($data->BULAN == 5 ? 'selected' : '') : ''?>>5</option>
-                <option value="6" <?=!empty($data) ? ($data->BULAN == 6 ? 'selected' : '') : ''?>>6</option>
-                <option value="7" <?=!empty($data) ? ($data->BULAN == 7 ? 'selected' : '') : ''?>>7</option>
-                <option value="8" <?=!empty($data) ? ($data->BULAN == 8 ? 'selected' : '') : ''?>>8</option>
-                <option value="9" <?=!empty($data) ? ($data->BULAN == 9 ? 'selected' : '') : ''?>>9</option>
-                <option value="10" <?=!empty($data) ? ($data->BULAN == 10 ? 'selected' : '') : ''?>>10</option>
-                <option value="11" <?=!empty($data) ? ($data->BULAN == 11 ? 'selected' : '') : ''?>>11</option>
-                <option value="12" <?=!empty($data) ? ($data->BULAN == 12 ? 'selected' : '') : ''?>>12</option>
-            </select>
-            <label class="form-label select-label">Bulan</label>
+            <div class="form-outline" data-mdb-input-init>
+                <input type="date" class="form-control" name="tanggal" style="width:100%" value="<?=!empty($data) ? date('Y-m-d', strtotime($data->TANGGAL)) : '' ?>" min="<?=date('Y')?>-01-01" required/>
+                <label for="nama_lembaga" class="form-label">Tanggal</label>
+            </div>
         </div>
         <div class="col-md-12 mb-4">
             <div class="form-outline" data-mdb-input-init>

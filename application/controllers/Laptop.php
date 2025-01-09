@@ -35,19 +35,25 @@ class Laptop extends CI_Controller {
         SUM(CASE WHEN TIPE = 'MTBF' AND PERIODE = 2 THEN PENCAPAIAN - TARGET END) AS SELISIH_MTBF_2
         FROM (SELECT A.PERIODE, A.TIPE, CASE WHEN A.TIPE ='MTBF' AND A.PERIODE=1 THEN AVG(PENCAPAIAN) WHEN A.TIPE = 'MTBF' AND A.PERIODE=2 THEN AVG(PENCAPAIAN) ELSE AVG(PENCAPAIAN) END AS PENCAPAIAN, B.TARGET FROM PC_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE AND A.TIPE = B.TIPE  WHERE A.TAHUN = '$tahun' AND TIPE_PERANGKAT='NB' GROUP BY A.TIPE, A.PERIODE ORDER BY TIPE) A")->result();
 
-        $dataGrafik = $this->db->query("SELECT *
-        FROM (SELECT A.PERIODE, A.TIPE, CASE WHEN A.TIPE ='MTBF' AND A.PERIODE=1 THEN AVG(PENCAPAIAN) WHEN A.TIPE = 'MTBF' AND A.PERIODE=2 THEN AVG(PENCAPAIAN) ELSE AVG(PENCAPAIAN) END AS PENCAPAIAN, B.TARGET FROM PC_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE AND A.TIPE = B.TIPE  WHERE A.TAHUN = '$tahun' AND TIPE_PERANGKAT='NB' GROUP BY A.TIPE, A.PERIODE ORDER BY TIPE) A")->result();
-        $data['achievementAR'] = $data['targetAR'] = $data['achievementKM'] = $data['targetKM'] = $data['achievementMTBF'] = $data['targetMTBF'] = array();
+        $dataGrafik = $this->db->query("SELECT A.*, B.PENCAPAIAN AS PENCAPAIAN_SEBELUM
+        FROM (SELECT A.PERIODE, A.TIPE, CASE WHEN A.TIPE ='MTBF' AND A.PERIODE=1 THEN AVG(PENCAPAIAN) WHEN A.TIPE = 'MTBF' AND A.PERIODE=2 THEN AVG(PENCAPAIAN) ELSE AVG(PENCAPAIAN) END AS PENCAPAIAN, B.TARGET FROM PC_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE AND A.TIPE = B.TIPE  WHERE A.TAHUN = '$tahun' AND TIPE_PERANGKAT='NB' GROUP BY A.TIPE, A.PERIODE ORDER BY TIPE) A 
+        LEFT JOIN 
+        (SELECT A.PERIODE, A.TIPE, CASE WHEN A.TIPE ='MTBF' AND A.PERIODE=1 THEN AVG(PENCAPAIAN) WHEN A.TIPE = 'MTBF' AND A.PERIODE=2 THEN AVG(PENCAPAIAN) ELSE AVG(PENCAPAIAN) END AS PENCAPAIAN, B.TARGET FROM PC_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE AND A.TIPE = B.TIPE  WHERE A.TAHUN = '".($tahun-1)."' AND TIPE_PERANGKAT='NB' GROUP BY A.TIPE, A.PERIODE ORDER BY TIPE) B
+        ON A.PERIODE=B.PERIODE AND A.TIPE=B.TIPE")->result();
+        $data['achievementAR'] = $data['targetAR'] = $data['achievementKM'] = $data['targetKM'] = $data['achievementMTBF'] = $data['targetMTBF'] = $data['achievementARLastYear'] = $data['achievementKMLastYear'] = $data['achievementMTBFLastYear'] = array();
 
         foreach($dataGrafik as $v){
             if($v->TIPE == 'AR'){
                 $data['achievementAR'][] = round($v->PENCAPAIAN*100,2);
+                $data['achievementARLastYear'][] = round($v->PENCAPAIAN_SEBELUM*100,2);
                 $data['targetAR'][] = round($v->TARGET*100,2);
             }else if($v->TIPE == 'KM'){
                 $data['achievementKM'][] = round($v->PENCAPAIAN*100,2);
+                $data['achievementKMLastYear'][] = round($v->PENCAPAIAN_SEBELUM*100,2);
                 $data['targetKM'][] = round($v->TARGET*100,2);
             }else if($v->TIPE == 'MTBF') {
                 $data['achievementMTBF'][] = round($v->PENCAPAIAN,2);
+                $data['achievementMTBFLastYear'][] = round($v->PENCAPAIAN_SEBELUM,2);
                 $data['targetMTBF'][] = round($v->TARGET,2);
             }
         }
@@ -167,23 +173,22 @@ class Laptop extends CI_Controller {
         $namaUser = $input['nama_user'];
         $tipe = $input['tipe'];
         $namaPerangkat = $input['nama_perangkat'];
-        $tahun = $input['tahun'];
-        $periode = $input['periode'];
-        $data = $this->db->query("SELECT TARGET FROM M_TARGETS WHERE TIPE='$tipe' AND TAHUN = '$tahun' AND PERIODE = '$periode'")->result();
-        if($tipe == 'AR'){
-            $pencapaian = $data[0]->TARGET * 100;
-            foreach($input['kendala'] as $v){
-                $pencapaian -= $v;
-            }
+        $tanggal = $input['tanggal'];
+        $tahun = date('Y', strtotime($tanggal));
+        $bulan = date('m', strtotime($tanggal));
+        if($bulan < 6){
+            $periode = '1';
+        }else {
+            $periode = '2';
+        }
+
+        if($tipe != 'MTBF'){
+            $pencapaian = $input['pencapaian'] / 100;
         }else {
             $pencapaian = $input['pencapaian'];
         }
 
-        if($tipe != 'MTBF'){
-            $pencapaian /= 100;
-        }
-
-        $this->db->query("INSERT INTO PC_TABLE(TAHUN, PERIODE, NAMA_USER, TIPE_PERANGKAT, NAMA_PERANGKAT, PENCAPAIAN, TIPE) VALUES ('$tahun','$periode','$namaUser','NB','$namaPerangkat','$pencapaian','$tipe')");
+        $this->db->query("INSERT INTO PC_TABLE(TAHUN, PERIODE, NAMA_USER, TIPE_PERANGKAT, NAMA_PERANGKAT, PENCAPAIAN, TIPE, TANGGAL) VALUES ('$tahun','$periode','$namaUser','NB','$namaPerangkat','$pencapaian','$tipe', '$tanggal')");
 
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('success', "Data berhasil ditambahkan!");
@@ -202,15 +207,21 @@ class Laptop extends CI_Controller {
         $namaUser = $input['nama_user'];
         $tipe = $input['tipe'];
         $namaPerangkat = $input['nama_perangkat'];
-        $tahun = $input['tahun'];
-        $periode = $input['periode'];
+        $tanggal = $input['tanggal'];
+        $tahun = date('Y', strtotime($tanggal));
+        $bulan = date('m', strtotime($tanggal));
+        if($bulan < 6){
+            $periode = '1';
+        }else {
+            $periode = '2';
+        }
         $pencapaian = $input['pencapaian'];
         
         if($tipe != 'MTBF'){
             $pencapaian /= 100;
         }
 
-        $this->db->query("UPDATE PC_TABLE SET TAHUN='$tahun', PERIODE='$periode', NAMA_USER='$namaUser', NAMA_PERANGKAT='$namaPerangkat', PENCAPAIAN='$pencapaian' WHERE ID = '$id'");
+        $this->db->query("UPDATE PC_TABLE SET TAHUN='$tahun', PERIODE='$periode', NAMA_USER='$namaUser', NAMA_PERANGKAT='$namaPerangkat', PENCAPAIAN='$pencapaian', TANGGAL='$tanggal', TIPE='$tipe' WHERE ID = '$id'");
 
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('success', "Data berhasil diubah!");

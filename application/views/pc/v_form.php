@@ -34,7 +34,7 @@
         </div>
         <div class="col-md-12 mb-4">
             <div class="form-outline" data-mdb-input-init>
-                <input type="date" class="form-control" name="tanggal" style="width:100%" value="<?=!empty($data) ? date('Y-m-d', strtotime($data->TANGGAL)) : '' ?>" required/>
+                <input type="date" class="form-control" name="tanggal" style="width:100%" value="<?=!empty($data) ? date('Y-m-d', strtotime($data->TANGGAL)) : '' ?>" min="<?=date('Y')?>-01-01" required/>
                 <label for="nama_lembaga" class="form-label">Tanggal</label>
             </div>
         </div>
@@ -66,17 +66,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-//    $('.tipe').on('change', function () {
-//     <?php if(empty($data)): ?>
-//         if($(this).val() == 'AR'){
-//             $('.colKendala').attr('hidden', false);
-//             $('.colPencapaian').attr('hidden', true);
-//         }else {
-//             $('.colPencapaian').attr('hidden', false);
-//             $('.colKendala').attr('hidden', true);
-//         }
-//     <?php endif; ?>
-//    });
 
 });
 </script>

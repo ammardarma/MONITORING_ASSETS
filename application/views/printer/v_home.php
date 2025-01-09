@@ -135,6 +135,45 @@
     </div>
 </div>
 
+<hr class="hr hr-blurry mb-5"/>
+<div class="mb-4"><h6 class="fw-bold"><i class="fas fa-chart-bar"></i> &nbsp;&nbsp;Comparison Data Between Years</h6></div>
+
+<div class="row mb-5">
+    <div class="col-md-12 mb-5">
+        <div class="card bg-transparent shadow-0 border border-primary border-2">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="text-primary fw-bold" style="font-size:0.9em;">Perbandingan Frekuensi Pengguna dengan Tahun Sebelumnya</div>
+                    <div class="text-primary fw-bold" style="font-size:1em;"><i class="fa fa-percentage"></i></div>
+                </div>
+                <canvas class="chart-fpg-compare" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 mb-5">
+        <div class="card bg-transparent shadow-0 border border-success border-2">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="text-success fw-bold" style="font-size:0.9em;">Perbandingan Frekuensi Perbaikan dengan Tahun Sebelumnya</div>
+                    <div class="text-success fw-bold" style="font-size:1em;">x&#772;</div>
+                </div>
+                <canvas class="chart-fpb-compare" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 mb-5">
+        <div class="card bg-transparent shadow-0 border border-warning border-2">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="text-warning fw-bold" style="font-size:0.9em;">Perbandingan Tingkat Kepuasan dengan Tahun Sebelumnya</div>
+                    <div class="text-warning fw-bold" style="font-size:1em;"><i class="fa fa-percentage"></i></div>
+                </div>
+                <canvas class="chart-tk-compare" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -152,8 +191,8 @@ $(document).ready(function() {
         return value.toLocaleString();
     };
 
-    // FREKUENSI PENGGUNA
-    const dataChartFPG = {
+  // FREKUENSI PENGGUNA
+  const dataChartFPG = {
     type: "bar",
     maintainAspectRatio: false,
     responsive: true,  
@@ -364,5 +403,221 @@ $(document).ready(function() {
     },
   };
   new Chart($('.chart-tk'), dataChartTK);
+
+  // FREKUENSI PENGGUNA
+  const dataChartFPGCompare = {
+    type: "bar",
+    maintainAspectRatio: false,
+    responsive: true,  
+    options: {
+      plugins : {
+        datalabels: { 
+          anchor: 'end',
+          align: 'top',
+          clamp: true
+        },
+        legend : {
+            position:'bottom',
+        }
+      }, 
+      scales: {
+            x: {
+                grid: {
+                display: false
+                }
+            },
+            y: {
+                grace: '2%',
+                grid: {
+                display: false
+                }
+            }
+        }
+    },
+    data: {
+      labels: <?=json_encode($bulan)?>,
+      datasets: [{
+          label: "Achievement <?=$tahun-1?>",
+          backgroundColor: [
+              'rgba(212, 212, 212, 0.2)',
+            ],
+            fill: true,
+            borderColor: [
+              'rgba(212,212,212,1)',
+            ],
+          borderWidth: 2,
+          borderRadius : 6,
+          tension: 0.2,
+          data: <?=json_encode($achievementFPGLastYear)?>,
+          datalabels: {
+            color: "black",
+            formatter: formatter,
+          }
+        },
+        {
+          label: "Achievement <?=$tahun?>",
+          backgroundColor: [
+            'rgba(102, 16, 242, 0.2)',
+          ],
+          borderColor: [
+            'rgba(102, 16, 242, 1)',
+          ],
+          borderWidth: 2,
+          borderRadius : 6,
+          tension: 0.2,
+          data: <?=json_encode($achievementFPG)?>,
+          datalabels: {
+            color: "black",
+            formatter: formatter,
+          }
+        },
+      ],
+    },
+  };
+  new Chart($('.chart-fpg-compare'), dataChartFPGCompare);
+
+  // FREKUENSI PERBAIKAN
+  const dataChartFPBCompare = {
+    type: "bar",
+    maintainAspectRatio: false,
+    responsive: true,  
+    options: {
+      plugins : {
+        datalabels: { 
+          anchor: 'end',
+          align: 'top',
+          clamp: true
+        },
+        legend : {
+            position:'bottom',
+        }
+      }, 
+      scales: {
+            x: {
+                grid: {
+                display: false
+                }
+            },
+            y: {
+                grace: '2%',
+                grid: {
+                display: false
+                }
+            }
+        }
+    },
+    data: {
+      labels: <?=json_encode($bulan)?>,
+      datasets: [{
+          label: "Achievement <?=$tahun-1?>",
+          backgroundColor: [
+              'rgba(212, 212, 212, 0.2)',
+            ],
+            fill: true,
+            borderColor: [
+              'rgba(212,212,212,1)',
+            ],
+          borderWidth: 2,
+          borderRadius : 6,
+          tension: 0.2,
+          data: <?=json_encode($achievementFPBLastYear)?>,
+          datalabels: {
+            color: "black",
+            formatter: formatterNonPercentage,
+          }
+        },
+        {
+          label: "Achievement <?=$tahun?>",
+          backgroundColor: [
+            'rgba(102, 16, 242, 0.2)',
+          ],
+          borderColor: [
+            'rgba(102, 16, 242, 1)',
+          ],
+          borderWidth: 2,
+          borderRadius : 6,
+          tension: 0.2,
+          data: <?=json_encode($achievementFPB)?>,
+          datalabels: {
+            color: "black",
+            formatter: formatterNonPercentage,
+          }
+        },
+      ],
+    },
+  };
+  new Chart($('.chart-fpb-compare'), dataChartFPBCompare);
+
+  // TINGKAT KEPUASAN
+  const dataChartTKCompare = {
+    type: "bar",
+    maintainAspectRatio: false,
+    responsive: true,  
+    options: {
+      plugins : {
+        datalabels: { 
+          anchor: 'end',
+          align: 'top',
+          clamp: true
+        },
+        legend : {
+            position:'bottom',
+        }
+      }, 
+      scales: {
+            x: {
+                grid: {
+                display: false
+                }
+            },
+            y: {
+                grace: '5%',
+                grid: {
+                display: false
+                }
+            }
+        }
+    },
+    data: {
+      labels: <?=json_encode($bulan)?>,
+      datasets: [{
+          label: "Achievement <?=$tahun-1?>",
+          backgroundColor: [
+              'rgba(212, 212, 212, 0.2)',
+            ],
+            fill: true,
+            borderColor: [
+              'rgba(212,212,212,1)',
+            ],
+          borderWidth: 2,
+          borderRadius : 6,
+          tension: 0.2,
+          data: <?=json_encode($achievementTKLastYear)?>,
+          datalabels: {
+            color: "black",
+            formatter: formatter,
+          }
+        },
+        {
+          label: "Achievement <?=$tahun?>",
+          backgroundColor: [
+            'rgba(102, 16, 242, 0.2)',
+          ],
+          borderColor: [
+            'rgba(102, 16, 242, 1)',
+          ],
+          borderWidth: 2,
+          borderRadius : 6,
+          tension: 0.2,
+          data: <?=json_encode($achievementTK)?>,
+          datalabels: {
+            color: "black",
+            formatter: formatter,
+          }
+        },
+      ],
+    },
+  };
+  new Chart($('.chart-tk-compare'), dataChartTKCompare);
 });
 </script>
