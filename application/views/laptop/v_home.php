@@ -1,9 +1,21 @@
+<div id="pdf">
+
+  <div id="header" class="row d-flex justify-content-between align-items-center mb-5 d-none">
+    <div class="col-md-2">
+      <img src="<?=base_url()?>assets/logo-wb.png" class="rounded d-none d-md-block logo" height="50" alt="?" loading="lazy"/>
+    </div>
+    <div class="col-md-4 text-end">
+      <h6 style="font-size:0.8em;">Print tanggal : <?=date('d F Y h:i:s')?></h6>
+      <h6 class="fw-bold text-primary" style="font-size:14px;"><i class="fa fa-info-circle">&nbsp;&nbsp;</i><?=$this->session->userdata('name') . ' | ' .ucfirst($this->session->userdata('status'))?></h6>
+    </div>
+  </div>
+
 <div class="mb-4"><h5 class="fw-bold"><i class="fa fa-laptop"></i> Laptop</h5></div>
 
     
 <div class="row justify-content-between align-items-center mb-2">
     <div class="col-md-3 align-self-stretch mb-2">
-        <div class="card shadow-5-strong rounded-8 wave wave-success">
+        <div class="card shadow-5-strong rounded-8 wave wave-success total-users">
             <div class="card-body">
                 <div class="row">
                     <small class="text-secondary"><small><b>Total Users</b></small></small>
@@ -15,13 +27,14 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <select data-mdb-select-init class="tahun">
-            <?php for($i = 2; $i < 10; $i++): ?>
-                <option value="202<?=$i?>" <?=(("202".$i) == $tahun) ? 'selected': ''?>>202<?=$i?></option>
-            <?php endfor; ?>
-        </select>
-        <label class="form-label select-label">Filter Year</label>
+    <div class="col-md-3 text-end">
+      <button class="btn btn-primary mb-4 rounded-5" onclick="printPDF()">Print PDF</button>
+      <select data-mdb-select-init class="tahun">
+          <?php for($i = 2; $i < 10; $i++): ?>
+              <option value="202<?=$i?>" <?=(("202".$i) == $tahun) ? 'selected': ''?>>202<?=$i?></option>
+          <?php endfor; ?>
+      </select>
+      <label class="form-label select-label">Filter Year</label>
     </div>
 </div>
 
@@ -294,7 +307,36 @@
     </div>
 </div>
 
+</div>
 <script type="text/javascript">
+function printPDF(){
+  $('#header').removeClass('d-none');
+  $('.total-users').removeClass('wave');
+  var HTML_Width = $("#pdf").width();
+  var HTML_Height = $("#pdf").height();
+  var top_left_margin = 30;
+  var PDF_Width = HTML_Width+(top_left_margin*2);
+  var PDF_Height = (PDF_Width*1)+(top_left_margin*2);
+  var canvas_image_width = HTML_Width;
+  var canvas_image_height = HTML_Height;
+  var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
+  var pdf = new jsPDF('p', 'pt',  "a4");
+  var width = pdf.internal.pageSize.width;
+  var height = pdf.internal.pageSize.height;
+       
+  html2canvas($("#pdf")[0],{allowTaint:true}).then(function(canvas) {
+  canvas.getContext('2d');
+  console.log(canvas.height+"  "+canvas.width);
+  var imgData = canvas.toDataURL("image/jpeg", 1.0);
+  pdf.addImage(imgData, 'JPG', 5, 30,width-10,height-100);
+  window.open(pdf.output('bloburl'), '_blank');
+  
+  });
+  $('#header').addClass('d-none');
+  $('.total-users').addClass('wave');
+
+}
+
 $(document).ready(function() {
     $('.tahun').on('change', function() {
       location.href="<?=base_url()?>Laptop?tahun="+$(this).val();

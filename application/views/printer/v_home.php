@@ -1,9 +1,22 @@
+<section id="pdf">
+
+  <div id="header" class="row d-flex justify-content-between align-items-center mb-5 d-none">
+    <div class="col-md-2">
+      <img src="<?=base_url()?>assets/logo-wb.png" class="rounded d-none d-md-block logo" height="50" alt="?" loading="lazy"/>
+    </div>
+    <div class="col-md-4 text-end">
+      <h6 style="font-size:0.8em;">Print tanggal : <?=date('d F Y h:i:s')?></h6>
+      <h6 class="fw-bold text-primary" style="font-size:14px;"><i class="fa fa-info-circle">&nbsp;&nbsp;</i><?=$this->session->userdata('name') . ' | ' .ucfirst($this->session->userdata('status'))?></h6>
+    </div>
+  </div>
+
 <div><h5 class="fw-bold"><i class="fa fa-print"></i> Printer</h5></div>
     
   <div class="row justify-content-between align-items-center mt-4">
       <div class="col-md-3 align-self-stretch mb-4">
       </div>
-      <div class="col-md-3 mb-4">
+      <div class="col-md-3 mb-4 text-end">
+          <button class="btn btn-primary mb-4 rounded-5" onclick="printPDF()">Print PDF</button>
           <select data-mdb-select-init class="tahun">
               <?php for($i = 2; $i < 10; $i++): ?>
                   <option value="202<?=$i?>" <?=(("202".$i) == $tahun) ? 'selected': ''?>>202<?=$i?></option>
@@ -135,6 +148,8 @@
     </div>
 </div>
 
+</section> <!-- END OF PDF -->
+<section id="pdf2">
 <hr class="hr hr-blurry mb-5"/>
 <div class="mb-4"><h6 class="fw-bold"><i class="fas fa-chart-bar"></i> &nbsp;&nbsp;Comparison Data Between Years</h6></div>
 
@@ -173,8 +188,35 @@
         </div>
     </div>
 </div>
+</section>
 
 <script type="text/javascript">
+function printPDF(){
+  $('#header').removeClass('d-none');
+  $('.total-users').removeClass('wave');
+  var HTML_Width = $("#pdf").width();
+  var HTML_Height = $("#pdf").height();
+  var top_left_margin = 30;
+  var PDF_Width = HTML_Width+(top_left_margin*2);
+  var PDF_Height = (PDF_Width*1)+(top_left_margin*2);
+  var canvas_image_width = HTML_Width;
+  var canvas_image_height = HTML_Height;
+  var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
+  var pdf = new jsPDF('p', 'pt',  "a4");
+  var width = pdf.internal.pageSize.width;
+  var height = pdf.internal.pageSize.height;
+       
+  html2canvas($("#pdf")[0],{allowTaint:true}).then(function(canvas) {
+  canvas.getContext('2d');
+  var imgData = canvas.toDataURL("image/jpeg", 1.0);
+  pdf.addImage(imgData, 'JPG', 5, 30,width-15,height-50);
+  window.open(pdf.output('bloburl'), '_blank');
+  });
+
+  $('#header').addClass('d-none');
+  $('.total-users').addClass('wave');
+
+}
 $(document).ready(function() {
 
     $('.tahun').on('change', function () {
