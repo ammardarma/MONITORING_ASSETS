@@ -32,7 +32,7 @@ class Printer extends CI_Controller {
         LEFT JOIN 
         (SELECT BULAN, pt.TIPE, mt.TARGET,  AVG(PENCAPAIAN) PENCAPAIAN FROM PRINTER_TABLE pt JOIN M_TARGETS mt ON pt.TIPE = mt.TIPE  WHERE pt.TAHUN LIKE '%".($tahun-1)."%' GROUP BY BULAN, TIPE ORDER BY BULAN) B 
         ON A.BULAN=B.BULAN AND A.TIPE=B.TIPE")->result();
-        $data['achievementFPG'] = $data['targetFPG'] = $data['achievementFPB'] = $data['targetFPB'] = $data['achievementTK'] = $data['targetTK'] = $data['bulan'] = $data['achievementFPGLastYear']  = $data['achievementFPB'] = $data['achievementTK'] = array();
+        $data['achievementFPG'] = $data['targetFPG'] = $data['achievementFPB'] = $data['targetFPB'] = $data['achievementTK'] = $data['targetTK'] = $data['bulan'] = $data['achievementFPGLastYear']  = $data['achievementFPBLastYear'] = $data['achievementTKLastYear'] = array();
 
         foreach($dataGrafik as $v){
             if($v->TIPE == 'FREKUENSI PENGGUNA'){
