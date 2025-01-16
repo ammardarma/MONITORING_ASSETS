@@ -182,36 +182,36 @@
 <hr class="hr hr-blurry mb-5"/>
 <div class="mb-4"><h6 class="fw-bold"><i class="fas fa-chart-bar"></i> &nbsp;&nbsp;Comparison Data Between Years</h6></div>
 <div class="row mt-3 mb-4">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <div class="card bg-transparent shadow-0 border border-primary border-3">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div class="text-primary fw-bold" style="font-size:0.8em;">Comparation Availability Rate</div>
                     <div class="text-primary fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
                 </div>
-                <canvas class="chart-ar-compare" height="300"></canvas>
+                <canvas class="chart-ar-compare" height="100"></canvas>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-12">
         <div class="card bg-transparent shadow-0 border border-success border-3">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div class="text-success fw-bold" style="font-size:0.8em;">Comparation Maintenance Success</div>
                     <div class="text-success fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
                 </div>
-                <canvas class="chart-km-compare" height="300"></canvas>
+                <canvas class="chart-km-compare" height="100"></canvas>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-12">
         <div class="card bg-transparent shadow-0 border border-warning border-3">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div class="text-warning fw-bold" style="font-size:0.8em;">Comparation Mean Time Between Failures</div>
                     <div class="text-warning fw-bold" style="font-size:0.8em;">(Month)</div>
                 </div>
-                <canvas class="chart-mtbf-compare" height="300"></canvas>
+                <canvas class="chart-mtbf-compare" height="100"></canvas>
             </div>
         </div>
     </div>
@@ -570,7 +570,7 @@ $(document).ready(function() {
   new Chart($('.chart-mtbf'), dataChartMTBF);
 
   const dataChartARCompare = {
-      type: "bar",
+      type: "line",
       maintainAspectRatio: false,
       responsive: true,  
       options: {
@@ -588,48 +588,42 @@ $(document).ready(function() {
               x: {
                   grid: {
                   display: false
-                  }
+                  },
+                
               },
               y: {
                   grid: {
                   display: false
-                  }
+                  },
+                  offset:true,
               }
           }
       },
       data: {
-        labels: ["Period 1", "Period 2",],
+        labels: <?=json_encode($labelARComparison)?>,
         datasets: [{
-            label: "Achievement <?=$this->session->userdata('tahun')-1?>",
-            backgroundColor: [
-              'rgba(212, 212, 212, 0.2)',
-            ],
-            fill: true,
+            label: "Target",
             borderColor: [
-              'rgba(212,212,212,1)',
+              'rgba(255,99,132,1)',
             ],
             borderWidth: 2,
             borderRadius : 6,
             tension: 0.4,
-            data: <?=json_encode($achievementARLastYear)?>,
+            data: <?=json_encode($targetARComparison)?>,
             datalabels: {
               color: "black",
               formatter: formatter,
             }
           },
           {
-            label: "Achievement <?=$this->session->userdata('tahun')?>",
-            backgroundColor: [
-              'rgba(102, 16, 242, 0.2)',
-            ],
-            fill: true,
+            label: "Achievement",
             borderColor: [
               'rgba(102, 16, 242, 1)',
             ],
             borderWidth: 2,
             borderRadius : 6,
             tension: 0.4,
-            data: <?=json_encode($achievementAR)?>,
+            data: <?=json_encode($achievementARComparison)?>,
             datalabels: {
               color: "black",
               formatter: formatter,
@@ -641,7 +635,7 @@ $(document).ready(function() {
   new Chart($('.chart-ar-compare'), dataChartARCompare);
 
   const dataChartKMCompare = {
-      type: "bar",
+      type: "line",
       maintainAspectRatio: false,
       responsive: true,  
       options: {
@@ -664,43 +658,36 @@ $(document).ready(function() {
               y: {
                   grid: {
                   display: false
-                  }
+                  },
+                  offset:true,
               }
           }
       },
       data: {
-        labels: ["Period 1", "Period 2",],
+        labels: <?=json_encode($labelKMComparison)?>,
         datasets: [{
-            label: "Achievement <?=$this->session->userdata('tahun')-1?>",
-            backgroundColor: [
-              'rgba(212, 212, 212, 0.2)',
-            ],
-            fill: true,
+            label: "Target",
             borderColor: [
-              'rgba(212,212,212,1)',
+              'rgba(255,99,132,1)',
             ],
             borderWidth: 2,
             borderRadius : 6,
             tension: 0.4,
-            data: <?=json_encode($achievementKMLastYear)?>,
+            data: <?=json_encode($targetKMComparison)?>,
             datalabels: {
               color: "black",
               formatter: formatter,
             }
           },
           {
-            label: "Achievement <?=$this->session->userdata('tahun')?>",
-            backgroundColor: [
-              'rgba(102, 16, 242, 0.2)',
-            ],
-            fill: true,
+            label: "Achievement",
             borderColor: [
               'rgba(102, 16, 242, 1)',
             ],
             borderWidth: 2,
             borderRadius : 6,
             tension: 0.4,
-            data: <?=json_encode($achievementKM)?>,
+            data: <?=json_encode($achievementKMComparison)?>,
             datalabels: {
               color: "black",
               formatter: formatter,
@@ -712,7 +699,7 @@ $(document).ready(function() {
   new Chart($('.chart-km-compare'), dataChartKMCompare);
 
   const dataChartMTBFCompare = {
-      type: "bar",
+      type: "line",
       maintainAspectRatio: false,
       responsive: true,  
       options: {
@@ -735,43 +722,36 @@ $(document).ready(function() {
               y: {
                   grid: {
                   display: false
-                  }
+                  },
+                  offset:true,
               }
           }
       },
       data: {
-        labels: ["Period 1", "Period 2",],
+        labels: <?=json_encode($labelMTBFComparison)?>,
         datasets: [{
-            label: "Achievement <?=$this->session->userdata('tahun')-1?>",
-            backgroundColor: [
-              'rgba(212, 212, 212, 0.2)',
-            ],
-            fill: true,
+            label: "Target",
             borderColor: [
-              'rgba(212,212,212,1)',
+              'rgba(255,99,132,1)',
             ],
             borderWidth: 2,
             borderRadius : 6,
             tension: 0.4,
-            data: <?=json_encode($achievementMTBFLastYear)?>,
+            data: <?=json_encode($targetMTBFComparison)?>,
             datalabels: {
               color: "black",
               formatter: formatterNonPercentage,
             }
           },
           {
-            label: "Achievement <?=$this->session->userdata('tahun')?>",
-            backgroundColor: [
-              'rgba(102, 16, 242, 0.2)',
-            ],
-            fill: true,
+            label: "Achievement",
             borderColor: [
               'rgba(102, 16, 242, 1)',
             ],
             borderWidth: 2,
             borderRadius : 6,
             tension: 0.4,
-            data: <?=json_encode($achievementMTBF)?>,
+            data: <?=json_encode($achievementMTBFComparison)?>,
             datalabels: {
               color: "black",
               formatter: formatterNonPercentage,

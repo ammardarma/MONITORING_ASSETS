@@ -58,7 +58,30 @@ class PC extends CI_Controller {
                 $data['targetMTBF'][] = round($v->TARGET,2);
             }
         }
-    
+
+        $data['achievementARComparison'] = $data['targetARComparison'] = 
+        $data['achievementKMComparison'] = $data['targetKMComparison'] = 
+        $data['achievementMTBFComparison'] = $data['targetMTBFComparison'] = 
+        $data['labelARComparison'] = $data['labelKMComparison'] = $data['labelMTBFComparison'] = array();
+
+        $dataGrafikComparison = $this->db->query("SELECT A.TAHUN, A.TIPE, AVG(PENCAPAIAN)PENCAPAIAN, TARGET, A.PERIODE FROM PC_TABLE A LEFT JOIN M_TARGETS B ON A.TIPE = B.TIPE AND A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE WHERE A.TAHUN BETWEEN '".($tahun-5)."' AND '$tahun' AND A.TIPE_PERANGKAT = 'PC' GROUP BY A.TAHUN, A.TIPE, A.PERIODE ORDER BY A.TAHUN")->result();
+
+        foreach($dataGrafikComparison as $v){
+            if($v->TIPE == 'AR'){
+                $data['achievementARComparison'][] = round($v->PENCAPAIAN*100,2);
+                $data['targetARComparison'][] = round($v->TARGET*100,2);
+                $data['labelARComparison'][] = $v->TAHUN . ' ( P' . $v->PERIODE . ' ) ';
+            }else if($v->TIPE == 'KM'){
+                $data['achievementKMComparison'][] = round($v->PENCAPAIAN*100,2);
+                $data['targetKMComparison'][] = round($v->TARGET*100,2);
+                $data['labelKMComparison'][] = $v->TAHUN . ' ( P' . $v->PERIODE . ' ) ';
+            }else if($v->TIPE == 'MTBF') {
+                $data['achievementMTBFComparison'][] = round($v->PENCAPAIAN,2);
+                $data['targetMTBFComparison'][] = round($v->TARGET,2);
+                $data['labelMTBFComparison'][] = $v->TAHUN . ' ( P' . $v->PERIODE . ' ) ';
+            }
+        }
+
 		$this->template->display('pc/v_home.php', 'header.php', $data);
 	}
 
@@ -69,6 +92,10 @@ class PC extends CI_Controller {
         $tahun = $this->session->userdata('tahun');
         $data['tipe'] = $this->input->get('tipe', true);
         $data['tahun'] = $tahun;
+        $data['target'] = $this->db->query("SELECT * FROM M_TARGETS WHERE TIPE = '".$data['tipe']."' AND TAHUN='$tahun'")->result();
+        if (count($data['target']) < 2) {
+            $this->session->set_flashdata('failed', "Tidak bisa input dikarenakan data target belum diinput!");
+        }
         $this->template->display('pc/v_list.php', 'header.php', $data);
     }
 

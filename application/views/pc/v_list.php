@@ -67,7 +67,7 @@
                     </div> 
                 </div>
                 <div class="col-md-2 text-end">
-                    <?php if($this->session->userdata('status') != 'admin'): ?>
+                    <?php if($this->session->userdata('status') != 'admin' && count($target) > 1): ?>
                         <a href="<?=base_url()?>PC/viewForm?tipe=<?=$tipe?>" class="btn btn-success" href="<?=base_url()?>PC" ><i class="fa fa-plus"></i> &nbsp;&nbsp;Add Data</a>
                     <?php endif; ?>
                 </div>
