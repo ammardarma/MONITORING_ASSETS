@@ -30,6 +30,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
         <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 
+        <!-- Js Charting -->
+        <script src="https://code.jscharting.com/latest/jscharting.js"></script>
+        <script type="text/javascript" src="https://code.jscharting.com/latest/modules/toolbar.js"></script>
+        <script type="text/javascript" src="https://code.jscharting.com/latest/modules/types.js"></script>
+
     </head>
 <body style="font-family: Lato;">
     <nav data-mdb-sidenav-init id="sidenav-1" class="sidenav bg-transparent text-gray align-content-center shadow-0" data-mdb-mode="side" data-mdb-slim="true" data-mdb-slim-collapsed="true" data-mdb-content="#content" data-mdb-hidden="false">

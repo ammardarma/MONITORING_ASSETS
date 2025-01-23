@@ -57,12 +57,12 @@
         <label class="form-label select-label">Filter Month</label>
     </div>
     <div class="col-md-4 mb-2">
-        <select data-mdb-select-init class="tipe">
+        <select data-mdb-select-init class="tipe" disabled>
            <option value="FREKUENSI PENGGUNA" <?=$tipe == 'FREKUENSI PENGGUNA' ? 'selected' : ''?>>Frekuensi Pengguna</option>
            <option value="FREKUENSI PERBAIKAN" <?=$tipe == 'FREKUENSI PERBAIKAN' ? 'selected' : ''?>>Frekuensi Perbaikan</option>
            <option value="TINGKAT KEPUASAN" <?=$tipe == 'TINGKAT KEPUASAN' ? 'selected' : ''?>>Tingkat Kepuasan</option>
         </select>
-        <label class="form-label select-label">Filter Type</label>
+        <label class="form-label select-label">Type</label>
     </div>
 </div>
 <div class="row">

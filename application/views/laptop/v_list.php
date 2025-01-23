@@ -45,12 +45,12 @@
         <label class="form-label select-label">Filter Period</label>
     </div>
     <div class="col-md-4 mb-2">
-        <select data-mdb-select-init class="tipe">
+        <select data-mdb-select-init class="tipe" disabled>
            <option value="AR" <?=$tipe == 'AR' ? 'selected' : ''?>>Availability Rate</option>
            <option value="KM" <?=$tipe == 'KM' ? 'selected' : ''?>>Maintenance Success</option>
            <option value="MTBF" <?=$tipe == 'MTBF' ? 'selected' : ''?>>Mean Time Between Failures</option>
         </select>
-        <label class="form-label select-label">Filter Type</label>
+        <label class="form-label select-label">Type</label>
     </div>
 </div>
 <div class="row">

@@ -79,7 +79,7 @@
             </div>
         </div>
         <div class="text-center mt-4">
-            <a href="<?=base_url()?>PC/viewList?tipe=AR">
+            <a href="<?=base_url()?>Laptop/viewList?tipe=AR">
                 <h6 class="text-primary mb-0">See Detail</h6>
                 <i class="fas fa-angle-down"></i>
             </a>
@@ -125,7 +125,7 @@
             </div>
         </div>
         <div class="text-center mt-4">
-            <a href="<?=base_url()?>PC/viewList?tipe=KM">
+            <a href="<?=base_url()?>Laptop/viewList?tipe=KM">
                 <h6 class="text-success mb-0">See Detail</h6>
                 <i class="fas fa-angle-down text-success"></i>
             </a>
@@ -171,7 +171,7 @@
             </div>
         </div>
         <div class="text-center mt-4">
-            <a href="<?=base_url()?>PC/viewList?tipe=MTBF">
+            <a href="<?=base_url()?>Laptop/viewList?tipe=MTBF">
                 <h6 class="text-warning mb-0">See Detail</h6>
                 <i class="fas fa-angle-down text-warning"></i>
             </a>

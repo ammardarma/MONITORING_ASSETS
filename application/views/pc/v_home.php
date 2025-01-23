@@ -38,6 +38,48 @@
     </div>
 </div>
 
+<div class="row mb-3">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <div class="text-primary fw-bold" style="font-size:0.8em;">Availability Rate</div>
+        <div class="text-primary fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
+      </div>
+      <div class="card-body text-center">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div id="chart-ar-p1" style="width: 100%; height: 120px; background-color:transparent;"></div> 
+            <div class="text-secondary mb-2" style="font-size:12px;">Target : <?=$dataSelisih[0]->AR_TARGET_1?>%</div>
+          </div>
+          <div class="col-md-6 position-relative text-center mb-2">
+            <div class="text-secondary mb-2" style="font-size:12px;">Period 1</div>
+              <?php if(substr($dataSelisih[0]->SELISIH_AR_1, 0, 1) == '-'): ?>
+                  <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_1,2) ?: '0'?>%</h6>
+              <?php else : ?>
+                  <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_1,2) ?: '0'?>%</h6>
+              <?php endif; ?>
+          </div>
+        </div>
+        <hr class="hr hr-blurry"/>
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div id="chart-ar-p2" style="width: 100%; height: 120px; background-color:transparent;"></div> 
+            <div class="text-secondary mb-2" style="font-size:12px;">Target : <?=$dataSelisih[0]->AR_TARGET_2?>%</div>
+          </div>
+          <div class="col-md-6 position-relative text-center mb-2">
+            <div class="text-secondary mb-2" style="font-size:12px;">Period 2</div>
+              <?php if(substr($dataSelisih[0]->SELISIH_AR_2, 0, 1) == '-'): ?>
+                  <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_2,2) ?: '0'?>%</h6>
+              <?php else : ?>
+                  <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_2,2) ?: '0'?>%</h6>
+              <?php endif; ?>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="row mb-4">
     <div class="col-md-4">
         <div class="card bg-transparent shadow-0 border-bottom border-top border-primary border-3">
@@ -352,6 +394,76 @@ $(document).ready(function() {
     const formatterNonPercentage = (value, ctx) => {
         return value.toLocaleString();
     };
+
+    var chart = JSC.chart('chart-ar-p1', { 
+        debug: true,  
+        legend_visible: false, 
+        yAxis: [ 
+            { 
+            line_visible: true, 
+            defaultTick_enabled: false, 
+            scale_range: [0, 100] 
+            }, 
+        ], 
+        xAxis: [ 
+            { 
+            defaultTick_gridLine_width: 0, 
+            spacingPercentage: 0.15 
+            }, 
+        ], 
+        defaultSeries: { 
+            type: 'gauge column roundCaps', 
+            shape: { 
+            label: [ 
+                { 
+                text: '%sum%', 
+                verticalAlign: 'middle', 
+                style_fontSize: 14 
+                } 
+            ] 
+            } 
+        }, 
+        series: [ 
+            { 
+            points: [['Achievement', <?=round($dataSelisih[0]->AR_1, 2)?>]] 
+            }, 
+        ] 
+    });
+
+    var chart = JSC.chart('chart-ar-p2', { 
+        debug: true,  
+        legend_visible: false, 
+        yAxis: [ 
+            { 
+            line_visible: true, 
+            defaultTick_enabled: false, 
+            scale_range: [0, 100] 
+            }, 
+        ], 
+        xAxis: [ 
+            { 
+            defaultTick_gridLine_width: 0, 
+            spacingPercentage: 0.15 
+            }, 
+        ], 
+        defaultSeries: { 
+            type: 'gauge column roundCaps', 
+            shape: { 
+            label: [ 
+                { 
+                text: '%sum%', 
+                verticalAlign: 'middle', 
+                style_fontSize: 14 
+                } 
+            ] 
+            } 
+        }, 
+        series: [ 
+            { 
+            points: [['Achievement', <?=round($dataSelisih[0]->AR_2, 2)?>]] 
+            }, 
+        ] 
+    });
 
     // AR
     const dataChartAR = {
