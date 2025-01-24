@@ -42,7 +42,7 @@
   <div class="col-md-4">
     <div class="card">
       <div class="card-header d-flex justify-content-between align-items-center">
-        <div class="text-primary fw-bold" style="font-size:0.8em;">Availability Rate</div>
+        <div class="text-primary fw-bold" style="font-size:1.2em;">Availability Rate</div>
         <div class="text-primary fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
       </div>
       <div class="card-body text-center">
@@ -54,9 +54,9 @@
           <div class="col-md-6 position-relative text-center mb-2">
             <div class="text-secondary mb-2" style="font-size:12px;">Period 1</div>
               <?php if(substr($dataSelisih[0]->SELISIH_AR_1, 0, 1) == '-'): ?>
-                  <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_1,2) ?: '0'?>%</h6>
+                  <h6 class="text-danger fw-bold"><i class="fa fa-arrow-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_1,2) ?: '0'?>%</h6>
               <?php else : ?>
-                  <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_1,2) ?: '0'?>%</h6>
+                  <h6 class="text-success fw-bold"><i class="fa fa-arrow-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_1,2) ?: '0'?>%</h6>
               <?php endif; ?>
           </div>
         </div>
@@ -69,9 +69,9 @@
           <div class="col-md-6 position-relative text-center mb-2">
             <div class="text-secondary mb-2" style="font-size:12px;">Period 2</div>
               <?php if(substr($dataSelisih[0]->SELISIH_AR_2, 0, 1) == '-'): ?>
-                  <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_2,2) ?: '0'?>%</h6>
+                  <h6 class="text-danger fw-bold"><i class="fa fa-arrow-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_2,2) ?: '0'?>%</h6>
               <?php else : ?>
-                  <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_2,2) ?: '0'?>%</h6>
+                  <h6 class="text-success fw-bold"><i class="fa fa-arrow-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_2,2) ?: '0'?>%</h6>
               <?php endif; ?>
           </div>
         </div>
