@@ -121,7 +121,7 @@
             </div>
         </div>
         <hr class="hr hr-blurry" />
-        <div class="text-end mb-4">
+        <div class="text-end mb-2">
             <h6 class="fw-bold text-primary" style="font-size:14px;"><i class="fa fa-info-circle">&nbsp;&nbsp;</i><?=$this->session->userdata('name') . ' | ' .ucfirst($this->session->userdata('status'))?></h6>
         </div>
         <?=$content?>

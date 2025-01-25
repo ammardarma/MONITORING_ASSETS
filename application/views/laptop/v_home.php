@@ -16,11 +16,11 @@
 <div class="row justify-content-between align-items-center mb-2">
     <div class="col-md-3 align-self-stretch mb-2">
         <div class="card shadow-5-strong rounded-8 wave wave-success total-users">
-            <div class="card-body">
+            <div class="card-body py-2">
                 <div class="row">
                     <small class="text-secondary"><small><b>Total Users</b></small></small>
                 </div>
-                <div class="d-flex justify-content-between align-items-start mt-3">
+                <div class="d-flex justify-content-between align-items-start mt-2">
                     <h3 class="text-dark fw-bold"><?=$dataUser[0]->USER_NB ?: '0'?></h3>
                     <div class="btn btn-floating btn-secondary"><b><i class="fa fa-user"></i></b></div>
                 </div>
@@ -38,274 +38,156 @@
     </div>
 </div>
 
-<div class="row mb-4">
-    <div class="col-md-4">
-        <div class="card bg-transparent shadow-0 border-bottom border-top border-primary border-3">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="text-primary fw-bold" style="font-size:0.8em;">Availability Rate</div>
-                    <div class="text-primary fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
-                </div>
-                <canvas class="chart-ar mb-3" height="300"></canvas>
-                <div class="col-md-12 align-self-stretch mb-2">
-                      <div class="card shadow-2 h-100">
-                          <div class="card-body pt-3 pb-2">
-                              <div class="d-flex justify-content-between align-items-center">
-                                  <div class="text-secondary fw-bold" style="font-size:0.8em;">Deviation Availability Rate</div>
-                                  <div class="text-primary fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
-                              </div>
-                                  <div class="row align-items-center justify-content-between mt-4">
-                                      <div class="col-md-6 position-relative text-center mb-2">
-                                        <div class="text-secondary mb-2" style="font-size:12px;">Period 1</div>
-                                          <?php if(substr($dataSelisih[0]->SELISIH_AR_1, 0, 1) == '-'): ?>
-                                              <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_1,2) ?: '0'?>%</h6>
-                                          <?php else : ?>
-                                              <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_1,2) ?: '0'?>%</h6>
-                                          <?php endif; ?>
-                                          <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
-                                      </div>
-                                      <div class="col-md-6 position-relative text-center mb-2">
-                                        <div class="text-secondary mb-2" style="font-size:12px;">Period 2</div>
-                                          <?php if(substr($dataSelisih[0]->SELISIH_AR_2, 0, 1) == '-'): ?>
-                                              <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_2,2) ?: '0'?>%</h6>
-                                          <?php else : ?>
-                                              <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_2,2) ?: '0'?>%</h6>
-                                          <?php endif; ?>
-                                      </div>
-                                  </div>
-                          </div>
-                      </div>
-                </div>
-            </div>
+<div class="row mb-3">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <div class="text-primary fw-bold" style="font-size:1.2em;">Availability Rate</div>
+        <div class="text-primary fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
+      </div>
+      <div class="card-body text-center">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div id="chart-ar-p1" style="width: 100%; height: 120px; background-color:transparent;"></div> 
+            <div class="text-secondary mb-2" style="font-size:12px;">Target : <?=$dataSelisih[0]->AR_TARGET_1?>%</div>
+          </div>
+          <div class="col-md-6 position-relative text-center mb-2">
+            <div class="text-secondary mb-2" style="font-size:12px;">Period 1</div>
+              <?php if(substr($dataSelisih[0]->SELISIH_AR_1, 0, 1) == '-'): ?>
+                  <h6 class="text-danger fw-bold"><i class="fa fa-arrow-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_1,2) ?: '0'?>%</h6>
+              <?php else : ?>
+                  <h6 class="text-success fw-bold"><i class="fa fa-arrow-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_1,2) ?: '0'?>%</h6>
+              <?php endif; ?>
+          </div>
         </div>
-        <div class="text-center mt-4">
-            <a href="<?=base_url()?>Laptop/viewList?tipe=AR">
-                <h6 class="text-primary mb-0">See Detail</h6>
-                <i class="fas fa-angle-down"></i>
-            </a>
+        <hr class="hr hr-blurry"/>
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div id="chart-ar-p2" style="width: 100%; height: 120px; background-color:transparent;"></div> 
+            <div class="text-secondary mb-2" style="font-size:12px;">Target : <?=$dataSelisih[0]->AR_TARGET_2?>%</div>
+          </div>
+          <div class="col-md-6 position-relative text-center mb-2">
+            <div class="text-secondary mb-2" style="font-size:12px;">Period 2</div>
+              <?php if(substr($dataSelisih[0]->SELISIH_AR_2, 0, 1) == '-'): ?>
+                  <h6 class="text-danger fw-bold"><i class="fa fa-arrow-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_2,2) ?: '0'?>%</h6>
+              <?php else : ?>
+                  <h6 class="text-success fw-bold"><i class="fa fa-arrow-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_2,2) ?: '0'?>%</h6>
+              <?php endif; ?>
+          </div>
         </div>
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+        <a class="text-center" href="<?=base_url()?>Laptop/viewComparation?tipe=AR">
+            <h6 class="text-primary mb-0">Comparison Years</h6>
+            <i class="fas fa-angle-down"></i>
+        </a>
+        <a class="text-center" href="<?=base_url()?>Laptop/viewList?tipe=AR">
+            <h6 class="text-primary mb-0">See Detail</h6>
+            <i class="fas fa-angle-down"></i>
+        </a>
+      </div>
     </div>
-    <div class="col-md-4">
-        <div class="card bg-transparent shadow-0 border-bottom border-top border-success border-3">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="text-success fw-bold" style="font-size:0.8em;">Maintenance Success</div>
-                    <div class="text-success fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
-                </div>
-                <canvas class="chart-km mb-3" height="300"></canvas>
-                <div class="col-md-12 align-self-stretch mb-2">
-                    <div class="card shadow-2">
-                        <div class="card-body pt-3 pb-2">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="text-secondary fw-bold" style="font-size:0.8em;">Deviation Maintenance Success</div>
-                                <div class="text-success fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
-                            </div>
-                            <div class="row align-items-center justify-content-between mt-4">
-                                <div class="col-md-6 position-relative text-center mb-2">
-                                  <div class="text-secondary mb-2" style="font-size:12px;">Period 1</div>
-                                    <?php if(substr($dataSelisih[0]->SELISIH_KM_1, 0, 1) == '-'): ?>
-                                        <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_1,2) ?: '0'?>%</h6>
-                                    <?php else : ?>
-                                        <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_1,2) ?: '0'?>%</h6>
-                                    <?php endif; ?>
-                                    <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
-                                </div>
-                                <div class="col-md-6 position-relative text-center mb-2">
-                                  <div class="text-secondary mb-2" style="font-size:12px;">Period 2</div>
-                                    <?php if(substr($dataSelisih[0]->SELISIH_KM_2, 0, 1) == '-'): ?>
-                                        <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_2,2) ?: '0'?>%</h6>
-                                    <?php else : ?>
-                                        <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_2,2) ?: '0'?>%</h6>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <div class="text-primary fw-bold" style="font-size:1.2em;">Maintenance Success</div>
+        <div class="text-primary fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
+      </div>
+      <div class="card-body text-center">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div id="chart-km-p1" style="width: 100%; height: 120px; background-color:transparent;"></div> 
+            <div class="text-secondary mb-2" style="font-size:12px;">Target : <?=$dataSelisih[0]->KM_TARGET_1?>%</div>
+          </div>
+          <div class="col-md-6 position-relative text-center mb-2">
+            <div class="text-secondary mb-2" style="font-size:12px;">Period 1</div>
+              <?php if(substr($dataSelisih[0]->SELISIH_KM_1, 0, 1) == '-'): ?>
+                  <h6 class="text-danger fw-bold"><i class="fa fa-arrow-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_1,2) ?: '0'?>%</h6>
+              <?php else : ?>
+                  <h6 class="text-success fw-bold"><i class="fa fa-arrow-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_1,2) ?: '0'?>%</h6>
+              <?php endif; ?>
+          </div>
         </div>
-        <div class="text-center mt-4">
-            <a href="<?=base_url()?>Laptop/viewList?tipe=KM">
-                <h6 class="text-success mb-0">See Detail</h6>
-                <i class="fas fa-angle-down text-success"></i>
-            </a>
+        <hr class="hr hr-blurry"/>
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div id="chart-km-p2" style="width: 100%; height: 120px; background-color:transparent;"></div> 
+            <div class="text-secondary mb-2" style="font-size:12px;">Target : <?=$dataSelisih[0]->KM_TARGET_2?>%</div>
+          </div>
+          <div class="col-md-6 position-relative text-center mb-2">
+            <div class="text-secondary mb-2" style="font-size:12px;">Period 2</div>
+              <?php if(substr($dataSelisih[0]->SELISIH_KM_2, 0, 1) == '-'): ?>
+                  <h6 class="text-danger fw-bold"><i class="fa fa-arrow-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_2,2) ?: '0'?>%</h6>
+              <?php else : ?>
+                  <h6 class="text-success fw-bold"><i class="fa fa-arrow-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_2,2) ?: '0'?>%</h6>
+              <?php endif; ?>
+          </div>
         </div>
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+        <a class="text-center" href="<?=base_url()?>Laptop/viewComparation?tipe=KM">
+            <h6 class="text-primary mb-0">Comparison Years</h6>
+            <i class="fas fa-angle-down"></i>
+        </a>
+        <a class="text-center" href="<?=base_url()?>Laptop/viewList?tipe=KM">
+            <h6 class="text-primary mb-0">See Detail</h6>
+            <i class="fas fa-angle-down"></i>
+        </a>
+      </div>
     </div>
-    <div class="col-md-4">
-        <div class="card bg-transparent shadow-0 border-bottom border-top border-warning border-3">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="text-warning fw-bold" style="font-size:0.8em;">Mean Time Between Failures</div>
-                    <div class="text-warning fw-bold" style="font-size:0.8em;">(Month)</div>
-                </div>
-                <canvas class="chart-mtbf mb-3" height="300"></canvas>
-                <div class="col-md-12 align-self-stretch mb-2">
-                      <div class="card shadow-2 h-100">
-                          <div class="card-body pt-3 pb-2">
-                              <div class="d-flex justify-content-between align-items-center">
-                                  <div class="text-secondary fw-bold" style="font-size:0.8em;">Deviation Mean Time Between Failures</div>
-                                  <div class="text-warning fw-bold" style="font-size:0.8em;">(Mon)</div>
-                              </div>
-                                  <div class="row align-items-center justify-content-between mt-4">
-                                      <div class="col-md-6 position-relative text-center mb-2">
-                                        <div class="text-secondary mb-2" style="font-size:12px;">Period 1</div>
-                                          <?php if(substr($dataSelisih[0]->SELISIH_MTBF_1, 0, 1) == '-'): ?>
-                                              <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_1,2) ?: '0'?></h6>
-                                          <?php else : ?>
-                                              <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_1,2) ?: '0'?></h6>
-                                          <?php endif; ?>
-                                          <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
-                                      </div>
-                                      <div class="col-md-6 position-relative text-center mb-2">
-                                        <div class="text-secondary mb-2" style="font-size:12px;">Period 2</div>
-                                          <?php if(substr($dataSelisih[0]->SELISIH_MTBF_2, 0, 1) == '-'): ?>
-                                              <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_2,2) ?: '0'?></h6>
-                                          <?php else : ?>
-                                              <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_2,2) ?: '0'?></h6>
-                                          <?php endif; ?>
-                                      </div>
-                                  </div>
-                          </div>
-                      </div>
-                </div>
-            </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <div class="text-primary fw-bold" style="font-size:1.2em;">Mean Time Between Failures</div>
+        <div class="text-primary fw-bold" style="font-size:0.8em;">(Month)</div>
+      </div>
+      <div class="card-body text-center">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div id="chart-mtbf-p1" style="width: 100%; height: 120px; background-color:transparent;"></div> 
+            <div class="text-secondary mb-2" style="font-size:12px;">Target : <?=$dataSelisih[0]->MTBF_TARGET_1?></div>
+          </div>
+          <div class="col-md-6 position-relative text-center mb-2">
+            <div class="text-secondary mb-2" style="font-size:12px;">Period 1</div>
+              <?php if(substr($dataSelisih[0]->SELISIH_MTBF_1, 0, 1) == '-'): ?>
+                  <h6 class="text-danger fw-bold"><i class="fa fa-arrow-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_1,0) ?: '0'?></h6>
+              <?php else : ?>
+                  <h6 class="text-success fw-bold"><i class="fa fa-arrow-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_1,0) ?: '0'?></h6>
+              <?php endif; ?>
+          </div>
         </div>
-        <div class="text-center mt-4">
-            <a href="<?=base_url()?>Laptop/viewList?tipe=MTBF">
-                <h6 class="text-warning mb-0">See Detail</h6>
-                <i class="fas fa-angle-down text-warning"></i>
-            </a>
+        <hr class="hr hr-blurry"/>
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div id="chart-mtbf-p2" style="width: 100%; height: 120px; background-color:transparent;"></div> 
+            <div class="text-secondary mb-2" style="font-size:12px;">Target : <?=$dataSelisih[0]->MTBF_TARGET_2?></div>
+          </div>
+          <div class="col-md-6 position-relative text-center mb-2">
+            <div class="text-secondary mb-2" style="font-size:12px;">Period 2</div>
+              <?php if(substr($dataSelisih[0]->SELISIH_MTBF_2, 0, 1) == '-'): ?>
+                  <h6 class="text-danger fw-bold"><i class="fa fa-arrow-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_2,0) ?: '0'?></h6>
+              <?php else : ?>
+                  <h6 class="text-success fw-bold"><i class="fa fa-arrow-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_2,0) ?: '0'?></h6>
+              <?php endif; ?>
+          </div>
         </div>
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+        <a class="text-center" href="<?=base_url()?>Laptop/viewComparation?tipe=MTBF">
+            <h6 class="text-primary mb-0">Comparison Years</h6>
+            <i class="fas fa-angle-down"></i>
+        </a>
+        <a class="text-center" href="<?=base_url()?>Laptop/viewList?tipe=MTBF">
+            <h6 class="text-primary mb-0">See Detail</h6>
+            <i class="fas fa-angle-down"></i>
+        </a>
+      </div>
     </div>
+  </div>
 </div>
 
-<!-- <div class="row mb-4">
-   <div class="col-md-4 align-self-stretch mb-2">
-        <div class="card shadow-5-strong h-100 border-bottom border-primary border-5">
-            <div class="card-body pt-3 pb-2">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="text-secondary fw-bold" style="font-size:0.8em;">Deviation Availability Rate</div>
-                    <div class="text-primary fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
-                </div>
-                    <div class="row align-items-center justify-content-between mt-4">
-                        <div class="col-md-6 position-relative text-center mb-2">
-                          <div class="text-secondary mb-2" style="font-size:12px;">Period 1</div>
-                            <?php if(substr($dataSelisih[0]->SELISIH_AR_1, 0, 1) == '-'): ?>
-                                <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_1,2) ?: '0'?>%</h6>
-                            <?php else : ?>
-                                <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_1,2) ?: '0'?>%</h6>
-                            <?php endif; ?>
-                            <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
-                        </div>
-                        <div class="col-md-6 position-relative text-center mb-2">
-                          <div class="text-secondary mb-2" style="font-size:12px;">Period 2</div>
-                            <?php if(substr($dataSelisih[0]->SELISIH_AR_2, 0, 1) == '-'): ?>
-                                <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_2,2) ?: '0'?>%</h6>
-                            <?php else : ?>
-                                <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_AR_2,2) ?: '0'?>%</h6>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-            </div>
-        </div>
-   </div>
-   <div class="col-md-4 align-self-stretch mb-2">
-        <div class="card shadow-5-strong h-100 border-bottom border-success border-5">
-            <div class="card-body pt-3 pb-2">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="text-secondary fw-bold" style="font-size:0.8em;">Deviation Maintenance Success</div>
-                    <div class="text-success fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
-                </div>
-                    <div class="row align-items-center justify-content-between mt-4">
-                        <div class="col-md-6 position-relative text-center mb-2">
-                          <div class="text-secondary mb-2" style="font-size:12px;">Period 1</div>
-                            <?php if(substr($dataSelisih[0]->SELISIH_KM_1, 0, 1) == '-'): ?>
-                                <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_1,2) ?: '0'?>%</h6>
-                            <?php else : ?>
-                                <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_1,2) ?: '0'?>%</h6>
-                            <?php endif; ?>
-                            <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
-                        </div>
-                        <div class="col-md-6 position-relative text-center mb-2">
-                          <div class="text-secondary mb-2" style="font-size:12px;">Period 2</div>
-                            <?php if(substr($dataSelisih[0]->SELISIH_KM_2, 0, 1) == '-'): ?>
-                                <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_2,2) ?: '0'?>%</h6>
-                            <?php else : ?>
-                                <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_KM_2,2) ?: '0'?>%</h6>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-            </div>
-        </div>
-   </div>
-   <div class="col-md-4 align-self-stretch mb-2">
-        <div class="card shadow-5-strong h-100 border-bottom border-warning border-5">
-            <div class="card-body pt-3 pb-2">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="text-secondary fw-bold" style="font-size:0.8em;">Deviation Mean Time Between Failures</div>
-                    <div class="text-warning fw-bold" style="font-size:0.8em;">(Mon)</div>
-                </div>
-                    <div class="row align-items-center justify-content-between mt-4">
-                        <div class="col-md-6 position-relative text-center mb-2">
-                          <div class="text-secondary mb-2" style="font-size:12px;">Period 1</div>
-                            <?php if(substr($dataSelisih[0]->SELISIH_MTBF_1, 0, 1) == '-'): ?>
-                                <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_1,2) ?: '0'?></h6>
-                            <?php else : ?>
-                                <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_1,2) ?: '0'?></h6>
-                            <?php endif; ?>
-                            <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
-                        </div>
-                        <div class="col-md-6 position-relative text-center mb-2">
-                          <div class="text-secondary mb-2" style="font-size:12px;">Period 2</div>
-                            <?php if(substr($dataSelisih[0]->SELISIH_MTBF_2, 0, 1) == '-'): ?>
-                                <h6 class="text-danger fw-bold"><i class="fa fa-angle-down"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_2,2) ?: '0'?></h6>
-                            <?php else : ?>
-                                <h6 class="text-success fw-bold"><i class="fa fa-angle-up"></i> &nbsp;&nbsp;<?=round($dataSelisih[0]->SELISIH_MTBF_2,2) ?: '0'?></h6>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-            </div>
-        </div>
-   </div>
-</div> -->
-
-<hr class="hr hr-blurry mb-5"/>
-<div class="mb-4"><h6 class="fw-bold"><i class="fas fa-chart-bar"></i> &nbsp;&nbsp;Comparison Data Between Years</h6></div>
-<div class="row mt-3 mb-4">
-    <div class="col-md-12">
-        <div class="card bg-transparent shadow-0 border border-primary border-3">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="text-primary fw-bold" style="font-size:0.8em;">Comparation Availability Rate</div>
-                    <div class="text-primary fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
-                </div>
-                <canvas class="chart-ar-compare" height="100"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12">
-        <div class="card bg-transparent shadow-0 border border-success border-3">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="text-success fw-bold" style="font-size:0.8em;">Comparation Maintenance Success</div>
-                    <div class="text-success fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
-                </div>
-                <canvas class="chart-km-compare" height="100"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12">
-        <div class="card bg-transparent shadow-0 border border-warning border-3">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="text-warning fw-bold" style="font-size:0.8em;">Comparation Mean Time Between Failures</div>
-                    <div class="text-warning fw-bold" style="font-size:0.8em;">(Month)</div>
-                </div>
-                <canvas class="chart-mtbf-compare" height="100"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
 
 </div>
 <script type="text/javascript">
@@ -352,413 +234,215 @@ $(document).ready(function() {
         return value.toLocaleString();
     };
 
-    // AR
-    const dataChartAR = {
-      type: "bar",
-      maintainAspectRatio: false,
-      responsive: true,  
-      options: {
-        plugins : {
-          datalabels: { 
-            anchor: 'center',
-            align: 'top',
-            clamp: true
-          },
-          legend : {
-              position:'bottom',
-          }
+    var chart = JSC.chart('chart-ar-p1', { 
+        debug: true,  
+        legend_visible: false, 
+        yAxis: [ 
+            { 
+            line_visible: true, 
+            defaultTick_enabled: false, 
+            scale_range: [0, 100] 
+            }, 
+        ], 
+        xAxis: [ 
+            { 
+            defaultTick_gridLine_width: 0, 
+            spacingPercentage: 0.15 
+            }, 
+        ], 
+        defaultSeries: { 
+            type: 'gauge column roundCaps', 
+            shape: { 
+            label: [ 
+                { 
+                text: '%sum%', 
+                verticalAlign: 'middle', 
+                style_fontSize: 14 
+                } 
+            ] 
+            } 
         }, 
-        scales: {
-              x: {
-                  grid: {
-                  display: false
-                  }
-              },
-              y: {
-                  grid: {
-                  display: false
-                  }
-              }
-          }
-      },
-      data: {
-        labels: ["Period 1", "Period 2",],
-        datasets: [{
-            label: "Target",
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-            ],
-            fill: true,
-            borderColor: [
-              'rgba(255,99,132,1)',
-            ],
-            borderWidth: 2,
-            borderRadius : 6,
-            tension: 0.4,
-            data: <?=json_encode($targetAR)?>,
-            datalabels: {
-              color: "black",
-              formatter: formatter,
-            }
-          },
-          {
-            label: "Achievement",
-            backgroundColor: [
-              'rgba(102, 16, 242, 0.2)',
-            ],
-            fill: true,
-            borderColor: [
-              'rgba(102, 16, 242, 1)',
-            ],
-            borderWidth: 2,
-            borderRadius : 6,
-            tension: 0.4,
-            data: <?=json_encode($achievementAR)?>,
-            datalabels: {
-              color: "black",
-              formatter: formatter,
-            }
-          },
-        ],
-      },
-    };
-  new Chart($('.chart-ar'), dataChartAR);
+        series: [ 
+            { 
+            points: [['Achievement', <?=round($dataSelisih[0]->AR_1, 2)?>]] 
+            }, 
+        ] 
+    });
 
-    //   KM
-  const dataChartKM = {
-    type: "bar",
-    maintainAspectRatio: false,
-    responsive: true,  
-    options: {
-      plugins : {
-        datalabels: { 
-          anchor: 'center',
-          align: 'top',
-          clamp: true
-        },
-        legend : {
-            position:'bottom',
-        }
-      }, 
-      scales: {
-            x: {
-                grid: {
-                display: false
-                }
-            },
-            y: {
-                grid: {
-                display: false
-                }
-            }
-        }
-    },
-    data: {
-      labels: ["Period 1", "Period 2",],
-      datasets: [{
-          label: "Target",
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-          ],
-          fill: true,
-          borderColor: [
-            'rgba(255,99,132,1)',
-          ],
-          borderWidth: 2,
-          borderRadius : 6,
-          tension: 0.4,
-          data: <?=json_encode($targetKM)?>,
-          datalabels: {
-            color: "black",
-            formatter: formatter,
-          }
-        },
-        {
-          label: "Achievement",
-          backgroundColor: [
-            'rgba(102, 16, 242, 0.2)',
-          ],
-          fill: true,
-          borderColor: [
-            'rgba(102, 16, 242, 1)',
-          ],
-          borderWidth: 2,
-          borderRadius : 6,
-          tension: 0.4,
-          data: <?=json_encode($achievementKM)?>,
-          datalabels: {
-            color: "black",
-            formatter: formatter,
-          }
-        },
-      ],
-    },
-  };
-  new Chart($('.chart-km'), dataChartKM);
-
-    // MTBF   
-  const dataChartMTBF = {
-    type: "bar",
-    maintainAspectRatio: false,
-    responsive: true,  
-    options: {
-      plugins : {
-        datalabels: { 
-          anchor: 'center',
-          align: 'top',
-          clamp: true
-        },
-        legend : {
-            position:'bottom',
-        }
-      }, 
-      scales: {
-            x: {
-                grid: {
-                display: false
-                }
-            },
-            y: {
-                grid: {
-                display: false
-                }
-            }
-        }
-    },
-    data: {
-      labels: ["Period 1", "Period 2",],
-      datasets: [{
-          label: "Target",
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-          ],
-          fill: true,
-          borderColor: [
-            'rgba(255,99,132,1)',
-          ],
-          borderWidth: 2,
-          borderRadius : 6,
-          tension: 0.4,
-          data: <?=json_encode($targetMTBF)?>,
-          datalabels: {
-            color: "black",
-            formatter: formatterNonPercentage,
-          }
-        },
-        {
-          label: "Achievement",
-          backgroundColor: [
-            'rgba(102, 16, 242, 0.2)',
-          ],
-          fill: true,
-          borderColor: [
-            'rgba(102, 16, 242, 1)',
-          ],
-          borderWidth: 2,
-          borderRadius : 6,
-          tension: 0.4,
-          data: <?=json_encode($achievementMTBF)?>,
-          datalabels: {
-            color: "black",
-            formatter: formatterNonPercentage,
-          }
-        },
-      ],
-    },
-  };
-  new Chart($('.chart-mtbf'), dataChartMTBF);
-
-  const dataChartARCompare = {
-      type: "line",
-      maintainAspectRatio: false,
-      responsive: true,  
-      options: {
-        plugins : {
-          datalabels: { 
-            anchor: 'center',
-            align: 'top',
-            clamp: true
-          },
-          legend : {
-              position:'bottom',
-          }
+    var chart = JSC.chart('chart-ar-p2', { 
+        debug: true,  
+        legend_visible: false, 
+        yAxis: [ 
+            { 
+            line_visible: true, 
+            defaultTick_enabled: false, 
+            scale_range: [0, 100] 
+            }, 
+        ], 
+        xAxis: [ 
+            { 
+            defaultTick_gridLine_width: 0, 
+            spacingPercentage: 0.15 
+            }, 
+        ], 
+        defaultSeries: { 
+            type: 'gauge column roundCaps', 
+            shape: { 
+            label: [ 
+                { 
+                text: '%sum%', 
+                verticalAlign: 'middle', 
+                style_fontSize: 14 
+                } 
+            ] 
+            } 
         }, 
-        scales: {
-              x: {
-                  grid: {
-                  display: false
-                  },
-                
-              },
-              y: {
-                  grid: {
-                  display: false
-                  },
-                  offset:true,
-              }
-          }
-      },
-      data: {
-        labels: <?=json_encode($labelARComparison)?>,
-        datasets: [{
-            label: "Target",
-            borderColor: [
-              'rgba(255,99,132,1)',
-            ],
-            borderWidth: 2,
-            borderRadius : 6,
-            tension: 0.4,
-            data: <?=json_encode($targetARComparison)?>,
-            datalabels: {
-              color: "black",
-              formatter: formatter,
-            }
-          },
-          {
-            label: "Achievement",
-            borderColor: [
-              'rgba(102, 16, 242, 1)',
-            ],
-            borderWidth: 2,
-            borderRadius : 6,
-            tension: 0.4,
-            data: <?=json_encode($achievementARComparison)?>,
-            datalabels: {
-              color: "black",
-              formatter: formatter,
-            }
-          },
-        ],
-      },
-    };
-  new Chart($('.chart-ar-compare'), dataChartARCompare);
+        series: [ 
+            { 
+            points: [['Achievement', <?=round($dataSelisih[0]->AR_2, 2)?>]] 
+            }, 
+        ] 
+    });
 
-  const dataChartKMCompare = {
-      type: "line",
-      maintainAspectRatio: false,
-      responsive: true,  
-      options: {
-        plugins : {
-          datalabels: { 
-            anchor: 'center',
-            align: 'top',
-            clamp: true
-          },
-          legend : {
-              position:'bottom',
-          }
+    var chart = JSC.chart('chart-km-p1', { 
+        debug: true,  
+        legend_visible: false, 
+        yAxis: [ 
+            { 
+            line_visible: true, 
+            defaultTick_enabled: false, 
+            scale_range: [0, 100] 
+            }, 
+        ], 
+        xAxis: [ 
+            { 
+            defaultTick_gridLine_width: 0, 
+            spacingPercentage: 0.15 
+            }, 
+        ], 
+        defaultSeries: { 
+            type: 'gauge column roundCaps', 
+            shape: { 
+            label: [ 
+                { 
+                text: '%sum%', 
+                verticalAlign: 'middle', 
+                style_fontSize: 14 
+                } 
+            ] 
+            } 
         }, 
-        scales: {
-              x: {
-                  grid: {
-                  display: false
-                  }
-              },
-              y: {
-                  grid: {
-                  display: false
-                  },
-                  offset:true,
-              }
-          }
-      },
-      data: {
-        labels: <?=json_encode($labelKMComparison)?>,
-        datasets: [{
-            label: "Target",
-            borderColor: [
-              'rgba(255,99,132,1)',
-            ],
-            borderWidth: 2,
-            borderRadius : 6,
-            tension: 0.4,
-            data: <?=json_encode($targetKMComparison)?>,
-            datalabels: {
-              color: "black",
-              formatter: formatter,
-            }
-          },
-          {
-            label: "Achievement",
-            borderColor: [
-              'rgba(102, 16, 242, 1)',
-            ],
-            borderWidth: 2,
-            borderRadius : 6,
-            tension: 0.4,
-            data: <?=json_encode($achievementKMComparison)?>,
-            datalabels: {
-              color: "black",
-              formatter: formatter,
-            }
-          },
-        ],
-      },
-    };
-  new Chart($('.chart-km-compare'), dataChartKMCompare);
+        series: [ 
+            { 
+            points: [['Achievement', <?=round($dataSelisih[0]->KM_1, 2)?>]] 
+            }, 
+        ] 
+    });
 
-  const dataChartMTBFCompare = {
-      type: "line",
-      maintainAspectRatio: false,
-      responsive: true,  
-      options: {
-        plugins : {
-          datalabels: { 
-            anchor: 'center',
-            align: 'top',
-            clamp: true
-          },
-          legend : {
-              position:'bottom',
-          }
+    var chart = JSC.chart('chart-km-p2', { 
+        debug: true,  
+        legend_visible: false, 
+        yAxis: [ 
+            { 
+            line_visible: true, 
+            defaultTick_enabled: false, 
+            scale_range: [0, 100] 
+            }, 
+        ], 
+        xAxis: [ 
+            { 
+            defaultTick_gridLine_width: 0, 
+            spacingPercentage: 0.15 
+            }, 
+        ], 
+        defaultSeries: { 
+            type: 'gauge column roundCaps', 
+            shape: { 
+            label: [ 
+                { 
+                text: '%sum%', 
+                verticalAlign: 'middle', 
+                style_fontSize: 14 
+                } 
+            ] 
+            } 
         }, 
-        scales: {
-              x: {
-                  grid: {
-                  display: false
-                  }
-              },
-              y: {
-                  grid: {
-                  display: false
-                  },
-                  offset:true,
-              }
-          }
-      },
-      data: {
-        labels: <?=json_encode($labelMTBFComparison)?>,
-        datasets: [{
-            label: "Target",
-            borderColor: [
-              'rgba(255,99,132,1)',
-            ],
-            borderWidth: 2,
-            borderRadius : 6,
-            tension: 0.4,
-            data: <?=json_encode($targetMTBFComparison)?>,
-            datalabels: {
-              color: "black",
-              formatter: formatterNonPercentage,
-            }
-          },
-          {
-            label: "Achievement",
-            borderColor: [
-              'rgba(102, 16, 242, 1)',
-            ],
-            borderWidth: 2,
-            borderRadius : 6,
-            tension: 0.4,
-            data: <?=json_encode($achievementMTBFComparison)?>,
-            datalabels: {
-              color: "black",
-              formatter: formatterNonPercentage,
-            }
-          },
-        ],
-      },
-    };
-  new Chart($('.chart-mtbf-compare'), dataChartMTBFCompare);
+        series: [ 
+            { 
+            points: [['Achievement', <?=round($dataSelisih[0]->KM_2, 2)?>]] 
+            }, 
+        ] 
+    });
+
+    var chart = JSC.chart('chart-mtbf-p1', { 
+        debug: true,  
+        legend_visible: false, 
+        yAxis: [ 
+            { 
+            line_visible: true, 
+            defaultTick_enabled: false, 
+            scale_range: [0, 6] 
+            }, 
+        ], 
+        xAxis: [ 
+            { 
+            defaultTick_gridLine_width: 0, 
+            spacingPercentage: 0.15 
+            }, 
+        ], 
+        defaultSeries: { 
+            type: 'gauge column roundCaps', 
+            shape: { 
+            label: [ 
+                { 
+                text: '%sum', 
+                verticalAlign: 'middle', 
+                style_fontSize: 14 
+                } 
+            ] 
+            } 
+        }, 
+        series: [ 
+            { 
+            points: [['Achievement', <?=round($dataSelisih[0]->MTBF_1, 0)?>]] 
+            }, 
+        ] 
+    });
+
+    var chart = JSC.chart('chart-mtbf-p2', { 
+        debug: true,  
+        legend_visible: false, 
+        yAxis: [ 
+            { 
+            line_visible: true, 
+            defaultTick_enabled: false, 
+            scale_range: [0, 12] 
+            }, 
+        ], 
+        xAxis: [ 
+            { 
+            defaultTick_gridLine_width: 0, 
+            spacingPercentage: 0.15 
+            }, 
+        ], 
+        defaultSeries: { 
+            type: 'gauge column roundCaps', 
+            shape: { 
+            label: [ 
+                { 
+                text: '%sum', 
+                verticalAlign: 'middle', 
+                style_fontSize: 14 
+                } 
+            ] 
+            } 
+        }, 
+        series: [ 
+            { 
+            points: [['Achievement', <?=round($dataSelisih[0]->MTBF_2, 0)?>]] 
+            }, 
+        ] 
+    });
+   
 });
 </script>

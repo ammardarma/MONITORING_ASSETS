@@ -12,17 +12,17 @@
 
 <div><h5 class="fw-bold"><i class="fa fa-print"></i> Printer</h5></div>
     
-  <div class="row justify-content-between align-items-center mt-4">
+  <div class="row justify-content-between align-items-center mt-2">
       <div class="col-md-3 align-self-stretch mb-4">
       </div>
-      <div class="col-md-3 mb-4 text-end">
-          <button class="btn btn-primary mb-4 rounded-5" onclick="printPDF()">Print PDF</button>
-          <select data-mdb-select-init class="tahun">
-              <?php for($i = 2; $i < 10; $i++): ?>
-                  <option value="202<?=$i?>" <?=(("202".$i) == $tahun) ? 'selected': ''?>>202<?=$i?></option>
-              <?php endfor; ?>
-          </select>
-          <label class="form-label select-label">Filter Year</label>
+      <div class="col-md-4 mb-2 d-flex justify-content-end">
+        <select data-mdb-select-init class="tahun">
+          <?php for($i = 2; $i < 10; $i++): ?>
+          <option value="202<?=$i?>" <?=(("202".$i) == $tahun) ? 'selected': ''?>>202<?=$i?></option>
+          <?php endfor; ?>
+        </select>
+        <label class="form-label select-label">Filter Year</label>
+        <button class="btn btn-primary ms-2 rounded-5" onclick="printPDF()">Print PDF</button>
       </div>
   </div>
 <div class="row mb-2">
@@ -95,15 +95,15 @@
 </div>
 
 <div class="row mb-5">
-    <div class="col-md-12 mb-5">
+    <div class="col-md-12 mb-2">
         <div class="card bg-transparent shadow-0 border border-primary border-2">
             <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
                     <div class="text-primary fw-bold" style="font-size:0.9em;">Frekuensi Pengguna</div>
                     <div class="text-primary fw-bold" style="font-size:1em;"><i class="fa fa-percentage"></i></div>
                 </div>
-                <canvas class="chart-fpg" height="100"></canvas>
-                <div class="text-center mt-5">
+                <canvas class="chart-fpg" height="50"></canvas>
+                <div class="text-center mt-2">
                     <a href="<?=base_url()?>Printer/viewList?tipe=FREKUENSI PENGGUNA">
                         <h6 class="text-primary mb-0">See Detail</h6>
                         <i class="fas fa-angle-down"></i>
@@ -112,15 +112,15 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12 mb-5">
+    <div class="col-md-12 mb-2">
         <div class="card bg-transparent shadow-0 border border-success border-2">
             <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
                     <div class="text-success fw-bold" style="font-size:0.9em;">Frekuensi Perbaikan</div>
                     <div class="text-success fw-bold" style="font-size:1em;">x&#772;</div>
                 </div>
-                <canvas class="chart-fpb" height="100"></canvas>
-                <div class="text-center mt-5">
+                <canvas class="chart-fpb" height="50"></canvas>
+                <div class="text-center mt-2">
                     <a href="<?=base_url()?>Printer/viewList?tipe=FREKUENSI PERBAIKAN">
                         <h6 class="text-success mb-0">See Detail</h6>
                         <i class="text-success fas fa-angle-down"></i>
@@ -129,15 +129,15 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12 mb-5">
+    <div class="col-md-12 mb-2">
         <div class="card bg-transparent shadow-0 border border-warning border-2">
             <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
                     <div class="text-warning fw-bold" style="font-size:0.9em;">Tingkat Kepuasan</div>
                     <div class="text-warning fw-bold" style="font-size:1em;"><i class="fa fa-percentage"></i></div>
                 </div>
-                <canvas class="chart-tk" height="100"></canvas>
-                <div class="text-center mt-5">
+                <canvas class="chart-tk" height="50"></canvas>
+                <div class="text-center mt-2">
                     <a href="<?=base_url()?>Printer/viewList?tipe=TINGKAT KEPUASAN">
                         <h6 class="text-warning mb-0">See Detail</h6>
                         <i class="text-warning fas fa-angle-down"></i>

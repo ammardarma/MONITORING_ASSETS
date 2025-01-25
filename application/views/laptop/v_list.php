@@ -75,6 +75,7 @@
                     <tr>
                         <th>Nama User</th>
                         <th>Nama Perangkat</th>
+                        <th>Tanggal</th>
                         <th>Tahun</th>
                         <th>Periode</th>
                         <th>Tipe</th>

@@ -27,6 +27,18 @@ class Laptop extends CI_Controller {
 
         $data['dataSelisih'] = $this->db->query("
         SELECT 
+        SUM(CASE WHEN TIPE = 'AR' AND PERIODE = 1 THEN PENCAPAIAN END)*100 AS AR_1,
+        SUM(CASE WHEN TIPE = 'AR' AND PERIODE = 1 THEN TARGET END)*100 AS AR_TARGET_1,
+        SUM(CASE WHEN TIPE = 'AR' AND PERIODE = 2 THEN PENCAPAIAN END)*100 AS AR_2,
+        SUM(CASE WHEN TIPE = 'AR' AND PERIODE = 2 THEN TARGET END)*100 AS AR_TARGET_2,
+        SUM(CASE WHEN TIPE = 'KM' AND PERIODE = 1 THEN PENCAPAIAN END)*100 AS KM_1,
+        SUM(CASE WHEN TIPE = 'KM' AND PERIODE = 1 THEN TARGET END)*100 AS KM_TARGET_1,
+        SUM(CASE WHEN TIPE = 'KM' AND PERIODE = 2 THEN PENCAPAIAN END)*100 AS KM_2,
+        SUM(CASE WHEN TIPE = 'KM' AND PERIODE = 2 THEN TARGET END)*100 AS KM_TARGET_2,
+        SUM(CASE WHEN TIPE = 'MTBF' AND PERIODE = 1 THEN PENCAPAIAN END) AS MTBF_1,
+        SUM(CASE WHEN TIPE = 'MTBF' AND PERIODE = 1 THEN TARGET END) AS MTBF_TARGET_1,
+        SUM(CASE WHEN TIPE = 'MTBF' AND PERIODE = 2 THEN PENCAPAIAN END) AS MTBF_2,
+        SUM(CASE WHEN TIPE = 'MTBF' AND PERIODE = 2 THEN TARGET END) AS MTBF_TARGET_2,
         SUM(CASE WHEN TIPE = 'AR' AND PERIODE = 1 THEN PENCAPAIAN - TARGET END)*100 AS SELISIH_AR_1,
         SUM(CASE WHEN TIPE = 'AR' AND PERIODE = 2 THEN PENCAPAIAN - TARGET END)*100 AS SELISIH_AR_2,
         SUM(CASE WHEN TIPE = 'KM' AND PERIODE = 1 THEN PENCAPAIAN - TARGET END)*100 AS SELISIH_KM_1,
@@ -34,6 +46,18 @@ class Laptop extends CI_Controller {
         SUM(CASE WHEN TIPE = 'MTBF' AND PERIODE = 1 THEN PENCAPAIAN - TARGET END) AS SELISIH_MTBF_1,
         SUM(CASE WHEN TIPE = 'MTBF' AND PERIODE = 2 THEN PENCAPAIAN - TARGET END) AS SELISIH_MTBF_2
         FROM (SELECT A.PERIODE, A.TIPE, CASE WHEN A.TIPE ='MTBF' AND A.PERIODE=1 THEN AVG(PENCAPAIAN) WHEN A.TIPE = 'MTBF' AND A.PERIODE=2 THEN AVG(PENCAPAIAN) ELSE AVG(PENCAPAIAN) END AS PENCAPAIAN, B.TARGET FROM PC_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE AND A.TIPE = B.TIPE  WHERE A.TAHUN = '$tahun' AND TIPE_PERANGKAT='NB' GROUP BY A.TIPE, A.PERIODE ORDER BY TIPE) A")->result();
+
+		$this->template->display('laptop/v_home.php', 'header.php', $data);
+	}
+
+    public function viewComparation() {
+        if(!empty($this->input->get('tahun', true))){
+            $this->session->set_userdata('tahun', $this->input->get('tahun', true));
+        }
+        $data['tipe'] = $this->input->get('tipe', true);
+        $tahun = $this->session->userdata('tahun');
+        $data['tahun'] = $tahun;
+        $data['class'] = $this;
 
         $dataGrafik = $this->db->query("SELECT A.*, B.PENCAPAIAN AS PENCAPAIAN_SEBELUM
         FROM (SELECT A.PERIODE, A.TIPE, CASE WHEN A.TIPE ='MTBF' AND A.PERIODE=1 THEN AVG(PENCAPAIAN) WHEN A.TIPE = 'MTBF' AND A.PERIODE=2 THEN AVG(PENCAPAIAN) ELSE AVG(PENCAPAIAN) END AS PENCAPAIAN, B.TARGET FROM PC_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN AND A.PERIODE = B.PERIODE AND A.TIPE = B.TIPE  WHERE A.TAHUN = '$tahun' AND TIPE_PERANGKAT='NB' GROUP BY A.TIPE, A.PERIODE ORDER BY TIPE) A 
@@ -76,8 +100,8 @@ class Laptop extends CI_Controller {
             }
         }
     
-		$this->template->display('laptop/v_home.php', 'header.php', $data);
-	}
+		$this->template->display('laptop/v_comparation.php', 'header.php', $data);
+    }
 
     public function viewList() {
         if(!empty($this->input->get('tahun', true))){
@@ -109,6 +133,7 @@ class Laptop extends CI_Controller {
 
             $row[] = $field['NAMA_USER'];
             $row[] = $field['NAMA_PERANGKAT'];
+            $row[] = $field['TANGGAL'];
             $row[] = $field['TAHUN'];
             $row[] = $field['PERIODE'];
             $row[] = $field['TIPE'];
@@ -134,7 +159,7 @@ class Laptop extends CI_Controller {
 
     public function getDataLaptop($post, $type = "get")
     {
-        $column_order = ['NAMA_USER', 'NAMA_PERANGKAT', 'TAHUN', 'PERIODE', 'TIPE', 'PENCAPAIAN'];
+        $column_order = ['NAMA_USER', 'NAMA_PERANGKAT', 'TANGGAL', 'TAHUN', 'PERIODE', 'TIPE', 'PENCAPAIAN'];
         $order = 'ASC';
         $this->db->select('A.*');
         $this->db->from('PC_TABLE A');
