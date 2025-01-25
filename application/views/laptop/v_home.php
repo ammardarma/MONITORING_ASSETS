@@ -18,10 +18,10 @@
         <div class="card shadow-5-strong rounded-8 wave wave-success total-users">
             <div class="card-body py-2">
                 <div class="row">
-                    <small class="text-secondary"><small><b>Total Users</b></small></small>
+                    <small style="font-size:1em;"class="text-secondary"><b>Total Users</b></small>
                 </div>
                 <div class="d-flex justify-content-between align-items-start mt-2">
-                    <h3 class="text-dark fw-bold"><?=$dataUser[0]->USER_NB ?: '0'?></h3>
+                    <h2 class="text-dark fw-bold"><?=$dataUser[0]->USER_NB ?: '0'?></h2>
                     <div class="btn btn-floating btn-secondary"><b><i class="fa fa-user"></i></b></div>
                 </div>
             </div>
