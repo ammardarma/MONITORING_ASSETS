@@ -55,6 +55,54 @@ class Printer extends CI_Controller {
 		$this->template->display('printer/v_home.php', 'header.php', $data);
 	}
 
+    public function viewComparation() {
+           // var_dump($this->session->userdata());die;
+           if(!empty($this->input->get('tahun', true))){
+            $this->session->set_userdata('tahun', $this->input->get('tahun', true));
+        }
+        $tahun = $this->session->userdata('tahun');
+        $data['tipe'] = $this->input->get('tipe', true);
+        $data['tahun'] = $tahun;
+
+        $data['dataSummary'] = $this->db->query("
+        SELECT SUM(PR_FPG) PR_FPG, SUM(PR_FPB) PR_FPB, SUM(PR_TK) PR_TK, AVG(TARGET_FPG) TARGET_FPG, AVG(TARGET_FPB) TARGET_FPB, AVG(TARGET_TP)TARGET_TP FROM ( 
+        SELECT
+        CASE WHEN A.TIPE='FREKUENSI PENGGUNA' THEN AVG(PENCAPAIAN) END PR_FPG,
+        CASE WHEN A.TIPE='FREKUENSI PERBAIKAN'  THEN AVG(PENCAPAIAN) END PR_FPB,
+        CASE WHEN A.TIPE='TINGKAT KEPUASAN'  THEN AVG(PENCAPAIAN) END PR_TK,
+        CASE WHEN B.TIPE = 'FREKUENSI PENGGUNA' THEN B.TARGET END AS TARGET_FPG,
+        CASE WHEN B.TIPE = 'FREKUENSI PERBAIKAN' THEN B.TARGET END AS TARGET_FPB,
+        CASE WHEN B.TIPE = 'TINGKAT KEPUASAN' THEN B.TARGET END AS TARGET_TP
+        FROM PRINTER_TABLE A JOIN M_TARGETS B ON A.TAHUN = B.TAHUN  AND A.TIPE = B.TIPE WHERE A.TAHUN like '%$tahun%' GROUP BY A.TIPE) PRINTER")->result();
+
+        $dataGrafik = $this->db->query("SELECT A.*, B.PENCAPAIAN AS PENCAPAIAN_SEBELUM FROM 
+        (SELECT BULAN, pt.TIPE, mt.TARGET,  AVG(PENCAPAIAN) PENCAPAIAN FROM PRINTER_TABLE pt JOIN M_TARGETS mt ON pt.TIPE = mt.TIPE  WHERE pt.TAHUN LIKE '%$tahun%' GROUP BY BULAN, TIPE ORDER BY BULAN) A 
+        LEFT JOIN 
+        (SELECT BULAN, pt.TIPE, mt.TARGET,  AVG(PENCAPAIAN) PENCAPAIAN FROM PRINTER_TABLE pt JOIN M_TARGETS mt ON pt.TIPE = mt.TIPE  WHERE pt.TAHUN LIKE '%".($tahun-1)."%' GROUP BY BULAN, TIPE ORDER BY BULAN) B 
+        ON A.BULAN=B.BULAN AND A.TIPE=B.TIPE")->result();
+        $data['achievementFPG'] = $data['targetFPG'] = $data['achievementFPB'] = $data['targetFPB'] = $data['achievementTK'] = $data['targetTK'] = $data['bulan'] = $data['achievementFPGLastYear']  = $data['achievementFPBLastYear'] = $data['achievementTKLastYear'] = array();
+
+        foreach($dataGrafik as $v){
+            if($v->TIPE == 'FREKUENSI PENGGUNA'){
+                $data['achievementFPG'][] = round($v->PENCAPAIAN * 100, 2);
+                $data['achievementFPGLastYear'][] = round($v->PENCAPAIAN_SEBELUM * 100, 2);
+                $data['targetFPG'][] = round($v->TARGET*100,2);
+                $data['bulan'][] = date('M', mktime(0, 0, 0, $v->BULAN, 10));
+            }else if($v->TIPE == 'FREKUENSI PERBAIKAN'){
+                $data['achievementFPB'][] = round($v->PENCAPAIAN, 2);
+                $data['achievementFPBLastYear'][] = round($v->PENCAPAIAN_SEBELUM, 2);
+                $data['targetFPB'][] = round($v->TARGET,2);
+            }else if($v->TIPE == 'TINGKAT KEPUASAN') {
+                $data['achievementTK'][] = round($v->PENCAPAIAN*100,2);
+                $data['achievementTKLastYear'][] = round($v->PENCAPAIAN_SEBELUM * 100, 2);
+                $data['targetTK'][] = round($v->TARGET*100,2);
+            }
+        }
+    
+
+		$this->template->display('printer/v_comparation.php', 'header.php', $data);
+    }
+
     public function viewList() {
         if(!empty($this->input->get('tahun', true))){
             $this->session->set_userdata('tahun', $this->input->get('tahun', true));

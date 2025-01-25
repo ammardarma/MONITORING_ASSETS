@@ -14,7 +14,7 @@
 
     
 <div class="row justify-content-between align-items-center mb-2">
-    <div class="col-md-3 align-self-stretch">
+    <div class="col-md-2 align-self-stretch">
         <div class="card shadow-5-strong rounded-8 wave wave-success total-users">
             <div class="card-body py-2">
                 <div class="row">

@@ -103,10 +103,14 @@
                     <div class="text-primary fw-bold" style="font-size:1em;"><i class="fa fa-percentage"></i></div>
                 </div>
                 <canvas class="chart-fpg" height="50"></canvas>
-                <div class="text-center mt-2">
+                <div class="text-center mt-2 d-flex justify-content-evenly">
+                    <a href="<?=base_url()?>Printer/viewComparation?tipe=FREKUENSI PENGGUNA">
+                        <h6 class="text-success mb-0">Comparison Years</h6>
+                        <i class="text-success fas fa-angle-down"></i>
+                    </a>
                     <a href="<?=base_url()?>Printer/viewList?tipe=FREKUENSI PENGGUNA">
-                        <h6 class="text-primary mb-0">See Detail</h6>
-                        <i class="fas fa-angle-down"></i>
+                        <h6 class="text-success mb-0">See Detail</h6>
+                        <i class="text-success fas fa-angle-down"></i>
                     </a>
                 </div>
             </div>
@@ -120,7 +124,11 @@
                     <div class="text-success fw-bold" style="font-size:1em;">x&#772;</div>
                 </div>
                 <canvas class="chart-fpb" height="50"></canvas>
-                <div class="text-center mt-2">
+                <div class="text-center mt-2 d-flex justify-content-evenly">
+                    <a href="<?=base_url()?>Printer/viewComparation?tipe=FREKUENSI PERBAIKAN">
+                        <h6 class="text-success mb-0">Comparison Years</h6>
+                        <i class="text-success fas fa-angle-down"></i>
+                    </a>
                     <a href="<?=base_url()?>Printer/viewList?tipe=FREKUENSI PERBAIKAN">
                         <h6 class="text-success mb-0">See Detail</h6>
                         <i class="text-success fas fa-angle-down"></i>
@@ -137,10 +145,14 @@
                     <div class="text-warning fw-bold" style="font-size:1em;"><i class="fa fa-percentage"></i></div>
                 </div>
                 <canvas class="chart-tk" height="50"></canvas>
-                <div class="text-center mt-2">
+                <div class="text-center mt-2 d-flex justify-content-evenly">
+                    <a href="<?=base_url()?>Printer/viewComparation?tipe=TINGKAT KEPUASAN">
+                        <h6 class="text-success mb-0">Comparison Years</h6>
+                        <i class="text-success fas fa-angle-down"></i>
+                    </a>
                     <a href="<?=base_url()?>Printer/viewList?tipe=TINGKAT KEPUASAN">
-                        <h6 class="text-warning mb-0">See Detail</h6>
-                        <i class="text-warning fas fa-angle-down"></i>
+                        <h6 class="text-success mb-0">See Detail</h6>
+                        <i class="text-success fas fa-angle-down"></i>
                     </a>
                 </div>
             </div>
@@ -149,46 +161,6 @@
 </div>
 
 </section> <!-- END OF PDF -->
-<section id="pdf2">
-<hr class="hr hr-blurry mb-5"/>
-<div class="mb-4"><h6 class="fw-bold"><i class="fas fa-chart-bar"></i> &nbsp;&nbsp;Comparison Data Between Years</h6></div>
-
-<div class="row mb-5">
-    <div class="col-md-12 mb-5">
-        <div class="card bg-transparent shadow-0 border border-primary border-2">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="text-primary fw-bold" style="font-size:0.9em;">Perbandingan Frekuensi Pengguna dengan Tahun Sebelumnya</div>
-                    <div class="text-primary fw-bold" style="font-size:1em;"><i class="fa fa-percentage"></i></div>
-                </div>
-                <canvas class="chart-fpg-compare" height="100"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12 mb-5">
-        <div class="card bg-transparent shadow-0 border border-success border-2">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="text-success fw-bold" style="font-size:0.9em;">Perbandingan Frekuensi Perbaikan dengan Tahun Sebelumnya</div>
-                    <div class="text-success fw-bold" style="font-size:1em;">x&#772;</div>
-                </div>
-                <canvas class="chart-fpb-compare" height="100"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12 mb-5">
-        <div class="card bg-transparent shadow-0 border border-warning border-2">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="text-warning fw-bold" style="font-size:0.9em;">Perbandingan Tingkat Kepuasan dengan Tahun Sebelumnya</div>
-                    <div class="text-warning fw-bold" style="font-size:1em;"><i class="fa fa-percentage"></i></div>
-                </div>
-                <canvas class="chart-tk-compare" height="100"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-</section>
 
 <script type="text/javascript">
 function printPDF(){
@@ -252,7 +224,7 @@ $(document).ready(function() {
       scales: {
             x: {
                 grid: {
-                display: false
+                display: true
                 }
             },
             y: {
@@ -323,7 +295,7 @@ $(document).ready(function() {
       scales: {
             x: {
                 grid: {
-                display: false
+                display: true
                 }
             },
             y: {
@@ -394,7 +366,7 @@ $(document).ready(function() {
       scales: {
             x: {
                 grid: {
-                display: false
+                display: true
                 }
             },
             y: {
@@ -446,220 +418,5 @@ $(document).ready(function() {
   };
   new Chart($('.chart-tk'), dataChartTK);
 
-  // FREKUENSI PENGGUNA
-  const dataChartFPGCompare = {
-    type: "bar",
-    maintainAspectRatio: false,
-    responsive: true,  
-    options: {
-      plugins : {
-        datalabels: { 
-          anchor: 'end',
-          align: 'top',
-          clamp: true
-        },
-        legend : {
-            position:'bottom',
-        }
-      }, 
-      scales: {
-            x: {
-                grid: {
-                display: false
-                }
-            },
-            y: {
-                grace: '2%',
-                grid: {
-                display: false
-                }
-            }
-        }
-    },
-    data: {
-      labels: <?=json_encode($bulan)?>,
-      datasets: [{
-          label: "Achievement <?=$tahun-1?>",
-          backgroundColor: [
-              'rgba(212, 212, 212, 0.2)',
-            ],
-            fill: true,
-            borderColor: [
-              'rgba(212,212,212,1)',
-            ],
-          borderWidth: 2,
-          borderRadius : 6,
-          tension: 0.2,
-          data: <?=json_encode($achievementFPGLastYear)?>,
-          datalabels: {
-            color: "black",
-            formatter: formatter,
-          }
-        },
-        {
-          label: "Achievement <?=$tahun?>",
-          backgroundColor: [
-            'rgba(102, 16, 242, 0.2)',
-          ],
-          borderColor: [
-            'rgba(102, 16, 242, 1)',
-          ],
-          borderWidth: 2,
-          borderRadius : 6,
-          tension: 0.2,
-          data: <?=json_encode($achievementFPG)?>,
-          datalabels: {
-            color: "black",
-            formatter: formatter,
-          }
-        },
-      ],
-    },
-  };
-  new Chart($('.chart-fpg-compare'), dataChartFPGCompare);
-
-  // FREKUENSI PERBAIKAN
-  const dataChartFPBCompare = {
-    type: "bar",
-    maintainAspectRatio: false,
-    responsive: true,  
-    options: {
-      plugins : {
-        datalabels: { 
-          anchor: 'end',
-          align: 'top',
-          clamp: true
-        },
-        legend : {
-            position:'bottom',
-        }
-      }, 
-      scales: {
-            x: {
-                grid: {
-                display: false
-                }
-            },
-            y: {
-                grace: '2%',
-                grid: {
-                display: false
-                }
-            }
-        }
-    },
-    data: {
-      labels: <?=json_encode($bulan)?>,
-      datasets: [{
-          label: "Achievement <?=$tahun-1?>",
-          backgroundColor: [
-              'rgba(212, 212, 212, 0.2)',
-            ],
-            fill: true,
-            borderColor: [
-              'rgba(212,212,212,1)',
-            ],
-          borderWidth: 2,
-          borderRadius : 6,
-          tension: 0.2,
-          data: <?=json_encode($achievementFPBLastYear)?>,
-          datalabels: {
-            color: "black",
-            formatter: formatterNonPercentage,
-          }
-        },
-        {
-          label: "Achievement <?=$tahun?>",
-          backgroundColor: [
-            'rgba(102, 16, 242, 0.2)',
-          ],
-          borderColor: [
-            'rgba(102, 16, 242, 1)',
-          ],
-          borderWidth: 2,
-          borderRadius : 6,
-          tension: 0.2,
-          data: <?=json_encode($achievementFPB)?>,
-          datalabels: {
-            color: "black",
-            formatter: formatterNonPercentage,
-          }
-        },
-      ],
-    },
-  };
-  new Chart($('.chart-fpb-compare'), dataChartFPBCompare);
-
-  // TINGKAT KEPUASAN
-  const dataChartTKCompare = {
-    type: "bar",
-    maintainAspectRatio: false,
-    responsive: true,  
-    options: {
-      plugins : {
-        datalabels: { 
-          anchor: 'end',
-          align: 'top',
-          clamp: true
-        },
-        legend : {
-            position:'bottom',
-        }
-      }, 
-      scales: {
-            x: {
-                grid: {
-                display: false
-                }
-            },
-            y: {
-                grace: '5%',
-                grid: {
-                display: false
-                }
-            }
-        }
-    },
-    data: {
-      labels: <?=json_encode($bulan)?>,
-      datasets: [{
-          label: "Achievement <?=$tahun-1?>",
-          backgroundColor: [
-              'rgba(212, 212, 212, 0.2)',
-            ],
-            fill: true,
-            borderColor: [
-              'rgba(212,212,212,1)',
-            ],
-          borderWidth: 2,
-          borderRadius : 6,
-          tension: 0.2,
-          data: <?=json_encode($achievementTKLastYear)?>,
-          datalabels: {
-            color: "black",
-            formatter: formatter,
-          }
-        },
-        {
-          label: "Achievement <?=$tahun?>",
-          backgroundColor: [
-            'rgba(102, 16, 242, 0.2)',
-          ],
-          borderColor: [
-            'rgba(102, 16, 242, 1)',
-          ],
-          borderWidth: 2,
-          borderRadius : 6,
-          tension: 0.2,
-          data: <?=json_encode($achievementTK)?>,
-          datalabels: {
-            color: "black",
-            formatter: formatter,
-          }
-        },
-      ],
-    },
-  };
-  new Chart($('.chart-tk-compare'), dataChartTKCompare);
 });
 </script>
