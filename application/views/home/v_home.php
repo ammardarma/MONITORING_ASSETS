@@ -19,7 +19,7 @@
                     <div><b><i class="fa fa-user"></i></b></div>
                 </div>
                 <div class="row h-100 text-center align-content-center">
-                    <p class="text-dark fw-bold" style="font-size: 3rem;"><?=$dataUser[0]->USER_PC ?: '0'?></p>
+                    <p class="text-dark fw-bold" style="font-size: 2.5rem;"><?=$dataUser[0]->USER_PC ?: '0'?></p>
                 </div>
             </div>
         </div>
@@ -108,7 +108,7 @@
                     <div><b><i class="fa fa-user"></i></b></div>
                 </div>
                 <div class="row h-100 text-center align-content-center">
-                    <p class="text-dark fw-bold" style="font-size: 3rem;"><?=$dataUser[0]->USER_NB ?: '0'?></p>
+                    <p class="text-dark fw-bold" style="font-size: 2.5rem;"><?=$dataUser[0]->USER_NB ?: '0'?></p>
                 </div>
             </div>
         </div>
