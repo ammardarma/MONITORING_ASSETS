@@ -24,7 +24,7 @@
                     <div class="text-primary fw-bold" style="font-size:0.8em;">Comparation Availability Rate</div>
                     <div class="text-primary fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
                 </div>
-                <canvas class="chart-ar-compare" height="100"></canvas>
+                <canvas class="chart-ar-compare" height="70"></canvas>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
                     <div class="text-success fw-bold" style="font-size:0.8em;">Comparation Maintenance Success</div>
                     <div class="text-success fw-bold" style="font-size:0.8em;"><i class="fa fa-percentage"></i></div>
                 </div>
-                <canvas class="chart-km-compare" height="100"></canvas>
+                <canvas class="chart-km-compare" height="70"></canvas>
             </div>
         </div>
     </div>
@@ -50,7 +50,7 @@
                     <div class="text-warning fw-bold" style="font-size:0.8em;">Comparation Mean Time Between Failures</div>
                     <div class="text-warning fw-bold" style="font-size:0.8em;">(Month)</div>
                 </div>
-                <canvas class="chart-mtbf-compare" height="100"></canvas>
+                <canvas class="chart-mtbf-compare" height="70"></canvas>
             </div>
         </div>
     </div>
