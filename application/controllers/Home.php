@@ -71,11 +71,11 @@ class Home extends CI_Controller {
         }
 
         if($target > $data){
-            $text = "<h2 class='text text-danger fw-bold'>".round($data,2)."$persen</h2>";
+            $text = "<div class='d-flex justify-content-center align-items-center'><span class='text-danger fa fa-arrow-down'></span>&nbsp;&nbsp;<h2 class='text text-danger fw-bold'>".round($data,2)."$persen</h2></div>";
         }else if($target == $data){
             $text = "<h2 class='text text-warning fw-bold'>".round($data,2)."$persen</h2>";
         }else if($target < $data){
-            $text = "<h2 class='text text-success fw-bold'>".round($data,2)."$persen</h2>";
+            $text = "<div class='d-flex justify-content-center align-items-center'><span class='text-success fa fa-arrow-up'></span>&nbsp;&nbsp;<h2 class='text text-success fw-bold'>".round($data,2)."$persen</h2></div>";
         }
 
         return $text;
