@@ -63,7 +63,7 @@ class Printer extends CI_Controller {
         $data['tipe'] = $this->input->get('tipe', true);
         $data['tahun'] = $tahun;
         $data['target'] = $this->db->query("SELECT * FROM M_TARGETS WHERE TIPE = '".$data['tipe']."' AND TAHUN='$tahun'")->result();
-        if (count($data['target']) < 2) {
+        if (count($data['target']) < 1) {
             $this->session->set_flashdata('failed', "Tidak bisa input dikarenakan data target belum diinput!");
         }
         $this->template->display('printer/v_list.php', 'header.php', $data);
