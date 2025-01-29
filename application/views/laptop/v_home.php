@@ -210,7 +210,7 @@ function printPDF(){
   canvas.getContext('2d');
   console.log(canvas.height+"  "+canvas.width);
   var imgData = canvas.toDataURL("image/jpeg", 1.0);
-  pdf.addImage(imgData, 'JPG', 5, 30,width-10,height-100);
+  pdf.addImage(imgData, 'JPG', 5, 30,width-30,height-400);
   window.open(pdf.output('bloburl'), '_blank');
   
   });

@@ -57,7 +57,7 @@
         <label class="form-label select-label">Filter Month</label>
     </div>
     <div class="col-md-4 mb-2">
-        <select data-mdb-select-init class="tipe" disabled>
+        <select data-mdb-select-init class="tipe" <?= $this->session->userdata('status') == 'admin' ? 'disabled' : ''?>>
            <option value="FREKUENSI PENGGUNA" <?=$tipe == 'FREKUENSI PENGGUNA' ? 'selected' : ''?>>Frekuensi Pengguna</option>
            <option value="FREKUENSI PERBAIKAN" <?=$tipe == 'FREKUENSI PERBAIKAN' ? 'selected' : ''?>>Frekuensi Perbaikan</option>
            <option value="TINGKAT KEPUASAN" <?=$tipe == 'TINGKAT KEPUASAN' ? 'selected' : ''?>>Tingkat Kepuasan</option>

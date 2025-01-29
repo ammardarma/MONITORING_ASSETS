@@ -45,7 +45,7 @@
         <label class="form-label select-label">Filter Period</label>
     </div>
     <div class="col-md-4 mb-2">
-        <select data-mdb-select-init class="tipe" disabled>
+        <select data-mdb-select-init class="tipe" <?= $this->session->userdata('status') == 'admin' ? 'disabled' : ''?>>
            <option value="AR" <?=$tipe == 'AR' ? 'selected' : ''?>>Availability Rate</option>
            <option value="KM" <?=$tipe == 'KM' ? 'selected' : ''?>>Maintenance Success</option>
            <option value="MTBF" <?=$tipe == 'MTBF' ? 'selected' : ''?>>Mean Time Between Failures</option>
